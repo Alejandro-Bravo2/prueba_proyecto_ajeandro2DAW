@@ -1,10 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { BaseHttpService } from '../../../core/services/base-http.service';
-import { LoadingService } from '../../../core/services/loading.service';
-import { environment } from '../../../../environments/environment';
 
 // DTOs que coinciden con el backend
 export interface ObjetivosDTO {
@@ -65,10 +62,6 @@ export interface NutritionTargetsResponse {
   providedIn: 'root'
 })
 export class ProgressService extends BaseHttpService {
-  constructor(http: HttpClient, loadingService: LoadingService) {
-    super(http, loadingService);
-  }
-
   /**
    * Listar todos los objetivos
    */

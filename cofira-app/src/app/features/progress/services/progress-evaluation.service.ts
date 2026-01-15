@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { BaseHttpService } from '../../../core/services/base-http.service';
-import { LoadingService } from '../../../core/services/loading.service';
 
 // ==========================================
 // TYPES AND INTERFACES
@@ -128,11 +126,6 @@ export interface DailyNutritionSummary {
 
 @Injectable({ providedIn: 'root' })
 export class ProgressEvaluationService extends BaseHttpService {
-
-  constructor(http: HttpClient, loadingService: LoadingService) {
-    super(http, loadingService);
-  }
-
   // ==========================================
   // WORKOUT LOGGING
   // ==========================================

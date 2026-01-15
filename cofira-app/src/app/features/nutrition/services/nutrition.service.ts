@@ -1,10 +1,7 @@
-import { Injectable, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { BaseHttpService } from '../../../core/services/base-http.service';
-import { LoadingService } from '../../../core/services/loading.service';
-import { environment } from '../../../../environments/environment';
 
 // DTOs que coinciden con el backend
 export interface RutinaAlimentacionDTO {
@@ -113,10 +110,6 @@ export interface DailyNutrition {
   providedIn: 'root'
 })
 export class NutritionService extends BaseHttpService {
-  constructor(http: HttpClient, loadingService: LoadingService) {
-    super(http, loadingService);
-  }
-
   /**
    * Listar todas las rutinas de alimentación
    */
