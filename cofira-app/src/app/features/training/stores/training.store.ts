@@ -171,8 +171,8 @@ export class TrainingStore {
 
     // Primero cargar los días disponibles
     this.trainingService.getAvailableTrainingDays().pipe(
-      catchError(err => {
-        console.error('Error loading available days:', err);
+      catchError(() => {
+        this._error.set('Error al cargar los días disponibles');
         return of([] as string[]);
       })
     ).subscribe(days => {
@@ -194,8 +194,7 @@ export class TrainingStore {
    */
   private loadExercisesForDay(userId: string, day: string): void {
     this.trainingService.getExercisesByDay(userId, day).pipe(
-      catchError(err => {
-        console.error('Error loading exercises:', err);
+      catchError(() => {
         this._error.set('Error al cargar los ejercicios');
         return of([]);
       }),

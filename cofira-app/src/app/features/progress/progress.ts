@@ -62,37 +62,35 @@ export class Progress implements OnInit {
     // Cargar datos usando el store
     this.store.load(userId, this.currentDate());
 
-    // Load nutrient data
+    // Cargar datos de nutrientes
     this.progressService.getNutrientDataByDate(userId, this.currentDate()).subscribe({
       next: (data) => {
         this.nutrientData.set(data);
       },
-      error: (err) => {
-        console.error('Error loading nutrient data:', err);
+      error: () => {
         this.error.set('Error al cargar los datos de nutrientes');
       }
     });
 
-    // Load progress entries
+    // Cargar entradas de progreso
     this.progressService.getProgressEntries(userId).subscribe({
       next: (entries) => {
         this.progressEntries.set(entries);
         this.isLoading.set(false);
       },
-      error: (err) => {
-        console.error('Error loading progress entries:', err);
+      error: () => {
         this.error.set('Error al cargar el progreso');
         this.isLoading.set(false);
       }
     });
 
-    // Load user exercises
+    // Cargar ejercicios del usuario
     this.progressService.getUserExercises(userId).subscribe({
       next: (exercises) => {
         this.exercises.set(exercises);
       },
-      error: (err) => {
-        console.error('Error loading exercises:', err);
+      error: () => {
+        // Error silencioso - los ejercicios son opcionales
       }
     });
   }

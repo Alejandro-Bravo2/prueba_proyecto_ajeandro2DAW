@@ -42,14 +42,12 @@ export class ResetPassword {
       const email = this.emailForm.value.email;
       if (email) {
         this.authService.requestPasswordResetCode(email).subscribe({
-          next: (response) => {
-            console.log('Reset code request successful', response);
+          next: () => {
             this.loadingService.hide();
             this.toastService.success('Código de restablecimiento enviado a tu email.');
             this.codeSent = true;
           },
           error: (err) => {
-            console.error('Reset code request failed', err);
             this.loadingService.hide();
             this.toastService.error('Error al enviar el código: ' + (err.message || 'Inténtalo de nuevo.'));
           }
@@ -67,14 +65,12 @@ export class ResetPassword {
       const email = this.emailForm.value.email; // Get email from the first form
       if (email && code && newPassword) {
         this.authService.resetPasswordWithCode(email, code, newPassword).subscribe({
-          next: (response) => {
-            console.log('Password reset successful', response);
+          next: () => {
             this.loadingService.hide();
             this.toastService.success('Contraseña restablecida con éxito.');
-            this.router.navigate(['/login']); // Redirect to login page after successful reset
+            this.router.navigate(['/login']);
           },
           error: (err) => {
-            console.error('Password reset failed', err);
             this.loadingService.hide();
             this.toastService.error('Error al restablecer la contraseña: ' + (err.message || 'Inténtalo de nuevo.'));
           }

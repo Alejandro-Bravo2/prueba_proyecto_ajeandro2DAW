@@ -45,8 +45,8 @@ export class AddProgressForm {
         next: (exercises) => {
           this.exercises.set(exercises);
         },
-        error: (err) => {
-          console.error('Error loading exercises:', err);
+        error: () => {
+          this.toastService.error('Error al cargar los ejercicios');
         },
       });
     }
@@ -94,8 +94,7 @@ export class AddProgressForm {
           this.isSubmitting.set(false);
           this.loadExercises(); // Reload exercises list
         },
-        error: (err) => {
-          console.error('Error adding progress:', err);
+        error: () => {
           this.toastService.error('Error al registrar el progreso');
           this.isSubmitting.set(false);
         },

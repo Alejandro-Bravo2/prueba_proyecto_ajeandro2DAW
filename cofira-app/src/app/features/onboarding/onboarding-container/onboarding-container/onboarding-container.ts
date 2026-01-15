@@ -53,13 +53,12 @@ export class OnboardingContainer implements OnInit {
   }
 
   nextStep(): void {
-    // Logic to validate current form before proceeding
+    // Validar el formulario actual antes de proceder
     if (this.currentStepIndex < this.onboardingSteps.length - 1) {
       this.currentStepIndex++;
       this.router.navigate([this.onboardingSteps[this.currentStepIndex].path], { relativeTo: this.activatedRoute });
     } else {
-      console.log('Onboarding complete!');
-      // Final step logic, e.g., save data and redirect to dashboard
+      // Onboarding completado, guardar datos y redirigir al dashboard
       // this.router.navigate(['/dashboard']);
     }
   }

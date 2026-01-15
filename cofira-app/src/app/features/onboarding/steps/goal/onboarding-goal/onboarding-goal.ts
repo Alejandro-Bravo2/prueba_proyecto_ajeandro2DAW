@@ -29,16 +29,14 @@ export class OnboardingGoal {
 
   onSubmit(): void {
     if (this.goalForm.valid) {
-      this.onboardingService.onboardingData.update((data: any) => ({
+      this.onboardingService.onboardingData.update((data) => ({
         ...data,
         ...this.goalForm.value,
       }));
-      console.log('Onboarding Goal form submitted:', this.goalForm.value);
-      console.log('Navigating to next onboarding step...');
+      // Navegar al siguiente paso del onboarding
       // this.router.navigate(['/onboarding/pricing']);
     } else {
       this.goalForm.markAllAsTouched();
-      console.log('Form is invalid');
     }
   }
 

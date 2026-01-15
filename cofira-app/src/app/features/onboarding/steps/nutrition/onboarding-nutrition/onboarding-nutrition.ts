@@ -29,16 +29,14 @@ export class OnboardingNutrition {
 
   onSubmit(): void {
     if (this.nutritionForm.valid) {
-      this.onboardingService.onboardingData.update((data: any) => ({
+      this.onboardingService.onboardingData.update((data) => ({
         ...data,
         ...this.nutritionForm.value,
       }));
-      console.log('Onboarding Nutrition form submitted:', this.nutritionForm.value);
-      console.log('Navigating to next onboarding step...');
+      // Navegar al siguiente paso del onboarding
       // this.router.navigate(['/onboarding/goal']);
     } else {
       this.nutritionForm.markAllAsTouched();
-      console.log('Form is invalid');
     }
   }
 

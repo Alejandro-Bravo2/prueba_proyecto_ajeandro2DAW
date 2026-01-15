@@ -35,12 +35,10 @@ export class OnboardingAbout {
         age: Number(formValue.age!)
       };
       this.onboardingService.updateAboutData(data);
-      console.log('Navigating to next onboarding step...');
-      // In a real app, navigate to the next onboarding step
+      // Navegar al siguiente paso del onboarding
       // this.router.navigate(['/onboarding/nutrition']);
     } else {
       this.aboutForm.markAllAsTouched();
-      console.log('Form is invalid');
     }
   }
 

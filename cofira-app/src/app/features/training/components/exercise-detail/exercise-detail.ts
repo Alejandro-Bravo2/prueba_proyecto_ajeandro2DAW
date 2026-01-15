@@ -55,8 +55,7 @@ export class ExerciseDetail implements OnInit {
         this.exercise.set(exercise);
         this.isLoading.set(false);
       },
-      error: (err) => {
-        console.error('Error al cargar ejercicio:', err);
+      error: () => {
         this.error.set('No se pudo cargar el ejercicio. Es posible que no exista.');
         this.isLoading.set(false);
       }

@@ -91,10 +91,8 @@ export class Header implements AfterViewInit {
    * @description Verifica que los ViewChild estén inicializados correctamente.
    */
   ngAfterViewInit(): void {
-    // ViewChild disponible para manipulación
-    if (!this.menuToggle?.nativeElement) {
-      console.warn('Header: menuToggle ViewChild no inicializado');
-    }
+    // ViewChild disponible para manipulacion
+    // La inicializacion de menuToggle se verifica implicitamente cuando se usa
   }
 
   get isLoggedIn(): boolean {
@@ -220,9 +218,7 @@ export class Header implements AfterViewInit {
         this.router.navigate(['/']);
         this.closeMobileMenu();
       },
-      error: (err) => {
-        console.error('Error during logout', err);
-        // Aún así navegar y limpiar en caso de error del servidor
+      error: () => {
         // Limpiar localStorage manualmente si el backend falla
         localStorage.removeItem('authToken');
         localStorage.removeItem('currentUser');

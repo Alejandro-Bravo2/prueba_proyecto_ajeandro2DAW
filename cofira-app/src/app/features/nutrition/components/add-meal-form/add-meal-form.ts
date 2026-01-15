@@ -110,8 +110,7 @@ export class AddMealForm {
           this.toggleForm();
           this.isSubmitting.set(false);
         },
-        error: (err) => {
-          console.error('Error adding meal:', err);
+        error: () => {
           this.toastService.error('Error al agregar la comida');
           this.isSubmitting.set(false);
         },

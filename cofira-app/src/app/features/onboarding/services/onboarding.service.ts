@@ -24,7 +24,6 @@ export class OnboardingService {
       ...currentData,
       ...data,
     }));
-    console.log('Onboarding data updated:', this.onboardingData());
   }
 
   // Placeholder methods for other steps

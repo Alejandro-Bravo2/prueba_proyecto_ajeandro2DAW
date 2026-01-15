@@ -29,16 +29,14 @@ export class OnboardingPricing {
 
   onSubmit(): void {
     if (this.pricingForm.valid) {
-      this.onboardingService.onboardingData.update((data: any) => ({
+      this.onboardingService.onboardingData.update((data) => ({
         ...data,
         ...this.pricingForm.value,
       }));
-      console.log('Onboarding Pricing form submitted:', this.pricingForm.value);
-      console.log('Navigating to next onboarding step...');
+      // Navegar al siguiente paso del onboarding
       // this.router.navigate(['/onboarding/muscles']);
     } else {
       this.pricingForm.markAllAsTouched();
-      console.log('Form is invalid');
     }
   }
 

@@ -45,8 +45,7 @@ export class Login implements OnInit {
       const { username, password } = this.loginForm.value;
       if (username && password) {
         this.authService.login(username, password).subscribe({
-          next: (response) => {
-            console.log('Login successful', response);
+          next: () => {
             // Verificar si el usuario necesita completar el onboarding
             if (this.authService.needsOnboarding()) {
               this.router.navigateByUrl('/onboarding');
@@ -55,13 +54,12 @@ export class Login implements OnInit {
               this.router.navigateByUrl(this.returnUrl);
             }
           },
-          error: (err) => {
-            console.error('Login failed', err);
+          error: () => {
+            this.loginForm.setErrors({ loginFailed: true });
           }
         });
       }
     } else {
-      console.log('Form is invalid');
       this.loginForm.markAllAsTouched();
     }
   }

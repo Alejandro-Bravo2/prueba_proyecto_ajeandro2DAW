@@ -42,16 +42,14 @@ export class OnboardingMuscles {
       .filter(value => value !== null);
 
     if (selectedMuscles && selectedMuscles.length > 0) {
-      this.onboardingService.onboardingData.update((data: any) => ({
+      this.onboardingService.onboardingData.update((data) => ({
         ...data,
         muscles: selectedMuscles,
       }));
-      console.log('Onboarding Muscles form submitted:', selectedMuscles);
-      console.log('Onboarding complete! Navigating to dashboard...');
-      // this.router.navigate(['/dashboard']); // Redirect to dashboard
+      // Onboarding completado, navegar al dashboard
+      // this.router.navigate(['/dashboard']);
     } else {
-      console.log('Form is invalid: No muscles selected');
-      // Optionally mark touched to show error if no muscles are selected
+      this.musclesFormArray.markAllAsTouched();
     }
   }
 

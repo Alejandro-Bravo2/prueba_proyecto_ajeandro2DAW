@@ -43,22 +43,18 @@ export class Register implements CanComponentDeactivate {
       if (name && username && email && password) {
         this.loadingService.show();
         this.authService.register(name, username, email, password).subscribe({
-          next: (response) => {
-            console.log('Registration successful', response);
+          next: () => {
             this.loadingService.hide();
             this.toastService.success('Registro exitoso. ¡Bienvenido!');
-            // Redirect to onboarding for new users
             this.router.navigate(['/onboarding']);
           },
           error: (err) => {
-            console.error('Registration failed', err);
             this.loadingService.hide();
             this.toastService.error('Error en el registro: ' + (err.message || 'Inténtalo de nuevo.'));
           }
         });
       }
     } else {
-      console.log('Form is invalid');
       this.registerForm.markAllAsTouched();
     }
   }

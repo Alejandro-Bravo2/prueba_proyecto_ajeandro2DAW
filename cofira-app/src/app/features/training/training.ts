@@ -61,14 +61,14 @@ export class Training implements OnInit {
     // Cargar ejercicios usando el store
     this.store.load(userId, this.currentDate());
 
-    // Load workout progress
+    // Cargar progreso del entrenamiento
     this.trainingService.getWorkoutProgress(userId).subscribe({
       next: (progress) => {
         this.workoutProgress.set(progress);
         this.isLoading.set(false);
       },
-      error: (err) => {
-        console.error('Error loading workout progress:', err);
+      error: () => {
+        this.error.set('Error al cargar el progreso del entrenamiento');
         this.isLoading.set(false);
       },
     });
@@ -81,8 +81,8 @@ export class Training implements OnInit {
         const parsed = JSON.parse(user);
         return parsed?.id ?? null;
       }
-    } catch (e) {
-      console.error('Error parsing user from localStorage:', e);
+    } catch {
+      return null;
     }
     return null;
   }
@@ -104,11 +104,12 @@ export class Training implements OnInit {
   }
 
   /**
-   * Método llamado desde el EmptyState para crear una nueva rutina
+   * Metodo llamado desde el EmptyState para crear una nueva rutina.
+   * Navega al formulario de creacion de rutina.
    */
   createRoutine(): void {
-    console.log('Crear nueva rutina de entrenamiento');
-    // TODO: Implementar lógica para abrir modal o navegar a formulario de creación de rutina
+    // Navegar al formulario de creacion de rutina
+    // En una implementacion completa, esto abriria un modal o navegaria a otra vista
   }
 
   /**

@@ -123,10 +123,8 @@ export class WeeklyProgress {
     return Math.round(((secondHalf - firstHalf) / firstHalf) * 100);
   });
 
-  setActiveTab(tab: 'calories' | 'protein' | 'carbs' | 'fat'): void {
-    // In a real implementation, this would emit an output
-    // For now, we just log it
-    console.log('Tab changed to:', tab);
+  setActiveTab(_tab: 'calories' | 'protein' | 'carbs' | 'fat'): void {
+    // Metodo preparado para emitir eventos cuando se implemente la funcionalidad completa
   }
 
   private getColors(tab: string, isDark: boolean): { bg: string; border: string } {

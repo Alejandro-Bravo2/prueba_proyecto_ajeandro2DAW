@@ -220,8 +220,8 @@ export class NutritionStore {
 
     // Primero cargar los días disponibles
     this.nutritionService.getAvailableMealDays().pipe(
-      catchError(err => {
-        console.error('Error loading available days:', err);
+      catchError(() => {
+        this._error.set('Error al cargar los días disponibles');
         return of([] as string[]);
       })
     ).subscribe(days => {
@@ -248,8 +248,7 @@ export class NutritionStore {
    */
   private loadMealsForDay(dayOfWeek: string): void {
     this.nutritionService.getMealsByDay(dayOfWeek).pipe(
-      catchError(err => {
-        console.error('Error loading meals:', err);
+      catchError(() => {
         this._error.set('Error al cargar las comidas');
         return of(null);
       }),
@@ -371,8 +370,7 @@ export class NutritionStore {
     this._error.set(null);
 
     this.nutritionService.getDailyNutrition(userId, targetDate).pipe(
-      catchError(err => {
-        console.error('Error loading nutrition data:', err);
+      catchError(() => {
         this._error.set('Error al cargar los datos de nutricion');
         return of(this.getEmptyNutrition(targetDate));
       }),
