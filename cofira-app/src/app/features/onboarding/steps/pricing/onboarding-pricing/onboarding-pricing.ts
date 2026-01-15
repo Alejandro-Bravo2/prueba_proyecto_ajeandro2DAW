@@ -1,7 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { OnboardingService } from '../../../services/onboarding.service';
 
 @Component({
@@ -12,6 +11,8 @@ import { OnboardingService } from '../../../services/onboarding.service';
   styleUrl: './onboarding-pricing.scss',
 })
 export class OnboardingPricing {
+  private readonly onboardingService = inject(OnboardingService);
+
   pricingForm = new FormGroup({
     priceRange: new FormControl('', [Validators.required]),
   });
@@ -21,11 +22,6 @@ export class OnboardingPricing {
     { value: '10-15', label: '10-15€' },
     { value: '15-20', label: '15-20€' },
   ];
-
-  constructor(
-    private onboardingService: OnboardingService,
-    private router: Router
-  ) {}
 
   onSubmit(): void {
     if (this.pricingForm.valid) {

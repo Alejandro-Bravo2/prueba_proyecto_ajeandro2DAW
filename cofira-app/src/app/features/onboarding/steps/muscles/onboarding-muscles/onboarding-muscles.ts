@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
+import { ReactiveFormsModule, FormGroup, FormArray, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { OnboardingService } from '../../../services/onboarding.service';
 import { atLeastOneSelectedValidator } from '../../../../../shared/validators/form-array.validators';
@@ -13,6 +13,9 @@ import { atLeastOneSelectedValidator } from '../../../../../shared/validators/fo
   styleUrl: './onboarding-muscles.scss',
 })
 export class OnboardingMuscles {
+  private readonly onboardingService = inject(OnboardingService);
+  private readonly router = inject(Router);
+
   musclesForm = new FormGroup({
     muscles: new FormArray<FormControl>([], [atLeastOneSelectedValidator()]),
   });
@@ -26,10 +29,7 @@ export class OnboardingMuscles {
     { value: 'abdominales', label: 'Abdominales' },
   ];
 
-  constructor(
-    private onboardingService: OnboardingService,
-    private router: Router
-  ) {
+  constructor() {
     // Initialize the FormArray with a control for each option, set to false
     this.muscleOptions.forEach(() => {
       this.musclesForm.controls.muscles.push(new FormControl(false));

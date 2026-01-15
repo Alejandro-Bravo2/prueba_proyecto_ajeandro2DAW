@@ -17,8 +17,6 @@ export class OnboardingService {
     age: 0,
   });
 
-  constructor() { }
-
   updateAboutData(data: { gender: string, height: number, age: number }): void {
     this.onboardingData.update(currentData => ({
       ...currentData,

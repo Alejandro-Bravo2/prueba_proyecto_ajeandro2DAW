@@ -214,7 +214,7 @@ export class NutritionStore {
   /**
    * Carga los días disponibles y las comidas del usuario
    */
-  load(userId: string): void {
+  load(_userId: string): void {
     this._loading.set(true);
     this._error.set(null);
 

@@ -245,7 +245,7 @@ export class NutritionService extends BaseHttpService {
           userId: '',
           date: date,
           mealType: type,
-          foods: comida.alimentos.map((alimento, idx) => ({
+          foods: comida.alimentos.map((alimento) => ({
             icon: this.getIconForMealType(type),
             quantity: '1 porción',
             name: alimento,
@@ -327,7 +327,7 @@ export class NutritionService extends BaseHttpService {
    * Actualiza una comida existente (formato legacy)
    * @deprecated Actualizar directamente la rutina con los endpoints del backend
    */
-  updateMeal(mealId: string, meal: Partial<Meal>): Observable<Meal> {
+  updateMeal(_mealId: string, _meal: Partial<Meal>): Observable<Meal> {
     // Implementar transformación cuando se necesite
     return of({} as Meal);
   }
@@ -336,7 +336,7 @@ export class NutritionService extends BaseHttpService {
    * Elimina una comida (formato legacy)
    * @deprecated Usar eliminarRutina() o modificar la rutina directamente
    */
-  deleteMeal(mealId: string): Observable<void> {
+  deleteMeal(_mealId: string): Observable<void> {
     // Implementar cuando se necesite
     return of(void 0);
   }
@@ -345,9 +345,9 @@ export class NutritionService extends BaseHttpService {
    * Obtiene todas las comidas de un usuario (formato legacy)
    * @deprecated Usar listarRutinas() directamente
    */
-  getAllMeals(userId: string): Observable<Meal[]> {
+  getAllMeals(_userId: string): Observable<Meal[]> {
     return this.listarRutinas().pipe(
-      map(rutinas => {
+      map(() => {
         // Transformar rutinas a formato legacy Meal[]
         return [];
       })

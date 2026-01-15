@@ -1,7 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { OnboardingService } from '../../../services/onboarding.service';
 
 @Component({
@@ -12,6 +11,8 @@ import { OnboardingService } from '../../../services/onboarding.service';
   styleUrl: './onboarding-goal.scss',
 })
 export class OnboardingGoal {
+  private readonly onboardingService = inject(OnboardingService);
+
   goalForm = new FormGroup({
     goal: new FormControl('', [Validators.required]),
   });
@@ -21,11 +22,6 @@ export class OnboardingGoal {
     { value: 'perder_grasa', label: 'Perder grasa' },
     { value: 'mantenerse', label: 'Mantenerse estable' },
   ];
-
-  constructor(
-    private onboardingService: OnboardingService,
-    private router: Router
-  ) {}
 
   onSubmit(): void {
     if (this.goalForm.valid) {
