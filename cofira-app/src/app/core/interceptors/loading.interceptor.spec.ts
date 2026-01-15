@@ -2,12 +2,12 @@ import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { HttpRequest, HttpHandlerFn, HttpEvent, HttpResponse } from '@angular/common/http';
 import { loadingInterceptor } from './loading.interceptor';
 import { LoadingService } from '../services/loading.service';
-import { Observable, of, throwError } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { delay } from 'rxjs/operators';
 
 describe('LoadingInterceptor', () => {
   let loadingService: jasmine.SpyObj<LoadingService>;
-  let mockRequest: HttpRequest<any>;
+  let mockRequest: HttpRequest<unknown>;
   let mockNext: HttpHandlerFn;
 
   beforeEach(() => {
@@ -22,7 +22,7 @@ describe('LoadingInterceptor', () => {
 
   describe('Loading State Management', () => {
     it('should call show() before request starts', (done) => {
-      mockNext = jasmine.createSpy('mockNext').and.returnValue(of({} as HttpEvent<any>));
+      mockNext = jasmine.createSpy('mockNext').and.returnValue(of({} as HttpEvent<unknown>));
 
       TestBed.runInInjectionContext(() => {
         loadingInterceptor(mockRequest, mockNext).subscribe(() => {
@@ -63,7 +63,7 @@ describe('LoadingInterceptor', () => {
     }));
 
     it('should call show() exactly once per request', (done) => {
-      mockNext = jasmine.createSpy('mockNext').and.returnValue(of({} as HttpEvent<any>));
+      mockNext = jasmine.createSpy('mockNext').and.returnValue(of({} as HttpEvent<unknown>));
 
       TestBed.runInInjectionContext(() => {
         loadingInterceptor(mockRequest, mockNext).subscribe(() => {
@@ -307,7 +307,7 @@ describe('LoadingInterceptor', () => {
       mockNext = jasmine.createSpy('mockNext').and.returnValue(of(httpResponse));
 
       TestBed.runInInjectionContext(() => {
-        loadingInterceptor(mockRequest, mockNext).subscribe((response: any) => {
+        loadingInterceptor(mockRequest, mockNext).subscribe((response: unknown) => {
           if (response.body) {
             expect(response.body).toEqual(responseData);
           }
@@ -321,7 +321,7 @@ describe('LoadingInterceptor', () => {
       mockNext = jasmine.createSpy('mockNext').and.returnValue(of(httpResponse));
 
       TestBed.runInInjectionContext(() => {
-        loadingInterceptor(mockRequest, mockNext).subscribe((response: any) => {
+        loadingInterceptor(mockRequest, mockNext).subscribe((response: unknown) => {
           expect(response).toEqual(httpResponse);
           done();
         });
@@ -342,7 +342,7 @@ describe('LoadingInterceptor', () => {
       mockNext = jasmine.createSpy('mockNext').and.callFake(() => {
         nextCalled = true;
         expect(showCalled).toBe(true, 'show should be called before next');
-        return of({} as HttpEvent<any>);
+        return of({} as HttpEvent<unknown>);
       });
 
       TestBed.runInInjectionContext(() => {
@@ -355,7 +355,7 @@ describe('LoadingInterceptor', () => {
 
       mockNext = jasmine
         .createSpy('mockNext')
-        .and.returnValue(of({} as HttpEvent<any>).pipe(delay(10)));
+        .and.returnValue(of({} as HttpEvent<unknown>).pipe(delay(10)));
 
       loadingService.hide.and.callFake(() => {
         expect(responseReceived).toBe(true, 'Response should be received before hide');
@@ -441,7 +441,7 @@ describe('LoadingInterceptor', () => {
 
   describe('Edge Cases', () => {
     it('should handle empty response', fakeAsync(() => {
-      mockNext = jasmine.createSpy('mockNext').and.returnValue(of(null as any).pipe(delay(0)));
+      mockNext = jasmine.createSpy('mockNext').and.returnValue(of(null as unknown).pipe(delay(0)));
 
       TestBed.runInInjectionContext(() => {
         loadingInterceptor(mockRequest, mockNext).subscribe();
@@ -453,7 +453,7 @@ describe('LoadingInterceptor', () => {
     }));
 
     it('should handle undefined response', fakeAsync(() => {
-      mockNext = jasmine.createSpy('mockNext').and.returnValue(of(undefined as any).pipe(delay(0)));
+      mockNext = jasmine.createSpy('mockNext').and.returnValue(of(undefined as unknown).pipe(delay(0)));
 
       TestBed.runInInjectionContext(() => {
         loadingInterceptor(mockRequest, mockNext).subscribe();

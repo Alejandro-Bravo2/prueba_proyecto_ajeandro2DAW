@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -16,7 +16,12 @@ import { ToastService } from '../../../../core/services/toast.service';
   styleUrl: './reset-password.scss',
 })
 export class ResetPassword {
-  codeSent: boolean = false;
+  private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
+  private readonly loadingService = inject(LoadingService);
+  private readonly toastService = inject(ToastService);
+
+  codeSent = false;
 
   emailForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -28,13 +33,6 @@ export class ResetPassword {
     confirmNewPassword: new FormControl('', [Validators.required]),
   }, { validators: passwordMatchValidator('newPassword', 'confirmNewPassword') });
 
-  constructor(
-    private authService: AuthService,
-    private router: Router,
-    private loadingService: LoadingService,
-    private toastService: ToastService
-  ) {}
-
   // Methods to handle form submissions
   requestResetCode(): void {
     if (this.emailForm.valid) {
@@ -42,14 +40,12 @@ export class ResetPassword {
       const email = this.emailForm.value.email;
       if (email) {
         this.authService.requestPasswordResetCode(email).subscribe({
-          next: (response) => {
-            console.log('Reset code request successful', response);
+          next: () => {
             this.loadingService.hide();
             this.toastService.success('Código de restablecimiento enviado a tu email.');
             this.codeSent = true;
           },
           error: (err) => {
-            console.error('Reset code request failed', err);
             this.loadingService.hide();
             this.toastService.error('Error al enviar el código: ' + (err.message || 'Inténtalo de nuevo.'));
           }
@@ -67,14 +63,12 @@ export class ResetPassword {
       const email = this.emailForm.value.email; // Get email from the first form
       if (email && code && newPassword) {
         this.authService.resetPasswordWithCode(email, code, newPassword).subscribe({
-          next: (response) => {
-            console.log('Password reset successful', response);
+          next: () => {
             this.loadingService.hide();
             this.toastService.success('Contraseña restablecida con éxito.');
-            this.router.navigate(['/login']); // Redirect to login page after successful reset
+            this.router.navigate(['/login']);
           },
           error: (err) => {
-            console.error('Password reset failed', err);
             this.loadingService.hide();
             this.toastService.error('Error al restablecer la contraseña: ' + (err.message || 'Inténtalo de nuevo.'));
           }

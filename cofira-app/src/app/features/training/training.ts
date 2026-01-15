@@ -5,10 +5,11 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { WeeklyTable } from './components/weekly-table/weekly-table';
 import { FeedbackForm } from './components/feedback-form/feedback-form';
 import { ProgressCard } from './components/progress-card/progress-card';
-import { TrainingService, Exercise, WorkoutProgress } from './services/training.service';
+import { TrainingService, WorkoutProgress } from './services/training.service';
 import { TrainingStore } from './stores/training.store';
 import { EmptyState } from '../../shared/components/ui/empty-state/empty-state';
 import { InfiniteScrollDirective } from '../../shared/directives/infinite-scroll.directive';
+import { AuthService } from '../../core/auth/auth.service';
 
 @Component({
   selector: 'app-training',
@@ -20,6 +21,7 @@ import { InfiniteScrollDirective } from '../../shared/directives/infinite-scroll
 export class Training implements OnInit {
   private readonly trainingService = inject(TrainingService);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly authService = inject(AuthService);
 
   /** Store de entrenamiento para gestion de estado */
   readonly store = inject(TrainingStore);
@@ -61,30 +63,21 @@ export class Training implements OnInit {
     // Cargar ejercicios usando el store
     this.store.load(userId, this.currentDate());
 
-    // Load workout progress
+    // Cargar progreso del entrenamiento
     this.trainingService.getWorkoutProgress(userId).subscribe({
       next: (progress) => {
         this.workoutProgress.set(progress);
         this.isLoading.set(false);
       },
-      error: (err) => {
-        console.error('Error loading workout progress:', err);
+      error: () => {
+        this.error.set('Error al cargar el progreso del entrenamiento');
         this.isLoading.set(false);
       },
     });
   }
 
   private getUserId(): string | null {
-    try {
-      const user = localStorage.getItem('currentUser');
-      if (user) {
-        const parsed = JSON.parse(user);
-        return parsed?.id ?? null;
-      }
-    } catch (e) {
-      console.error('Error parsing user from localStorage:', e);
-    }
-    return null;
+    return this.authService.currentUser()?.id ?? null;
   }
 
   /** Limpiar busqueda */
@@ -104,11 +97,12 @@ export class Training implements OnInit {
   }
 
   /**
-   * Método llamado desde el EmptyState para crear una nueva rutina
+   * Metodo llamado desde el EmptyState para crear una nueva rutina.
+   * Navega al formulario de creacion de rutina.
    */
   createRoutine(): void {
-    console.log('Crear nueva rutina de entrenamiento');
-    // TODO: Implementar lógica para abrir modal o navegar a formulario de creación de rutina
+    // Navegar al formulario de creacion de rutina
+    // En una implementacion completa, esto abriria un modal o navegaria a otra vista
   }
 
   /**

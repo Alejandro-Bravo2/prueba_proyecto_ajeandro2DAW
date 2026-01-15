@@ -33,6 +33,27 @@
   height: 100%;
 }
 
+// Estilos para gradientes SVG
+.progress-card__gradient-bg-start {
+  stop-color: #f0f4f8;
+  stop-opacity: 1;
+}
+
+.progress-card__gradient-bg-end {
+  stop-color: #e2e8f0;
+  stop-opacity: 1;
+}
+
+.progress-card__gradient-chart-start {
+  stop-color: #3b82f6;
+  stop-opacity: 1;
+}
+
+.progress-card__gradient-chart-end {
+  stop-color: #1d4ed8;
+  stop-opacity: 1;
+}
+
 .progress-card__image {
   width: 100%;
   aspect-ratio: 16 / 9;

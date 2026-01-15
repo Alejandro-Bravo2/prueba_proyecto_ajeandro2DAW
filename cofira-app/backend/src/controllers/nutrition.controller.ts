@@ -2,7 +2,7 @@ import { Response } from 'express';
 import { z } from 'zod';
 import { prisma } from '../index.js';
 import { AuthRequest } from '../types/index.js';
-import { openRouterService } from '../services/openrouter.service.js';
+import { ollamaService } from '../services/ollama.service.js';
 import { imageToBase64, processAndSaveImage } from '../middleware/upload.middleware.js';
 import { MealType } from '@prisma/client';
 
@@ -45,8 +45,8 @@ export async function analyzeFood(req: AuthRequest, res: Response): Promise<void
     // Convert image to base64 for AI analysis
     const base64Image = await imageToBase64(req.file.buffer);
 
-    // Analyze with OpenRouter
-    const analysis = await openRouterService.analyzeFood(base64Image);
+    // Analyze with Ollama (IA local)
+    const analysis = await ollamaService.analyzeFood(base64Image);
 
     // Save image to disk
     const imageUrl = await processAndSaveImage(

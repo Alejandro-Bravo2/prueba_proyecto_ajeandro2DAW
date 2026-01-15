@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ToastService } from '../../../../../core/services/toast.service';
 
@@ -10,7 +10,7 @@ import { ToastService } from '../../../../../core/services/toast.service';
   styleUrl: './toast-container.scss',
 })
 export class ToastContainer {
-  constructor(public toastService: ToastService) { }
+  readonly toastService = inject(ToastService);
 
   dismissToast(id: string): void {
     this.toastService.dismiss(id);

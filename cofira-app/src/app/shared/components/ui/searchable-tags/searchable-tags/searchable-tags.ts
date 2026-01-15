@@ -19,7 +19,7 @@ export class SearchableTags implements OnInit {
   @Input() allTags: Tag[] = [];
   @Input() selectedTags: Tag[] = [];
   @Input() tagType: 'red' | 'yellow' = 'red'; // For styling
-  @Input() placeholder: string = 'Buscar...';
+  @Input() placeholder = 'Buscar...';
 
   @Output() tagAdded = new EventEmitter<Tag>();
   @Output() tagRemoved = new EventEmitter<Tag>();

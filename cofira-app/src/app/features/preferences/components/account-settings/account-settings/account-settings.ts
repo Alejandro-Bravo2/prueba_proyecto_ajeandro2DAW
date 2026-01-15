@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { InputComponent } from '../../../../../shared/components/ui/input/input/input';
 import { Button } from '../../../../../shared/components/ui/button/button/button';
 import { UserService } from '../../../../user/services/user.service';
@@ -24,6 +23,10 @@ interface User {
   styleUrl: './account-settings.scss',
 })
 export class AccountSettings implements OnInit {
+  private readonly userService = inject(UserService);
+  private readonly loadingService = inject(LoadingService);
+  private readonly toastService = inject(ToastService);
+
   accountSettingsForm = new FormGroup({
     name: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -33,13 +36,6 @@ export class AccountSettings implements OnInit {
   }, { validators: passwordMatchValidator('newPassword', 'confirmNewPassword') });
 
   currentUser: User | null = null; // Placeholder for current user data
-
-  constructor(
-    private userService: UserService,
-    private router: Router,
-    private loadingService: LoadingService,
-    private toastService: ToastService
-  ) {}
 
   ngOnInit(): void {
     // Simulate fetching current user data
@@ -54,8 +50,7 @@ export class AccountSettings implements OnInit {
         });
         this.loadingService.hide();
       },
-      error: (err: Error) => {
-        console.error('Error fetching user data', err);
+      error: () => {
         this.loadingService.hide();
         this.toastService.error('Error al cargar datos del usuario.');
       }
@@ -76,14 +71,11 @@ export class AccountSettings implements OnInit {
 
       if (this.currentUser) {
         this.userService.updateUser(this.currentUser.id, updatedUser).subscribe({
-          next: (response) => {
-            console.log('Account settings updated:', response);
+          next: () => {
             this.loadingService.hide();
             this.toastService.success('Configuración de cuenta actualizada.');
-            // Optionally, update local user state or refresh token
           },
           error: (err: Error) => {
-            console.error('Error updating account settings:', err);
             this.loadingService.hide();
             this.toastService.error('Error al actualizar la configuración: ' + (err.message || 'Inténtalo de nuevo.'));
           }
@@ -91,7 +83,6 @@ export class AccountSettings implements OnInit {
       }
     } else {
       this.accountSettingsForm.markAllAsTouched();
-      console.log('Form is invalid');
     }
   }
 }

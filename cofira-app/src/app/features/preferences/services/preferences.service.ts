@@ -12,8 +12,6 @@ export class PreferencesService {
   allergies = signal<Tag[]>([]);
   favoriteIngredients = signal<Tag[]>([]);
 
-  constructor() { }
-
   addAllergy(allergy: Tag): void {
     this.allergies.update(tags => {
       if (!tags.some(t => t.value === allergy.value)) {

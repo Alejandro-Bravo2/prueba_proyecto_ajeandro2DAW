@@ -7,7 +7,7 @@ import { AuthService } from '../auth/auth.service';
  * Si no lo ha completado, redirige a la pagina de onboarding.
  * Debe usarse DESPUES de authGuard en las rutas protegidas.
  */
-export const onboardingGuard: CanActivateFn = (route, state) => {
+export const onboardingGuard: CanActivateFn = (_route, _state) => {
   const authService = inject(AuthService);
   const router = inject(Router);
 
@@ -28,7 +28,7 @@ export const onboardingGuard: CanActivateFn = (route, state) => {
  * Guard que previene el acceso a la pagina de onboarding si ya esta completado.
  * Redirige al usuario a la pagina principal si ya ha completado el onboarding.
  */
-export const skipIfOnboardedGuard: CanActivateFn = (route, state) => {
+export const skipIfOnboardedGuard: CanActivateFn = (_route, _state) => {
   const authService = inject(AuthService);
   const router = inject(Router);
 

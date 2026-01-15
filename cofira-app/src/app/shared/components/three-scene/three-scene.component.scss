@@ -10,19 +10,18 @@
   overflow: hidden;
 }
 
-.three-scene {
-  &__canvas {
-    width: 100%;
-    height: 100%;
-    display: block;
-    opacity: 1;
-    transition: opacity 0.3s ease;
-  }
+.three-scene__canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  opacity: 1;
+  transition: opacity 0.3s ease;
 }
 
-// Modo de movimiento reducido
+// Modo de movimiento reducido - desactivar animaciones para accesibilidad
 @media (prefers-reduced-motion: reduce) {
   .three-scene__canvas {
-    animation: none !important;
+    animation: none;
+    transition: none;
   }
 }

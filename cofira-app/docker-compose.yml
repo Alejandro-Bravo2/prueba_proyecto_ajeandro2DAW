@@ -1,6 +1,36 @@
 version: '3.8'
 
 services:
+  # ==========================================================================
+  # OLLAMA: Servicio de IA local
+  # ==========================================================================
+  ollama:
+    image: ollama/ollama:latest
+    container_name: cofira_ollama
+    volumes:
+      - ollama_data:/root/.ollama
+    ports:
+      - "11434:11434"
+    # Descarga automatica del modelo qwen2.5 al iniciar
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        /bin/ollama serve &
+        sleep 5
+        ollama pull qwen2.5:1.5b
+        ollama pull llava:7b
+        wait
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:11434/api/tags"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 120s
+    restart: unless-stopped
+
+  # ==========================================================================
+  # DATABASE: PostgreSQL
+  # ==========================================================================
   postgres:
     image: postgres:16-alpine
     container_name: cofira_postgres
@@ -19,6 +49,9 @@ services:
       retries: 5
     restart: unless-stopped
 
+  # ==========================================================================
+  # BACKEND: Node.js API
+  # ==========================================================================
   backend:
     build:
       context: ./backend
@@ -28,7 +61,10 @@ services:
       NODE_ENV: ${NODE_ENV:-development}
       PORT: 3000
       DATABASE_URL: postgresql://${DB_USER:-cofira}:${DB_PASSWORD:-cofira_secret_2024}@postgres:5432/${DB_NAME:-cofira_db}?schema=public
-      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY}
+      # Ollama configuracion - sin API externa
+      OLLAMA_HOST: http://ollama:11434
+      OLLAMA_MODEL: qwen2.5:1.5b
+      OLLAMA_VISION_MODEL: llava:7b
       JWT_SECRET: ${JWT_SECRET:-your_super_secret_jwt_key_2024}
       JWT_EXPIRES_IN: ${JWT_EXPIRES_IN:-7d}
       CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost:4200}
@@ -37,11 +73,15 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+      ollama:
+        condition: service_healthy
     volumes:
       - ./backend/uploads:/app/uploads
     restart: unless-stopped
 
-  # Frontend (opcional - para produccion)
+  # ==========================================================================
+  # FRONTEND: Angular (solo produccion)
+  # ==========================================================================
   frontend:
     build:
       context: .
@@ -57,4 +97,6 @@ services:
 
 volumes:
   postgres_data:
+    driver: local
+  ollama_data:
     driver: local

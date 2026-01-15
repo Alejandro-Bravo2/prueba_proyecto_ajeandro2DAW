@@ -14,7 +14,7 @@
     <section class="c-modal__body">
       <!-- Meta info -->
       @if (hasRecipe()) {
-        <div class="recipe-modal__meta">
+        <aside class="recipe-modal__meta">
           @if (tiempoPreparacion() > 0) {
             <span class="recipe-modal__meta-item">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
@@ -42,7 +42,7 @@
               {{ difficultyLabel() }}
             </span>
           }
-        </div>
+        </aside>
       }
 
       <!-- Description -->
@@ -105,7 +105,7 @@
         }
       } @else {
         <!-- Fallback when no recipe data -->
-        <div class="recipe-modal__no-recipe">
+        <aside class="recipe-modal__no-recipe">
           <p>Los alimentos de esta comida:</p>
           <ul class="foods-list">
             @for (food of foods(); track food) {
@@ -113,7 +113,7 @@
             }
           </ul>
           <p class="recipe-modal__hint">Regenera tu plan de alimentacion para obtener recetas detalladas.</p>
-        </div>
+        </aside>
       }
     </section>
   </article>

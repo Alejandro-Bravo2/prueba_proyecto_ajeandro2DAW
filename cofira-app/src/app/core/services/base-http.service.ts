@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry, finalize } from 'rxjs/operators';
@@ -6,17 +6,17 @@ import { LoadingService } from './loading.service';
 import { environment } from '../../../environments/environment';
 
 export interface HttpOptions {
-  params?: HttpParams | { [param: string]: string | number | boolean | ReadonlyArray<string | number | boolean> };
-  headers?: { [header: string]: string | string[] };
+  params?: HttpParams | Record<string, string | number | boolean | readonly (string | number | boolean)[]>;
+  headers?: Record<string, string | string[]>;
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class BaseHttpService {
-  private API_BASE_URL = environment.apiUrl; // Backend URL from environment
-
-  constructor(protected http: HttpClient, private loadingService: LoadingService) { }
+  protected readonly http = inject(HttpClient);
+  private readonly loadingService = inject(LoadingService);
+  private readonly API_BASE_URL = environment.apiUrl;
 
   private handleError(error: HttpErrorResponse) {
     let errorMessage = 'An unknown error occurred!';
@@ -33,7 +33,7 @@ Message: ${error.message}`;
     return throwError(() => new Error(errorMessage));
   }
 
-  private request<T>(method: string, endpoint: string, data?: any, options?: HttpOptions): Observable<T> {
+  private request<T>(method: string, endpoint: string, data?: unknown, options?: HttpOptions): Observable<T> {
     // Remove leading slash if present to avoid double slashes
     const cleanEndpoint = endpoint.startsWith('/') ? endpoint.substring(1) : endpoint;
     // Check if endpoint is already a full URL
@@ -70,11 +70,11 @@ Message: ${error.message}`;
     return this.request<T>('get', endpoint, undefined, options);
   }
 
-  post<T>(endpoint: string, data: any, options?: HttpOptions): Observable<T> {
+  post<T>(endpoint: string, data: unknown, options?: HttpOptions): Observable<T> {
     return this.request<T>('post', endpoint, data, options);
   }
 
-  put<T>(endpoint: string, data: any, options?: HttpOptions): Observable<T> {
+  put<T>(endpoint: string, data: unknown, options?: HttpOptions): Observable<T> {
     return this.request<T>('put', endpoint, data, options);
   }
 

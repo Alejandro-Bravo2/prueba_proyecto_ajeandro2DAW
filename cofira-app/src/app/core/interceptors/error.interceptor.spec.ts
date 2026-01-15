@@ -1,14 +1,14 @@
 import { TestBed } from '@angular/core/testing';
-import { HttpRequest, HttpHandlerFn, HttpErrorResponse, HttpEvent } from '@angular/common/http';
+import { HttpRequest, HttpHandlerFn, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { errorInterceptor } from './error.interceptor';
 import { ToastService } from '../services/toast.service';
-import { Observable, throwError, of } from 'rxjs';
+import { throwError, of } from 'rxjs';
 
 describe('ErrorInterceptor', () => {
   let toastService: jasmine.SpyObj<ToastService>;
   let router: jasmine.SpyObj<Router>;
-  let mockRequest: HttpRequest<any>;
+  let mockRequest: HttpRequest<unknown>;
   let mockNext: HttpHandlerFn;
 
   beforeEach(() => {
@@ -98,7 +98,7 @@ describe('ErrorInterceptor', () => {
 
         TestBed.runInInjectionContext(() => {
           errorInterceptor(mockRequest, mockNext).subscribe({
-            error: (error) => {
+            error: () => {
               expect(toastService.warning).toHaveBeenCalledWith(
                 'No tienes permiso para acceder a este recurso.'
               );
@@ -136,7 +136,7 @@ describe('ErrorInterceptor', () => {
 
         TestBed.runInInjectionContext(() => {
           errorInterceptor(mockRequest, mockNext).subscribe({
-            error: (error) => {
+            error: () => {
               expect(toastService.warning).toHaveBeenCalledWith(
                 'El recurso solicitado no se encontró.'
               );
@@ -160,7 +160,7 @@ describe('ErrorInterceptor', () => {
 
         TestBed.runInInjectionContext(() => {
           errorInterceptor(mockRequest, mockNext).subscribe({
-            error: (error) => {
+            error: () => {
               expect(toastService.error).toHaveBeenCalledWith(
                 'Error interno del servidor. Por favor, inténtalo más tarde.'
               );
@@ -213,7 +213,7 @@ describe('ErrorInterceptor', () => {
 
       TestBed.runInInjectionContext(() => {
         errorInterceptor(mockRequest, mockNext).subscribe({
-          error: (error) => {
+          error: () => {
             expect(toastService.error).toHaveBeenCalled();
             const callArgs = toastService.error.calls.mostRecent().args[0];
             expect(callArgs).toContain('Error: Connection timeout');
@@ -248,11 +248,11 @@ describe('ErrorInterceptor', () => {
   describe('Successful Requests', () => {
     it('should not intercept successful requests', (done) => {
       const mockResponse = { data: 'success' };
-      mockNext = jasmine.createSpy('mockNext').and.returnValue(of(mockResponse as any));
+      mockNext = jasmine.createSpy('mockNext').and.returnValue(of(mockResponse as unknown));
 
       TestBed.runInInjectionContext(() => {
         errorInterceptor(mockRequest, mockNext).subscribe({
-          next: (response) => {
+          next: () => {
             expect(toastService.error).not.toHaveBeenCalled();
             expect(toastService.warning).not.toHaveBeenCalled();
             expect(router.navigate).not.toHaveBeenCalled();
@@ -264,11 +264,11 @@ describe('ErrorInterceptor', () => {
 
     it('should pass through 2xx responses without modification', (done) => {
       const mockResponse = { status: 200, data: 'test' };
-      mockNext = jasmine.createSpy('mockNext').and.returnValue(of(mockResponse as any));
+      mockNext = jasmine.createSpy('mockNext').and.returnValue(of(mockResponse as unknown));
 
       TestBed.runInInjectionContext(() => {
         errorInterceptor(mockRequest, mockNext).subscribe({
-          next: (response: any) => {
+          next: (response: unknown) => {
             expect(response).toEqual(mockResponse);
             done();
           },
@@ -404,7 +404,7 @@ describe('ErrorInterceptor', () => {
     it('should handle error with undefined status', (done) => {
       const errorResponse = new HttpErrorResponse({
         error: 'Unknown error',
-        status: undefined as any,
+        status: undefined as unknown as number,
         statusText: 'Unknown',
       });
 
@@ -412,7 +412,7 @@ describe('ErrorInterceptor', () => {
 
       TestBed.runInInjectionContext(() => {
         errorInterceptor(mockRequest, mockNext).subscribe({
-          error: (error) => {
+          error: () => {
             expect(toastService.error).toHaveBeenCalled();
             done();
           },
@@ -430,7 +430,7 @@ describe('ErrorInterceptor', () => {
 
       TestBed.runInInjectionContext(() => {
         errorInterceptor(mockRequest, mockNext).subscribe({
-          error: (error) => {
+          error: () => {
             expect(toastService.error).toHaveBeenCalled();
             done();
           },

@@ -3,6 +3,7 @@ import { FormBuilder, ReactiveFormsModule, Validators, FormArray } from '@angula
 import { CommonModule } from '@angular/common';
 import { NutritionService, Meal, FoodItem } from '../../services/nutrition.service';
 import { ToastService } from '../../../../core/services/toast.service';
+import { AuthService } from '../../../../core/auth/auth.service';
 
 @Component({
   selector: 'app-add-meal-form',
@@ -12,9 +13,10 @@ import { ToastService } from '../../../../core/services/toast.service';
   styleUrl: './add-meal-form.scss',
 })
 export class AddMealForm {
-  private formBuilder = inject(FormBuilder);
-  private nutritionService = inject(NutritionService);
-  private toastService = inject(ToastService);
+  private readonly formBuilder = inject(FormBuilder);
+  private readonly nutritionService = inject(NutritionService);
+  private readonly toastService = inject(ToastService);
+  private readonly authService = inject(AuthService);
 
   // Output event when meal is added
   mealAdded = output<Meal>();
@@ -110,8 +112,7 @@ export class AddMealForm {
           this.toggleForm();
           this.isSubmitting.set(false);
         },
-        error: (err) => {
-          console.error('Error adding meal:', err);
+        error: () => {
           this.toastService.error('Error al agregar la comida');
           this.isSubmitting.set(false);
         },
@@ -122,10 +123,6 @@ export class AddMealForm {
   }
 
   private getUserId(): string | null {
-    const user = localStorage.getItem('currentUser');
-    if (user) {
-      return JSON.parse(user).id;
-    }
-    return null;
+    return this.authService.currentUser()?.id ?? null;
   }
 }

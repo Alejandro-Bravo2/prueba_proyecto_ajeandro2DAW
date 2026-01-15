@@ -1,5 +1,5 @@
 import { Injectable, inject, signal, computed } from '@angular/core';
-import { TrainingService, Exercise, WorkoutProgress } from '../services/training.service';
+import { TrainingService, Exercise } from '../services/training.service';
 import { ToastService } from '../../../core/services/toast.service';
 import { catchError, finalize } from 'rxjs/operators';
 import { of } from 'rxjs';
@@ -165,14 +165,14 @@ export class TrainingStore {
   /**
    * Carga los ejercicios del usuario desde el backend
    */
-  load(userId: string, date?: string): void {
+  load(userId: string, _date?: string): void {
     this._loading.set(true);
     this._error.set(null);
 
     // Primero cargar los días disponibles
     this.trainingService.getAvailableTrainingDays().pipe(
-      catchError(err => {
-        console.error('Error loading available days:', err);
+      catchError(() => {
+        this._error.set('Error al cargar los días disponibles');
         return of([] as string[]);
       })
     ).subscribe(days => {
@@ -194,8 +194,7 @@ export class TrainingStore {
    */
   private loadExercisesForDay(userId: string, day: string): void {
     this.trainingService.getExercisesByDay(userId, day).pipe(
-      catchError(err => {
-        console.error('Error loading exercises:', err);
+      catchError(() => {
         this._error.set('Error al cargar los ejercicios');
         return of([]);
       }),

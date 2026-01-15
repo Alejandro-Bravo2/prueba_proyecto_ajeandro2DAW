@@ -30,21 +30,21 @@ export class ModalService {
   private readonly document = inject(DOCUMENT);
 
   /**
+   * Factory para crear instancias de Renderer2.
+   */
+  private readonly rendererFactory = inject(RendererFactory2);
+
+  /**
    * Instancia de Renderer2 para manipulación segura del DOM.
    * @description Creada via RendererFactory2 para uso en servicios
    */
-  private readonly renderer: Renderer2;
+  private readonly renderer: Renderer2 = this.rendererFactory.createRenderer(null, null);
 
   /**
    * Signal que contiene el modal activo y sus inputs.
    * @description null cuando no hay modal abierto
    */
-  private activeModal = signal<{ component: Type<any>, inputs: Record<string, any> } | null>(null);
-
-  constructor(rendererFactory: RendererFactory2) {
-    // En servicios, usamos RendererFactory2 para crear una instancia de Renderer2
-    this.renderer = rendererFactory.createRenderer(null, null);
-  }
+  private activeModal = signal<{ component: Type<unknown>, inputs: Record<string, unknown> } | null>(null);
 
   /**
    * Abre un modal con el componente especificado.
@@ -58,7 +58,7 @@ export class ModalService {
    * modalService.open(EditarPerfilComponent, { usuarioId: 123 });
    * ```
    */
-  open<T>(component: Type<T>, inputs?: Record<string, any>): void {
+  open<T>(component: Type<T>, inputs?: Record<string, unknown>): void {
     this.activeModal.set({ component, inputs: inputs || {} });
     // Usar Renderer2 para manipulación SSR-safe del DOM
     this.renderer.addClass(this.document.body, 'modal-open');

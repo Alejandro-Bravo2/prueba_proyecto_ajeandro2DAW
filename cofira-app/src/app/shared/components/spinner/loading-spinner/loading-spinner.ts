@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoadingService } from '../../../../core/services/loading.service';
 
@@ -10,5 +10,5 @@ import { LoadingService } from '../../../../core/services/loading.service';
   styleUrls: ['./loading-spinner.scss']
 })
 export class LoadingSpinner {
-  constructor(public loadingService: LoadingService) {}
+  readonly loadingService = inject(LoadingService);
 }

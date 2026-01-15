@@ -1,9 +1,7 @@
-import { Injectable, inject, signal } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Injectable, signal } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { map, tap, catchError } from 'rxjs/operators';
 import { BaseHttpService } from '../../../core/services/base-http.service';
-import { LoadingService } from '../../../core/services/loading.service';
 import { environment } from '../../../../environments/environment';
 
 // New AI-generated workout interfaces
@@ -123,10 +121,6 @@ export class TrainingService extends BaseHttpService {
   isGenerating = signal(false);
   currentWorkout = signal<GeneratedWorkout | null>(null);
 
-  constructor(http: HttpClient, loadingService: LoadingService) {
-    super(http, loadingService);
-  }
-
   // ==========================================
   // AI WORKOUT GENERATION METHODS
   // ==========================================
@@ -141,7 +135,7 @@ export class TrainingService extends BaseHttpService {
       `${this.aiApiUrl}/generate`,
       request
     ).pipe(
-      tap(response => {
+      tap(() => {
         this.isGenerating.set(false);
         this.loadWeeklySchedule();
       }),
@@ -362,7 +356,7 @@ export class TrainingService extends BaseHttpService {
     );
   }
 
-  updateExercise(exerciseId: string, data: Partial<Exercise>): Observable<Exercise> {
+  updateExercise(_exerciseId: string, _data: Partial<Exercise>): Observable<Exercise> {
     return of({} as Exercise);
   }
 

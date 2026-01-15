@@ -1,4 +1,4 @@
-import { Component, input, output, computed, signal, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, input, output, computed, ChangeDetectionStrategy } from '@angular/core';
 import { MacroChart, MacroData } from '../macro-chart/macro-chart';
 import { PhotoAnalyzer } from '../photo-analyzer/photo-analyzer';
 import { FoodAnalysis } from '../../services/nutrition-ai.service';
@@ -136,9 +136,8 @@ export class NutritionDashboard {
     return nutrition?.meals.length || 0;
   });
 
-  onFoodAnalyzed(analysis: FoodAnalysis): void {
-    // Handle analyzed food preview
-    console.log('Food analyzed:', analysis);
+  onFoodAnalyzed(_analysis: FoodAnalysis): void {
+    // Metodo preparado para mostrar preview del alimento analizado
   }
 
   onFoodConfirmed(analysis: FoodAnalysis): void {

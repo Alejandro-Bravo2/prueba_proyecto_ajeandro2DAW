@@ -114,7 +114,7 @@
 
         <form class="signup-wizard__form" [formGroup]="registerForm">
           <!-- Name -->
-          <div class="signup-wizard__field">
+          <fieldset class="signup-wizard__field">
             <label for="name" class="signup-wizard__label">Nombre</label>
             <input
               type="text"
@@ -128,10 +128,10 @@
             @if (registerForm.get('name')?.errors && registerForm.get('name')?.touched) {
               <span class="signup-wizard__field-error">El nombre es obligatorio.</span>
             }
-          </div>
+          </fieldset>
 
           <!-- Username -->
-          <div class="signup-wizard__field">
+          <fieldset class="signup-wizard__field">
             <label for="username" class="signup-wizard__label">Nombre de usuario</label>
             <input
               type="text"
@@ -156,10 +156,10 @@
                 }
               </span>
             }
-          </div>
+          </fieldset>
 
           <!-- Email -->
-          <div class="signup-wizard__field">
+          <fieldset class="signup-wizard__field">
             <label for="email" class="signup-wizard__label">Email</label>
             <input
               type="email"
@@ -184,10 +184,10 @@
                 }
               </span>
             }
-          </div>
+          </fieldset>
 
           <!-- Password -->
-          <div class="signup-wizard__field">
+          <fieldset class="signup-wizard__field">
             <label for="password" class="signup-wizard__label">Contrasena</label>
             <input
               type="password"
@@ -208,10 +208,10 @@
                 }
               </span>
             }
-          </div>
+          </fieldset>
 
           <!-- Confirm Password -->
-          <div class="signup-wizard__field">
+          <fieldset class="signup-wizard__field">
             <label for="confirmPassword" class="signup-wizard__label">Confirmar Contrasena</label>
             <input
               type="password"
@@ -225,10 +225,10 @@
             @if (registerForm.hasError('passwordMatch') && registerForm.get('confirmPassword')?.touched) {
               <span class="signup-wizard__field-error">Las contrasenas no coinciden.</span>
             }
-          </div>
+          </fieldset>
 
           <!-- Terms Checkbox -->
-          <div class="signup-wizard__field signup-wizard__field--checkbox">
+          <fieldset class="signup-wizard__field signup-wizard__field--checkbox">
             <label class="signup-wizard__checkbox-label">
               <input
                 type="checkbox"
@@ -251,7 +251,7 @@
             @if (registerForm.get('acceptTerms')?.invalid && registerForm.get('acceptTerms')?.touched) {
               <span class="signup-wizard__field-error">Debes aceptar los terminos para continuar.</span>
             }
-          </div>
+          </fieldset>
         </form>
       </section>
     }

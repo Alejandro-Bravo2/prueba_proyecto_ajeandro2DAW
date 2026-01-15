@@ -1,7 +1,7 @@
-<div class="progress-evaluation">
+<article class="progress-evaluation">
   <header class="progress-evaluation__header">
     <h2 class="progress-evaluation__title">Evaluacion de Progreso</h2>
-    <div class="progress-evaluation__tabs">
+    <nav class="progress-evaluation__tabs">
       <button
         class="progress-evaluation__tab"
         [class.progress-evaluation__tab--active]="activeTab() === 'training'"
@@ -20,102 +20,102 @@
         (click)="setTab('full')">
         Integral
       </button>
-    </div>
+    </nav>
   </header>
 
   @if (store.loading()) {
-    <div class="progress-evaluation__loading">
-      <div class="spinner"></div>
+    <aside class="progress-evaluation__loading">
+      <span class="spinner"></span>
       <span>Analizando tu progreso...</span>
-    </div>
+    </aside>
   } @else if (store.error()) {
-    <div class="progress-evaluation__error">
+    <aside class="progress-evaluation__error">
       <span class="error-icon">⚠️</span>
       <p>{{ store.error() }}</p>
       <button class="btn btn--secondary" (click)="refresh()">Reintentar</button>
-    </div>
+    </aside>
   } @else if (store.hasData()) {
-    <div class="progress-evaluation__content">
+    <section class="progress-evaluation__content">
       <!-- Trend Indicators -->
       <section class="progress-evaluation__trends">
         @if (store.trainingTrend()) {
-          <div class="trend-card" [ngClass]="getTrendClass(store.trainingTrend())">
+          <article class="trend-card" [ngClass]="getTrendClass(store.trainingTrend())">
             <span class="trend-card__icon">{{ getTrendIcon(store.trainingTrend()) }}</span>
-            <div class="trend-card__info">
+            <section class="trend-card__info">
               <span class="trend-card__label">Entrenamiento</span>
               <span class="trend-card__value">{{ getTrendText(store.trainingTrend()) }}</span>
-            </div>
-          </div>
+            </section>
+          </article>
         }
         @if (store.nutritionTrend()) {
-          <div class="trend-card" [ngClass]="getTrendClass(store.nutritionTrend())">
+          <article class="trend-card" [ngClass]="getTrendClass(store.nutritionTrend())">
             <span class="trend-card__icon">{{ getTrendIcon(store.nutritionTrend()) }}</span>
-            <div class="trend-card__info">
+            <section class="trend-card__info">
               <span class="trend-card__label">Nutricion</span>
               <span class="trend-card__value">{{ getTrendText(store.nutritionTrend()) }}</span>
-            </div>
-          </div>
+            </section>
+          </article>
         }
       </section>
 
       <!-- Plateau Alert -->
       @if (store.hasPlateau()) {
-        <div class="progress-evaluation__alert progress-evaluation__alert--warning">
+        <aside class="progress-evaluation__alert progress-evaluation__alert--warning">
           <span class="alert-icon">⚠️</span>
-          <div class="alert-content">
+          <section class="alert-content">
             <strong>Plateau detectado</strong>
             <p>{{ store.plateauMessage() || 'No se ha detectado mejora significativa en las ultimas semanas. Revisa las recomendaciones.' }}</p>
-          </div>
-        </div>
+          </section>
+        </aside>
       }
 
       <!-- Metrics Cards -->
       <section class="progress-evaluation__metrics">
         @if (store.currentEvaluation()?.entrenamientoResumen) {
-          <div class="metric-card">
+          <article class="metric-card">
             <span class="metric-card__icon">🎯</span>
-            <div class="metric-card__content">
+            <section class="metric-card__content">
               <span class="metric-card__value">{{ store.trainingConsistency() | number:'1.0-0' }}%</span>
               <span class="metric-card__label">Consistencia</span>
-            </div>
-          </div>
-          <div class="metric-card">
+            </section>
+          </article>
+          <article class="metric-card">
             <span class="metric-card__icon">💪</span>
-            <div class="metric-card__content">
+            <section class="metric-card__content">
               <span class="metric-card__value">{{ store.trainingVolume() | number:'1.0-0' }} kg</span>
               <span class="metric-card__label">Volumen Total</span>
-            </div>
-          </div>
-          <div class="metric-card" [class.metric-card--positive]="store.strengthImprovement() > 0" [class.metric-card--negative]="store.strengthImprovement() < 0">
+            </section>
+          </article>
+          <article class="metric-card" [class.metric-card--positive]="store.strengthImprovement() > 0" [class.metric-card--negative]="store.strengthImprovement() < 0">
             <span class="metric-card__icon">📈</span>
-            <div class="metric-card__content">
+            <section class="metric-card__content">
               <span class="metric-card__value">{{ store.strengthImprovement() > 0 ? '+' : '' }}{{ store.strengthImprovement() | number:'1.1-1' }}%</span>
               <span class="metric-card__label">Mejora Fuerza</span>
-            </div>
-          </div>
+            </section>
+          </article>
         }
         @if (store.currentEvaluation()?.nutricionResumen) {
-          <div class="metric-card">
+          <article class="metric-card">
             <span class="metric-card__icon">🍎</span>
-            <div class="metric-card__content">
+            <section class="metric-card__content">
               <span class="metric-card__value">{{ store.calorieAdherence() | number:'1.0-0' }}%</span>
               <span class="metric-card__label">Adherencia Calorias</span>
-            </div>
-          </div>
-          <div class="metric-card">
+            </section>
+          </article>
+          <article class="metric-card">
             <span class="metric-card__icon">🥩</span>
-            <div class="metric-card__content">
+            <section class="metric-card__content">
               <span class="metric-card__value">{{ store.proteinAdherence() | number:'1.0-0' }}%</span>
               <span class="metric-card__label">Adherencia Proteinas</span>
-            </div>
-          </div>
-          <div class="metric-card">
+            </section>
+          </article>
+          <article class="metric-card">
             <span class="metric-card__icon">🔥</span>
-            <div class="metric-card__content">
+            <section class="metric-card__content">
               <span class="metric-card__value">{{ store.averageCalories() | number:'1.0-0' }}</span>
               <span class="metric-card__label">Calorias Promedio</span>
-            </div>
-          </div>
+            </section>
+          </article>
         }
       </section>
 
@@ -123,11 +123,11 @@
       @if (store.nutritionPatterns().length > 0) {
         <section class="progress-evaluation__patterns">
           <h4>Patrones Detectados</h4>
-          <div class="pattern-list">
+          <ul class="pattern-list">
             @for (pattern of store.nutritionPatterns(); track pattern) {
-              <span class="pattern-tag">{{ getPatternText(pattern) }}</span>
+              <li class="pattern-tag">{{ getPatternText(pattern) }}</li>
             }
-          </div>
+          </ul>
         </section>
       }
 
@@ -138,9 +138,9 @@
             <span class="ai-icon">🤖</span>
             <h3>Feedback Personalizado</h3>
           </header>
-          <div class="feedback-content">
+          <section class="feedback-content">
             <p>{{ store.aiFeedback() }}</p>
-          </div>
+          </section>
         </section>
       }
 
@@ -167,13 +167,13 @@
           </ul>
         </section>
       }
-    </div>
+    </section>
   } @else {
-    <div class="progress-evaluation__empty">
+    <aside class="progress-evaluation__empty">
       <span class="empty-icon">📊</span>
       <h3>No hay suficientes datos</h3>
       <p>Registra tu entrenamiento y comidas para obtener feedback personalizado sobre tu progreso.</p>
-    </div>
+    </aside>
   }
 
   <footer class="progress-evaluation__footer">
@@ -184,4 +184,4 @@
       {{ store.loading() ? 'Actualizando...' : 'Actualizar Evaluacion' }}
     </button>
   </footer>
-</div>
+</article>

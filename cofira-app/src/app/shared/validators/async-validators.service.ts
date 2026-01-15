@@ -1,17 +1,20 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { AbstractControl, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
 import { Observable, timer, of } from 'rxjs';
 import { switchMap, map, catchError } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
+
+interface UserExistsResponse {
+  exists: boolean;
+}
 
 @Injectable({
   providedIn: 'root',
 })
 export class AsyncValidatorsService {
   private readonly API_URL = environment.apiUrl;
-
-  constructor(private http: HttpClient) {}
+  private readonly http = inject(HttpClient);
 
   emailUnique(excludeEmail?: string): AsyncValidatorFn {
     return (
@@ -31,13 +34,13 @@ export class AsyncValidatorsService {
           }
           // API call to check if email exists (Spring Boot endpoint)
           return this.http
-            .get<any>(`${this.API_URL}/usuarios/email?email=${control.value}`)
+            .get<UserExistsResponse>(`${this.API_URL}/usuarios/email?email=${control.value}`)
             .pipe(
               map(() => {
                 // If email exists (200 response), it's taken
                 return { emailTaken: true };
               }),
-              catchError((error) => {
+              catchError((error: HttpErrorResponse) => {
                 // 404 means email doesn't exist (unique)
                 if (error.status === 404) {
                   return of(null);
@@ -73,13 +76,13 @@ export class AsyncValidatorsService {
           }
           // API call to check if username exists (Spring Boot endpoint)
           return this.http
-            .get<any>(`${this.API_URL}/usuarios/username?username=${control.value}`)
+            .get<UserExistsResponse>(`${this.API_URL}/usuarios/username?username=${control.value}`)
             .pipe(
               map(() => {
                 // If username exists (200 response), it's taken
                 return { usernameTaken: true };
               }),
-              catchError((error) => {
+              catchError((error: HttpErrorResponse) => {
                 // 404 means username doesn't exist (unique)
                 if (error.status === 404) {
                   return of(null);

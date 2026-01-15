@@ -2,7 +2,7 @@ import { Response } from 'express';
 import { z } from 'zod';
 import { prisma } from '../index.js';
 import { AuthRequest } from '../types/index.js';
-import { openRouterService } from '../services/openrouter.service.js';
+import { ollamaService } from '../services/ollama.service.js';
 import { GoalStatus, GoalType } from '@prisma/client';
 
 // Validation schemas
@@ -237,8 +237,8 @@ export async function estimateGoalCompletion(req: AuthRequest, res: Response): P
         .map(p => p.workoutsCompleted as number);
     }
 
-    // Use AI to estimate completion
-    const estimate = await openRouterService.estimateGoalCompletion(
+    // Use AI to estimate completion (Ollama local)
+    const estimate = await ollamaService.estimateGoalCompletion(
       goal.type,
       goal.targetValue,
       goal.currentValue,

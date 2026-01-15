@@ -12,6 +12,7 @@ import { WeeklyProgress, WeeklyData } from './components/weekly-progress/weekly-
 import { FoodAnalysis } from './services/nutrition-ai.service';
 import { ToastService } from '../../core/services/toast.service';
 import { UserProfileService } from '../../core/services/user-profile.service';
+import { AuthService } from '../../core/auth/auth.service';
 import { finalize, retry, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { InfiniteScrollDirective } from '../../shared/directives/infinite-scroll.directive';
@@ -29,6 +30,7 @@ export class Nutrition implements OnInit {
   private readonly router = inject(Router);
   private readonly destroyRef = inject(DestroyRef);
   private readonly toastService = inject(ToastService);
+  private readonly authService = inject(AuthService);
 
   /** Store de nutricion para gestion de estado */
   readonly store = inject(NutritionStore);
@@ -202,12 +204,7 @@ export class Nutrition implements OnInit {
   }
 
   private getUserId(): string | null {
-    try {
-      const user = localStorage.getItem('currentUser');
-      return user ? JSON.parse(user).id : null;
-    } catch {
-      return null;
-    }
+    return this.authService.currentUser()?.id ?? null;
   }
 
   private getTodayDate(): string {

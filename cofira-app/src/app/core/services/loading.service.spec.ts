@@ -253,10 +253,9 @@ describe('LoadingService', () => {
       const values: boolean[] = [];
 
       // Create an effect to track signal changes
-      const unsubscribe = TestBed.runInInjectionContext(() => {
+      TestBed.runInInjectionContext(() => {
         const effectRef = TestBed.inject(LoadingService).isLoading;
         values.push(effectRef());
-        return () => {};
       });
 
       service.show();

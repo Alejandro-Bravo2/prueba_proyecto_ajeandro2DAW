@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
+import { ReactiveFormsModule, FormGroup, FormArray, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { OnboardingService } from '../../../services/onboarding.service';
 import { atLeastOneSelectedValidator } from '../../../../../shared/validators/form-array.validators';
@@ -13,6 +13,9 @@ import { atLeastOneSelectedValidator } from '../../../../../shared/validators/fo
   styleUrl: './onboarding-muscles.scss',
 })
 export class OnboardingMuscles {
+  private readonly onboardingService = inject(OnboardingService);
+  private readonly router = inject(Router);
+
   musclesForm = new FormGroup({
     muscles: new FormArray<FormControl>([], [atLeastOneSelectedValidator()]),
   });
@@ -26,10 +29,7 @@ export class OnboardingMuscles {
     { value: 'abdominales', label: 'Abdominales' },
   ];
 
-  constructor(
-    private onboardingService: OnboardingService,
-    private router: Router
-  ) {
+  constructor() {
     // Initialize the FormArray with a control for each option, set to false
     this.muscleOptions.forEach(() => {
       this.musclesForm.controls.muscles.push(new FormControl(false));
@@ -42,16 +42,14 @@ export class OnboardingMuscles {
       .filter(value => value !== null);
 
     if (selectedMuscles && selectedMuscles.length > 0) {
-      this.onboardingService.onboardingData.update((data: any) => ({
+      this.onboardingService.onboardingData.update((data) => ({
         ...data,
         muscles: selectedMuscles,
       }));
-      console.log('Onboarding Muscles form submitted:', selectedMuscles);
-      console.log('Onboarding complete! Navigating to dashboard...');
-      // this.router.navigate(['/dashboard']); // Redirect to dashboard
+      // Onboarding completado, navegar al dashboard
+      // this.router.navigate(['/dashboard']);
     } else {
-      console.log('Form is invalid: No muscles selected');
-      // Optionally mark touched to show error if no muscles are selected
+      this.musclesFormArray.markAllAsTouched();
     }
   }
 

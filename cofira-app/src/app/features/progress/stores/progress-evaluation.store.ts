@@ -168,12 +168,12 @@ export class ProgressEvaluationStore {
     this._error.set(null);
 
     this.evaluationService.logWorkout(dto).pipe(
-      tap(result => {
+      tap(() => {
         this.toastService.success('Entrenamiento registrado');
         // Auto-refresh evaluation after logging
         this.loadTrainingEvaluation();
       }),
-      catchError(err => {
+      catchError(() => {
         this._error.set('Error al registrar entrenamiento');
         this.toastService.error('Error al registrar el entrenamiento');
         return of(null);
@@ -190,12 +190,12 @@ export class ProgressEvaluationStore {
     this._error.set(null);
 
     this.evaluationService.logNutrition(dto).pipe(
-      tap(result => {
+      tap(() => {
         this.toastService.success('Comida registrada');
         // Auto-refresh evaluation after logging
         this.loadNutritionEvaluation();
       }),
-      catchError(err => {
+      catchError(() => {
         this._error.set('Error al registrar nutricion');
         this.toastService.error('Error al registrar la comida');
         return of(null);
@@ -217,7 +217,7 @@ export class ProgressEvaluationStore {
     this._lastEvaluationType.set('training');
 
     this.evaluationService.evaluateTraining().pipe(
-      catchError(err => {
+      catchError(() => {
         this._error.set('Error al cargar evaluacion de entrenamiento');
         return of(null);
       }),
@@ -238,7 +238,7 @@ export class ProgressEvaluationStore {
     this._lastEvaluationType.set('nutrition');
 
     this.evaluationService.evaluateNutrition().pipe(
-      catchError(err => {
+      catchError(() => {
         this._error.set('Error al cargar evaluacion de nutricion');
         return of(null);
       }),
@@ -259,7 +259,7 @@ export class ProgressEvaluationStore {
     this._lastEvaluationType.set('full');
 
     this.evaluationService.evaluateFull().pipe(
-      catchError(err => {
+      catchError(() => {
         this._error.set('Error al cargar evaluacion completa');
         return of(null);
       }),
@@ -274,7 +274,7 @@ export class ProgressEvaluationStore {
   /**
    * Load evaluation history
    */
-  loadHistory(limit: number = 10): void {
+  loadHistory(limit = 10): void {
     this.evaluationService.getEvaluationHistory(limit).pipe(
       catchError(() => of([]))
     ).subscribe(history => {

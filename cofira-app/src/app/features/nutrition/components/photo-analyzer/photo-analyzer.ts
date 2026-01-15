@@ -76,8 +76,7 @@ export class PhotoAnalyzer {
         this.foodAnalyzed.emit(result.analysis);
         this.isAnalyzing.set(false);
       },
-      error: (err) => {
-        console.error('Error analyzing food:', err);
+      error: () => {
         this.toastService.error('Error al analizar la imagen');
         this.isAnalyzing.set(false);
       },

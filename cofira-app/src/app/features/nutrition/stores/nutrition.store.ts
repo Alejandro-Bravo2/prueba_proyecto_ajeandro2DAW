@@ -1,5 +1,5 @@
 import { Injectable, inject, signal, computed } from '@angular/core';
-import { NutritionService, Meal, DailyNutrition } from '../services/nutrition.service';
+import { NutritionService, Meal, DailyNutrition, DiaAlimentacionDTO, ComidaDTO } from '../services/nutrition.service';
 import { ToastService } from '../../../core/services/toast.service';
 import { catchError, finalize } from 'rxjs/operators';
 import { of } from 'rxjs';
@@ -214,14 +214,14 @@ export class NutritionStore {
   /**
    * Carga los días disponibles y las comidas del usuario
    */
-  load(userId: string): void {
+  load(_userId: string): void {
     this._loading.set(true);
     this._error.set(null);
 
     // Primero cargar los días disponibles
     this.nutritionService.getAvailableMealDays().pipe(
-      catchError(err => {
-        console.error('Error loading available days:', err);
+      catchError(() => {
+        this._error.set('Error al cargar los días disponibles');
         return of([] as string[]);
       })
     ).subscribe(days => {
@@ -248,8 +248,7 @@ export class NutritionStore {
    */
   private loadMealsForDay(dayOfWeek: string): void {
     this.nutritionService.getMealsByDay(dayOfWeek).pipe(
-      catchError(err => {
-        console.error('Error loading meals:', err);
+      catchError(() => {
         this._error.set('Error al cargar las comidas');
         return of(null);
       }),
@@ -269,18 +268,18 @@ export class NutritionStore {
   /**
    * Transforma DiaAlimentacionDTO a Meal[]
    */
-  private transformDiaToMeals(dia: any): Meal[] {
+  private transformDiaToMeals(dia: DiaAlimentacionDTO): Meal[] {
     const meals: Meal[] = [];
-    const mealTypes = [
-      { key: 'desayuno', type: 'breakfast' as const, label: 'Desayuno' },
-      { key: 'almuerzo', type: 'snack' as const, label: 'Almuerzo' },
-      { key: 'comida', type: 'lunch' as const, label: 'Comida' },
-      { key: 'merienda', type: 'snack' as const, label: 'Merienda' },
-      { key: 'cena', type: 'dinner' as const, label: 'Cena' }
+    const mealTypes: { key: keyof DiaAlimentacionDTO; type: Meal['mealType']; label: string }[] = [
+      { key: 'desayuno', type: 'breakfast', label: 'Desayuno' },
+      { key: 'almuerzo', type: 'snack', label: 'Almuerzo' },
+      { key: 'comida', type: 'lunch', label: 'Comida' },
+      { key: 'merienda', type: 'snack', label: 'Merienda' },
+      { key: 'cena', type: 'dinner', label: 'Cena' }
     ];
 
-    mealTypes.forEach(({ key, type, label }) => {
-      const comida = dia[key];
+    mealTypes.forEach(({ key, type }) => {
+      const comida = dia[key] as ComidaDTO | null;
       if (comida && comida.alimentos && comida.alimentos.length > 0) {
         meals.push({
           id: `${dia.id}-${key}`,
@@ -371,8 +370,7 @@ export class NutritionStore {
     this._error.set(null);
 
     this.nutritionService.getDailyNutrition(userId, targetDate).pipe(
-      catchError(err => {
-        console.error('Error loading nutrition data:', err);
+      catchError(() => {
         this._error.set('Error al cargar los datos de nutricion');
         return of(this.getEmptyNutrition(targetDate));
       }),

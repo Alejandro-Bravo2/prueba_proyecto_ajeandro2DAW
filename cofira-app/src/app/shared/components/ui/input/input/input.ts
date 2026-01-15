@@ -1,6 +1,6 @@
-import { Component, Input, Output, EventEmitter, forwardRef } from '@angular/core';
+import { Component, Input, forwardRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule, FormControl, Validators } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-input',
@@ -17,23 +17,23 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule, FormContr
   ],
 })
 export class InputComponent implements ControlValueAccessor {
-  @Input() label: string = '';
-  @Input() type: string = 'text';
-  @Input() placeholder: string = '';
+  @Input() label = '';
+  @Input() type = 'text';
+  @Input() placeholder = '';
   @Input() control: FormControl = new FormControl(); // Allow passing a FormControl instance
-  @Input() errorMessage: string = ''; // Custom error message
+  @Input() errorMessage = ''; // Custom error message
 
-  // For ControlValueAccessor
-  _value: any = '';
-  _isDisabled: boolean = false;
-  _onChange: (value: any) => void = () => {};
-  _onTouched: () => void = () => {};
+  // For ControlValueAccessor - placeholders for callbacks
+  _value = '';
+  _isDisabled = false;
+  _onChange: (value: string) => void = (_value) => { /* noop */ };
+  _onTouched: () => void = () => { /* noop */ };
 
-  get value(): any {
+  get value(): string {
     return this._value;
   }
 
-  set value(val: any) {
+  set value(val: string) {
     if (val !== this._value) {
       this._value = val;
       this._onChange(val);
@@ -41,11 +41,11 @@ export class InputComponent implements ControlValueAccessor {
   }
 
   // ControlValueAccessor methods
-  writeValue(value: any): void {
+  writeValue(value: string): void {
     this.value = value;
   }
 
-  registerOnChange(fn: (value: any) => void): void {
+  registerOnChange(fn: (value: string) => void): void {
     this._onChange = fn;
   }
 

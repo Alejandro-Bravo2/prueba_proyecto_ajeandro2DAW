@@ -17,21 +17,21 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR, ReactiveFormsModule, FormContr
   ],
 })
 export class Checkbox implements ControlValueAccessor {
-  @Input() label: string = '';
-  @Input() id: string = '';
+  @Input() label = '';
+  @Input() id = '';
   @Input() control: FormControl = new FormControl(); // Allow passing a FormControl instance
 
   // For ControlValueAccessor
-  _value: any = false;
-  _isDisabled: boolean = false;
-  _onChange: (value: any) => void = () => {};
-  _onTouched: () => void = () => {};
+  _value = false;
+  _isDisabled = false;
+  _onChange: (value: boolean) => void = (_value) => { /* noop */ };
+  _onTouched: () => void = () => { /* noop */ };
 
-  get value(): any {
+  get value(): boolean {
     return this._value;
   }
 
-  set value(val: any) {
+  set value(val: boolean) {
     if (val !== this._value) {
       this._value = val;
       this._onChange(val);
@@ -39,11 +39,11 @@ export class Checkbox implements ControlValueAccessor {
   }
 
   // ControlValueAccessor methods
-  writeValue(value: any): void {
+  writeValue(value: boolean): void {
     this.value = value;
   }
 
-  registerOnChange(fn: (value: any) => void): void {
+  registerOnChange(fn: (value: boolean) => void): void {
     this._onChange = fn;
   }
 

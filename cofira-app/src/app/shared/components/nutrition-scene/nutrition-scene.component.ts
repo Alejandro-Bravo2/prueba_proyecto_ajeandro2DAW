@@ -53,9 +53,9 @@ export class NutritionSceneComponent implements AfterViewInit, OnDestroy {
   private bowlGroup!: THREE.Group;
   private floatingFruits: THREE.Group[] = [];
   private particles!: THREE.Points;
-  private frameId: number = 0;
-  private mouseX: number = 0;
-  private mouseY: number = 0;
+  private frameId = 0;
+  private mouseX = 0;
+  private mouseY = 0;
   private clock = new THREE.Clock();
   private isInitialized = false;
 

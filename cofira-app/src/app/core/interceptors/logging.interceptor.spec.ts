@@ -7,10 +7,10 @@ import {
   HttpErrorResponse,
 } from '@angular/common/http';
 import { loggingInterceptor } from './logging.interceptor';
-import { Observable, of, throwError, delay } from 'rxjs';
+import { of, throwError, delay } from 'rxjs';
 
 describe('LoggingInterceptor', () => {
-  let mockRequest: HttpRequest<any>;
+  let mockRequest: HttpRequest<unknown>;
   let mockNext: HttpHandlerFn;
   let consoleSpy: jasmine.Spy;
   let consoleErrorSpy: jasmine.Spy;
@@ -23,7 +23,7 @@ describe('LoggingInterceptor', () => {
 
   describe('Successful Requests', () => {
     it('should log successful request completion', (done) => {
-      mockNext = jasmine.createSpy('mockNext').and.returnValue(of({} as HttpEvent<any>));
+      mockNext = jasmine.createSpy('mockNext').and.returnValue(of({} as HttpEvent<unknown>));
 
       TestBed.runInInjectionContext(() => {
         loggingInterceptor(mockRequest, mockNext).subscribe(() => {
@@ -41,7 +41,7 @@ describe('LoggingInterceptor', () => {
 
     it('should include request method in log', (done) => {
       const postRequest = new HttpRequest('POST', '/api/users', { name: 'Test' });
-      mockNext = jasmine.createSpy('mockNext').and.returnValue(of({} as HttpEvent<any>));
+      mockNext = jasmine.createSpy('mockNext').and.returnValue(of({} as HttpEvent<unknown>));
 
       TestBed.runInInjectionContext(() => {
         loggingInterceptor(postRequest, mockNext).subscribe(() => {
@@ -57,7 +57,7 @@ describe('LoggingInterceptor', () => {
       const requestWithParams = new HttpRequest('GET', '/api/users', {
         params: { page: '1', limit: '10' },
       });
-      mockNext = jasmine.createSpy('mockNext').and.returnValue(of({} as HttpEvent<any>));
+      mockNext = jasmine.createSpy('mockNext').and.returnValue(of({} as HttpEvent<unknown>));
 
       TestBed.runInInjectionContext(() => {
         loggingInterceptor(requestWithParams, mockNext).subscribe(() => {
@@ -72,7 +72,7 @@ describe('LoggingInterceptor', () => {
     it('should measure and log elapsed time', (done) => {
       mockNext = jasmine
         .createSpy('mockNext')
-        .and.returnValue(of({} as HttpEvent<any>).pipe(delay(100)));
+        .and.returnValue(of({} as HttpEvent<unknown>).pipe(delay(100)));
 
       TestBed.runInInjectionContext(() => {
         loggingInterceptor(mockRequest, mockNext).subscribe(() => {
@@ -90,7 +90,7 @@ describe('LoggingInterceptor', () => {
     });
 
     it('should log elapsed time in milliseconds', (done) => {
-      mockNext = jasmine.createSpy('mockNext').and.returnValue(of({} as HttpEvent<any>));
+      mockNext = jasmine.createSpy('mockNext').and.returnValue(of({} as HttpEvent<unknown>));
 
       TestBed.runInInjectionContext(() => {
         loggingInterceptor(mockRequest, mockNext).subscribe(() => {
@@ -199,17 +199,17 @@ describe('LoggingInterceptor', () => {
   });
 
   describe('Different HTTP Methods', () => {
-    ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'].forEach((method) => {
+    (['GET', 'POST', 'PUT', 'PATCH', 'DELETE'] as const).forEach((method) => {
       it(`should log ${method} requests correctly`, (done) => {
-        let request: HttpRequest<any>;
+        let request: HttpRequest<unknown>;
 
         if (method === 'GET' || method === 'DELETE') {
-          request = new HttpRequest(method as any, '/api/test');
+          request = new HttpRequest(method, '/api/test');
         } else {
-          request = new HttpRequest(method as any, '/api/test', { data: 'test' });
+          request = new HttpRequest(method, '/api/test', { data: 'test' });
         }
 
-        mockNext = jasmine.createSpy('mockNext').and.returnValue(of({} as HttpEvent<any>));
+        mockNext = jasmine.createSpy('mockNext').and.returnValue(of({} as HttpEvent<unknown>));
 
         TestBed.runInInjectionContext(() => {
           loggingInterceptor(request, mockNext).subscribe(() => {
@@ -230,9 +230,10 @@ describe('LoggingInterceptor', () => {
       mockNext = jasmine.createSpy('mockNext').and.returnValue(of(httpResponse));
 
       TestBed.runInInjectionContext(() => {
-        loggingInterceptor(mockRequest, mockNext).subscribe((response: any) => {
-          if (response.body) {
-            expect(response.body).toEqual(responseData);
+        loggingInterceptor(mockRequest, mockNext).subscribe((response) => {
+          const httpResp = response as HttpResponse<typeof responseData>;
+          if (httpResp.body) {
+            expect(httpResp.body).toEqual(responseData);
           }
           done();
         });
@@ -244,7 +245,7 @@ describe('LoggingInterceptor', () => {
       mockNext = jasmine.createSpy('mockNext').and.returnValue(of(httpResponse));
 
       TestBed.runInInjectionContext(() => {
-        loggingInterceptor(mockRequest, mockNext).subscribe((response: any) => {
+        loggingInterceptor(mockRequest, mockNext).subscribe((response) => {
           expect(response).toEqual(httpResponse);
           done();
         });
@@ -266,9 +267,9 @@ describe('LoggingInterceptor', () => {
 
   describe('Multiple Requests', () => {
     it('should log each request independently', (done) => {
-      const mockNext1 = jasmine.createSpy('mockNext1').and.returnValue(of({} as HttpEvent<any>));
-      const mockNext2 = jasmine.createSpy('mockNext2').and.returnValue(of({} as HttpEvent<any>));
-      const mockNext3 = jasmine.createSpy('mockNext3').and.returnValue(of({} as HttpEvent<any>));
+      const mockNext1 = jasmine.createSpy('mockNext1').and.returnValue(of({} as HttpEvent<unknown>));
+      const mockNext2 = jasmine.createSpy('mockNext2').and.returnValue(of({} as HttpEvent<unknown>));
+      const mockNext3 = jasmine.createSpy('mockNext3').and.returnValue(of({} as HttpEvent<unknown>));
 
       let completedRequests = 0;
       const checkDone = () => {
@@ -292,10 +293,10 @@ describe('LoggingInterceptor', () => {
 
       const mockNext1 = jasmine
         .createSpy('mockNext1')
-        .and.returnValue(of({} as HttpEvent<any>).pipe(delay(10)));
+        .and.returnValue(of({} as HttpEvent<unknown>).pipe(delay(10)));
       const mockNext2 = jasmine
         .createSpy('mockNext2')
-        .and.returnValue(of({} as HttpEvent<any>).pipe(delay(50)));
+        .and.returnValue(of({} as HttpEvent<unknown>).pipe(delay(50)));
 
       let completedRequests = 0;
       const checkDone = () => {
@@ -313,7 +314,7 @@ describe('LoggingInterceptor', () => {
     });
 
     it('should handle mix of successful and failed requests', (done) => {
-      const mockNext1 = jasmine.createSpy('mockNext1').and.returnValue(of({} as HttpEvent<any>));
+      const mockNext1 = jasmine.createSpy('mockNext1').and.returnValue(of({} as HttpEvent<unknown>));
       const mockNext2 = jasmine
         .createSpy('mockNext2')
         .and.returnValue(throwError(() => new Error('Error')));
@@ -340,7 +341,7 @@ describe('LoggingInterceptor', () => {
   describe('URL Patterns', () => {
     it('should log requests to absolute URLs', (done) => {
       const absoluteRequest = new HttpRequest('GET', 'http://localhost:3000/api/users');
-      mockNext = jasmine.createSpy('mockNext').and.returnValue(of({} as HttpEvent<any>));
+      mockNext = jasmine.createSpy('mockNext').and.returnValue(of({} as HttpEvent<unknown>));
 
       TestBed.runInInjectionContext(() => {
         loggingInterceptor(absoluteRequest, mockNext).subscribe(() => {
@@ -354,7 +355,7 @@ describe('LoggingInterceptor', () => {
 
     it('should log requests to relative URLs', (done) => {
       const relativeRequest = new HttpRequest('GET', '/api/users');
-      mockNext = jasmine.createSpy('mockNext').and.returnValue(of({} as HttpEvent<any>));
+      mockNext = jasmine.createSpy('mockNext').and.returnValue(of({} as HttpEvent<unknown>));
 
       TestBed.runInInjectionContext(() => {
         loggingInterceptor(relativeRequest, mockNext).subscribe(() => {
@@ -369,7 +370,7 @@ describe('LoggingInterceptor', () => {
     it('should log requests with query parameters', (done) => {
       const url = '/api/users?page=1&limit=10';
       const paramsRequest = new HttpRequest('GET', url);
-      mockNext = jasmine.createSpy('mockNext').and.returnValue(of({} as HttpEvent<any>));
+      mockNext = jasmine.createSpy('mockNext').and.returnValue(of({} as HttpEvent<unknown>));
 
       TestBed.runInInjectionContext(() => {
         loggingInterceptor(paramsRequest, mockNext).subscribe(() => {
@@ -387,7 +388,7 @@ describe('LoggingInterceptor', () => {
       const startTime = Date.now();
       mockNext = jasmine
         .createSpy('mockNext')
-        .and.returnValue(of({} as HttpEvent<any>).pipe(delay(100)));
+        .and.returnValue(of({} as HttpEvent<unknown>).pipe(delay(100)));
 
       TestBed.runInInjectionContext(() => {
         loggingInterceptor(mockRequest, mockNext).subscribe(() => {
@@ -409,7 +410,7 @@ describe('LoggingInterceptor', () => {
     });
 
     it('should show 0 or small value for very fast requests', (done) => {
-      mockNext = jasmine.createSpy('mockNext').and.returnValue(of({} as HttpEvent<any>));
+      mockNext = jasmine.createSpy('mockNext').and.returnValue(of({} as HttpEvent<unknown>));
 
       TestBed.runInInjectionContext(() => {
         loggingInterceptor(mockRequest, mockNext).subscribe(() => {
@@ -431,7 +432,7 @@ describe('LoggingInterceptor', () => {
   describe('Edge Cases', () => {
     it('should handle requests with special characters in URL', (done) => {
       const specialRequest = new HttpRequest('GET', '/api/users/test@example.com');
-      mockNext = jasmine.createSpy('mockNext').and.returnValue(of({} as HttpEvent<any>));
+      mockNext = jasmine.createSpy('mockNext').and.returnValue(of({} as HttpEvent<unknown>));
 
       TestBed.runInInjectionContext(() => {
         loggingInterceptor(specialRequest, mockNext).subscribe(() => {
@@ -446,7 +447,7 @@ describe('LoggingInterceptor', () => {
     it('should handle very long URLs', (done) => {
       const longUrl = '/api/users?' + 'param=value&'.repeat(50);
       const longRequest = new HttpRequest('GET', longUrl);
-      mockNext = jasmine.createSpy('mockNext').and.returnValue(of({} as HttpEvent<any>));
+      mockNext = jasmine.createSpy('mockNext').and.returnValue(of({} as HttpEvent<unknown>));
 
       TestBed.runInInjectionContext(() => {
         loggingInterceptor(longRequest, mockNext).subscribe(() => {
@@ -485,7 +486,7 @@ describe('LoggingInterceptor', () => {
 
   describe('Observable Behavior', () => {
     it('should not prevent request from completing', (done) => {
-      mockNext = jasmine.createSpy('mockNext').and.returnValue(of({} as HttpEvent<any>));
+      mockNext = jasmine.createSpy('mockNext').and.returnValue(of({} as HttpEvent<unknown>));
 
       TestBed.runInInjectionContext(() => {
         loggingInterceptor(mockRequest, mockNext).subscribe({

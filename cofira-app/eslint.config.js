@@ -31,6 +31,14 @@ module.exports = defineConfig([
           style: "kebab-case",
         },
       ],
+      // Permitir variables con prefijo underscore como intencionalmente no usadas
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          argsIgnorePattern: "^_",
+          varsIgnorePattern: "^_",
+        },
+      ],
     },
   },
   {

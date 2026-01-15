@@ -25,54 +25,59 @@
   gap: var(--spacing-size-m);
   animation: fadeIn var(--duration-base) ease-out, slideInRight var(--duration-base) ease-out;
   transition: transform var(--duration-fast);
+}
 
-  &__message {
-    flex-grow: 1;
-    font-size: var(--font-size-md);
-    font-family: var(--font-primary);
-    margin: 0;
-  }
+.toast__message {
+  flex-grow: 1;
+  font-size: var(--font-size-md);
+  font-family: var(--font-primary);
+  margin: 0;
+}
 
-  &__dismiss-button {
-    @include boton-reset;
-    @include flex-center;
-    width: 24px;
-    height: 24px;
-    border-radius: var(--radius-circle);
-    color: var(--text-dark);
-    cursor: pointer;
-    &:hover {
-      background-color: var(--gris-dark);
-    }
-  }
+.toast__dismiss-button {
+  @include boton-reset;
+  @include flex-center;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-circle);
+  color: var(--text-dark);
+  cursor: pointer;
+}
 
-  &--success {
-    border-left: 5px solid var(--amarillo-normal);
-    .toast__message {
-      color: var(--text-dark);
-    }
-  }
+.toast__dismiss-button:hover {
+  background-color: var(--gris-dark);
+}
 
-  &--error {
-    border-left: 5px solid var(--button-red);
-    .toast__message {
-      color: var(--text-dark);
-    }
-  }
+.toast--success {
+  border-left: 5px solid var(--amarillo-normal);
+}
 
-  &--info {
-    border-left: 5px solid var(--gris-dark);
-    .toast__message {
-      color: var(--text-dark);
-    }
-  }
+.toast--success .toast__message {
+  color: var(--text-dark);
+}
 
-  &--warning {
-    border-left: 5px solid var(--amarillo-dark);
-    .toast__message {
-      color: var(--text-dark);
-    }
-  }
+.toast--error {
+  border-left: 5px solid var(--button-red);
+}
+
+.toast--error .toast__message {
+  color: var(--text-dark);
+}
+
+.toast--info {
+  border-left: 5px solid var(--gris-dark);
+}
+
+.toast--info .toast__message {
+  color: var(--text-dark);
+}
+
+.toast--warning {
+  border-left: 5px solid var(--amarillo-dark);
+}
+
+.toast--warning .toast__message {
+  color: var(--text-dark);
 }
 
 @keyframes fadeIn {

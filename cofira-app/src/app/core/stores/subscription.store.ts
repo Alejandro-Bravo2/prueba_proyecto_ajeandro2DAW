@@ -81,8 +81,7 @@ export class SubscriptionStore {
       .pipe(finalize(() => this._loading.set(false)))
       .subscribe({
         next: (estado) => this.actualizarDesdeRespuesta(estado),
-        error: (err) => {
-          console.error('Error cargando estado de subscripcion:', err);
+        error: () => {
           this._error.set('Error al cargar estado de subscripcion');
         }
       });

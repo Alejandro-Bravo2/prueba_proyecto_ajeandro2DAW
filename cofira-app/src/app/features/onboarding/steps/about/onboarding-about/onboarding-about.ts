@@ -1,8 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
-import { Router } from '@angular/router'; // Import Router
-import { OnboardingService } from '../../../services/onboarding.service'; // Import OnboardingService
+import { OnboardingService } from '../../../services/onboarding.service';
 
 @Component({
   selector: 'app-onboarding-about',
@@ -12,6 +11,8 @@ import { OnboardingService } from '../../../services/onboarding.service'; // Imp
   styleUrl: './onboarding-about.scss',
 })
 export class OnboardingAbout {
+  private readonly onboardingService = inject(OnboardingService);
+
   aboutForm = new FormGroup({
     gender: new FormControl('', [Validators.required]),
     height: new FormControl('', [Validators.required]),
@@ -20,11 +21,6 @@ export class OnboardingAbout {
 
   heightOptions = Array.from({ length: (200 - 150) / 5 + 1 }, (_, i) => 150 + i * 5);
   ageOptions = Array.from({ length: 100 - 18 + 1 }, (_, i) => 18 + i);
-
-  constructor(
-    private onboardingService: OnboardingService,
-    private router: Router
-  ) {}
 
   onSubmit(): void {
     if (this.aboutForm.valid) {
@@ -35,12 +31,10 @@ export class OnboardingAbout {
         age: Number(formValue.age!)
       };
       this.onboardingService.updateAboutData(data);
-      console.log('Navigating to next onboarding step...');
-      // In a real app, navigate to the next onboarding step
+      // Navegar al siguiente paso del onboarding
       // this.router.navigate(['/onboarding/nutrition']);
     } else {
       this.aboutForm.markAllAsTouched();
-      console.log('Form is invalid');
     }
   }
 

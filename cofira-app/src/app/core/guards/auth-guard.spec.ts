@@ -1,7 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import {
   CanActivateFn,
-  Router,
   ActivatedRouteSnapshot,
   RouterStateSnapshot,
   UrlTree,
@@ -14,7 +13,6 @@ import { AuthService } from '../auth/auth.service';
 
 describe('authGuard', () => {
   let authService: jasmine.SpyObj<AuthService>;
-  let router: Router;
   let mockRoute: ActivatedRouteSnapshot;
   let mockState: RouterStateSnapshot;
 
@@ -32,7 +30,6 @@ describe('authGuard', () => {
       ],
     });
 
-    router = TestBed.inject(Router);
     mockRoute = {} as ActivatedRouteSnapshot;
     mockState = { url: '/entrenamiento' } as RouterStateSnapshot;
   });

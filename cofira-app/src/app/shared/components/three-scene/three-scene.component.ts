@@ -5,7 +5,8 @@ import {
   NgZone,
   ViewChild,
   AfterViewInit,
-  effect
+  effect,
+  inject
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import * as THREE from 'three';
@@ -50,9 +51,9 @@ export class ThreeSceneComponent implements AfterViewInit, OnDestroy {
   private orbitingObjects: THREE.Group[] = [];
   private particles!: THREE.Points;
   private connectionLines!: THREE.LineSegments;
-  private frameId: number = 0;
-  private mouseX: number = 0;
-  private mouseY: number = 0;
+  private frameId = 0;
+  private mouseX = 0;
+  private mouseY = 0;
   private clock = new THREE.Clock();
   private isInitialized = false;
 
@@ -77,10 +78,10 @@ export class ThreeSceneComponent implements AfterViewInit, OnDestroy {
     }
   };
 
-  constructor(
-    private ngZone: NgZone,
-    private themeService: ThemeService
-  ) {
+  private readonly ngZone = inject(NgZone);
+  private readonly themeService = inject(ThemeService);
+
+  constructor() {
     effect(() => {
       const isDark = this.themeService.currentTheme() === 'dark';
       if (this.isInitialized) {
@@ -583,9 +584,9 @@ export class ThreeSceneComponent implements AfterViewInit, OnDestroy {
       obj.position.x = Math.cos(data['orbitAngle']) * data['orbitRadius'];
       obj.position.z = Math.sin(data['orbitAngle']) * data['orbitRadius'];
 
-      // Aplicar inclinación de órbita
-      const tiltedY = obj.position.y * Math.cos(data['orbitTilt']) - obj.position.z * Math.sin(data['orbitTilt']);
-      const tiltedZ = obj.position.y * Math.sin(data['orbitTilt']) + obj.position.z * Math.cos(data['orbitTilt']);
+      // Aplicar inclinación de órbita (calculado para uso futuro)
+      const _tiltedY = obj.position.y * Math.cos(data['orbitTilt']) - obj.position.z * Math.sin(data['orbitTilt']);
+      const _tiltedZ = obj.position.y * Math.sin(data['orbitTilt']) + obj.position.z * Math.cos(data['orbitTilt']);
       obj.position.y = data['yOffset'] + Math.sin(elapsedTime + data['orbitAngle']) * 0.2;
 
       // Rotación propia

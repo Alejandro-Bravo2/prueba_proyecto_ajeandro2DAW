@@ -1,8 +1,9 @@
-import { Component, inject, output, signal, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, output, signal, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ProgressService, ProgressEntry } from '../../services/progress.service';
 import { ToastService } from '../../../../core/services/toast.service';
+import { AuthService } from '../../../../core/auth/auth.service';
 
 @Component({
   selector: 'app-add-progress-form',
@@ -12,10 +13,11 @@ import { ToastService } from '../../../../core/services/toast.service';
   styleUrl: './add-progress-form.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AddProgressForm {
-  private formBuilder = inject(FormBuilder);
-  private progressService = inject(ProgressService);
-  private toastService = inject(ToastService);
+export class AddProgressForm implements OnInit {
+  private readonly formBuilder = inject(FormBuilder);
+  private readonly progressService = inject(ProgressService);
+  private readonly toastService = inject(ToastService);
+  private readonly authService = inject(AuthService);
 
   // Output event when progress is added
   progressAdded = output<ProgressEntry>();
@@ -45,8 +47,8 @@ export class AddProgressForm {
         next: (exercises) => {
           this.exercises.set(exercises);
         },
-        error: (err) => {
-          console.error('Error loading exercises:', err);
+        error: () => {
+          this.toastService.error('Error al cargar los ejercicios');
         },
       });
     }
@@ -94,8 +96,7 @@ export class AddProgressForm {
           this.isSubmitting.set(false);
           this.loadExercises(); // Reload exercises list
         },
-        error: (err) => {
-          console.error('Error adding progress:', err);
+        error: () => {
           this.toastService.error('Error al registrar el progreso');
           this.isSubmitting.set(false);
         },
@@ -106,10 +107,6 @@ export class AddProgressForm {
   }
 
   private getUserId(): string | null {
-    const user = localStorage.getItem('currentUser');
-    if (user) {
-      return JSON.parse(user).id;
-    }
-    return null;
+    return this.authService.currentUser()?.id ?? null;
   }
 }

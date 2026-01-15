@@ -15,8 +15,8 @@ type ButtonType = 'button' | 'submit' | 'reset';
 export class Button {
   @Input() variant: ButtonVariant = 'primario';
   @Input() size: ButtonSize = 'mediano';
-  @Input() completo: boolean = false;
-  @Input() disabled: boolean = false;
+  @Input() completo = false;
+  @Input() disabled = false;
   @Input() type: ButtonType = 'button';
 
   @Output() clickEvent = new EventEmitter<Event>();

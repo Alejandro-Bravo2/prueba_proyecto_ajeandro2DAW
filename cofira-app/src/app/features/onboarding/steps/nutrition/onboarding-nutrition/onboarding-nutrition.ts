@@ -1,7 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { OnboardingService } from '../../../services/onboarding.service';
 
 @Component({
@@ -12,6 +11,8 @@ import { OnboardingService } from '../../../services/onboarding.service';
   styleUrl: './onboarding-nutrition.scss',
 })
 export class OnboardingNutrition {
+  private readonly onboardingService = inject(OnboardingService);
+
   nutritionForm = new FormGroup({
     variety: new FormControl('', [Validators.required]),
   });
@@ -22,23 +23,16 @@ export class OnboardingNutrition {
     { value: 'poco', label: 'Poca variedad' },
   ];
 
-  constructor(
-    private onboardingService: OnboardingService,
-    private router: Router
-  ) {}
-
   onSubmit(): void {
     if (this.nutritionForm.valid) {
-      this.onboardingService.onboardingData.update((data: any) => ({
+      this.onboardingService.onboardingData.update((data) => ({
         ...data,
         ...this.nutritionForm.value,
       }));
-      console.log('Onboarding Nutrition form submitted:', this.nutritionForm.value);
-      console.log('Navigating to next onboarding step...');
+      // Navegar al siguiente paso del onboarding
       // this.router.navigate(['/onboarding/goal']);
     } else {
       this.nutritionForm.markAllAsTouched();
-      console.log('Form is invalid');
     }
   }
 

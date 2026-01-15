@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, NavigationEnd, ActivatedRoute, RouterLink } from '@angular/router';
 import { filter, map, startWith } from 'rxjs/operators';
@@ -17,20 +17,18 @@ interface Breadcrumb {
   styleUrl: './breadcrumbs.scss',
 })
 export class Breadcrumbs {
-  breadcrumbs$: Observable<Breadcrumb[]>;
+  private readonly router = inject(Router);
+  private readonly activatedRoute = inject(ActivatedRoute);
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute) {
-    // Usamos startWith(null) para generar breadcrumbs inmediatamente en la primera carga
-    this.breadcrumbs$ = this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd),
-      startWith(null),
-      map(() => this.buildBreadcrumbs(this.activatedRoute.root))
-    );
-  }
+  breadcrumbs$: Observable<Breadcrumb[]> = this.router.events.pipe(
+    filter(event => event instanceof NavigationEnd),
+    startWith(null),
+    map(() => this.buildBreadcrumbs(this.activatedRoute.root))
+  );
 
   private buildBreadcrumbs(
     route: ActivatedRoute,
-    url: string = '',
+    url = '',
     breadcrumbs: Breadcrumb[] = []
   ): Breadcrumb[] {
     const children: ActivatedRoute[] = route.children;

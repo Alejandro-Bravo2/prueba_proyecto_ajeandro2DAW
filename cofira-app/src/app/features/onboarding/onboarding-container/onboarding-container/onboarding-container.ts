@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, ActivatedRoute, NavigationEnd, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { StepsIndicator } from '../../components/steps-indicator/steps-indicator/steps-indicator';
-import { OnboardingService } from '../../services/onboarding.service'; // Import OnboardingService
+import { OnboardingService } from '../../services/onboarding.service';
 
 interface OnboardingStep {
   path: string;
@@ -18,6 +18,10 @@ interface OnboardingStep {
   styleUrl: './onboarding-container.scss',
 })
 export class OnboardingContainer implements OnInit {
+  private readonly router = inject(Router);
+  private readonly activatedRoute = inject(ActivatedRoute);
+  readonly onboardingService = inject(OnboardingService);
+
   onboardingSteps: OnboardingStep[] = [
     { path: 'about', label: 'Sobre ti' },
     { path: 'nutrition', label: 'Preferencias nutricionales' },
@@ -25,13 +29,7 @@ export class OnboardingContainer implements OnInit {
     { path: 'pricing', label: 'Rango de precios' },
     { path: 'muscles', label: 'Grupos musculares' },
   ];
-  currentStepIndex: number = 0; // 0-indexed
-
-  constructor(
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
-    public onboardingService: OnboardingService // Inject OnboardingService
-  ) {}
+  currentStepIndex = 0;
 
   ngOnInit(): void {
     this.router.events.pipe(
@@ -53,13 +51,12 @@ export class OnboardingContainer implements OnInit {
   }
 
   nextStep(): void {
-    // Logic to validate current form before proceeding
+    // Validar el formulario actual antes de proceder
     if (this.currentStepIndex < this.onboardingSteps.length - 1) {
       this.currentStepIndex++;
       this.router.navigate([this.onboardingSteps[this.currentStepIndex].path], { relativeTo: this.activatedRoute });
     } else {
-      console.log('Onboarding complete!');
-      // Final step logic, e.g., save data and redirect to dashboard
+      // Onboarding completado, guardar datos y redirigir al dashboard
       // this.router.navigate(['/dashboard']);
     }
   }

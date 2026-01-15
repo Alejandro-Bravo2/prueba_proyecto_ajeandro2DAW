@@ -89,8 +89,7 @@ export class PreferencesAccount implements CanComponentDeactivate {
         this.subscriptionStore.cargarEstado();
         this.isCancellingSubscription.set(false);
       },
-      error: (err) => {
-        console.error('Error cancelando subscripcion:', err);
+      error: () => {
         this.toastService.error('Error al cancelar la subscripcion');
         this.isCancellingSubscription.set(false);
       }

@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { BaseHttpService } from '../../../core/services/base-http.service';
-import { LoadingService } from '../../../core/services/loading.service';
 import { RutinaAlimentacionDTO } from '../../nutrition/services/nutrition.service';
 import { RutinaEjercicioDTO } from '../../training/services/training.service';
 
@@ -74,14 +73,10 @@ interface User {
 export class UserService extends BaseHttpService {
   private readonly API_URL = 'usuarios';
 
-  constructor(http: HttpClient, loadingService: LoadingService) {
-    super(http, loadingService);
-  }
-
   /**
    * Listar usuarios con paginación
    */
-  listarUsuarios(nombre?: string, page: number = 0, size: number = 10): Observable<PageResponse<UsuarioListadoDTO>> {
+  listarUsuarios(nombre?: string, page = 0, size = 10): Observable<PageResponse<UsuarioListadoDTO>> {
     let params = new HttpParams()
       .set('page', page.toString())
       .set('size', size.toString());

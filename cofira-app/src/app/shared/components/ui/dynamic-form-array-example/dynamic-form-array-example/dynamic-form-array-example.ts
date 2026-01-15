@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormArray, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { phoneValidator } from '../../../../validators/spanish-formats.validator';
@@ -11,13 +11,11 @@ import { phoneValidator } from '../../../../validators/spanish-formats.validator
   styleUrl: './dynamic-form-array-example.scss',
 })
 export class DynamicFormArrayExample {
-  parentForm: FormGroup;
+  private readonly fb = inject(FormBuilder);
 
-  constructor(private fb: FormBuilder) {
-    this.parentForm = this.fb.group({
-      phoneNumbers: this.fb.array([this.createPhoneNumberControl()])
-    });
-  }
+  parentForm: FormGroup = this.fb.group({
+    phoneNumbers: this.fb.array([this.createPhoneNumberControl()])
+  });
 
   get phoneNumbers(): FormArray<FormControl<string | null>> {
     return this.parentForm.get('phoneNumbers') as FormArray<FormControl<string | null>>;
@@ -39,10 +37,10 @@ export class DynamicFormArrayExample {
 
   onSubmit(): void {
     if (this.parentForm.valid) {
-      console.log('Submitted Phone Numbers:', this.parentForm.value);
+      // Formulario valido - procesar datos
+      // En una implementacion real, aqui se enviarian los datos al servidor
     } else {
       this.parentForm.markAllAsTouched();
-      console.log('Form is invalid');
     }
   }
 }

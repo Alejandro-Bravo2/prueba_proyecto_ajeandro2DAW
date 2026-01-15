@@ -117,7 +117,6 @@ export class CheckoutStore {
           }
         },
         error: (err) => {
-          console.error('Error en checkout:', err);
           const errorMsg = err.error?.mensaje || 'Error al procesar el pago';
           this._error.set(errorMsg);
           this.toastService.error(errorMsg);

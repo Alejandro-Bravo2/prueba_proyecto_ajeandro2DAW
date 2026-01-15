@@ -9,16 +9,16 @@
         <mark class="plan-summary__badge">Recomendado</mark>
       }
 
-      <div class="plan-summary__plan-info">
+      <hgroup class="plan-summary__plan-info">
         <h3 class="plan-summary__plan-name">{{ planInfo.nombre }}</h3>
         <p class="plan-summary__plan-subtitle">{{ planInfo.subtitulo }}</p>
-      </div>
+      </hgroup>
 
-      <div class="plan-summary__price">
+      <data class="plan-summary__price" [value]="planInfo.precio">
         <span class="plan-summary__price-currency">&euro;</span>
         <span class="plan-summary__price-amount">{{ planInfo.precio }}</span>
         <span class="plan-summary__price-period">/{{ planInfo.periodo }}</span>
-      </div>
+      </data>
 
       <ul class="plan-summary__features">
         @for (feature of planInfo.features; track feature) {
@@ -32,20 +32,20 @@
       </ul>
     </section>
 
-    <section class="plan-summary__total">
-      <div class="plan-summary__total-row">
-        <span>Subtotal</span>
-        <span>&euro;{{ planInfo.precio }}</span>
-      </div>
-      <div class="plan-summary__total-row">
-        <span>Impuestos</span>
-        <span>Incluidos</span>
-      </div>
-      <div class="plan-summary__total-row plan-summary__total-row--final">
-        <span>Total a pagar</span>
-        <span class="plan-summary__total-amount">&euro;{{ planInfo.precio }}</span>
-      </div>
-    </section>
+    <dl class="plan-summary__total">
+      <figure class="plan-summary__total-row">
+        <dt>Subtotal</dt>
+        <dd>&euro;{{ planInfo.precio }}</dd>
+      </figure>
+      <figure class="plan-summary__total-row">
+        <dt>Impuestos</dt>
+        <dd>Incluidos</dd>
+      </figure>
+      <figure class="plan-summary__total-row plan-summary__total-row--final">
+        <dt>Total a pagar</dt>
+        <dd class="plan-summary__total-amount">&euro;{{ planInfo.precio }}</dd>
+      </figure>
+    </dl>
 
     <footer class="plan-summary__actions">
       <button

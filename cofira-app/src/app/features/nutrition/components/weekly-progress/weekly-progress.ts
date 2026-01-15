@@ -1,4 +1,4 @@
-import { Component, input, computed, inject, effect, ChangeDetectionStrategy } from '@angular/core';
+import { Component, input, computed, inject, ChangeDetectionStrategy } from '@angular/core';
 import { BaseChartDirective } from 'ng2-charts';
 import { ChartConfiguration, ChartData } from 'chart.js';
 import { ThemeService } from '../../../../core/services/theme.service';
@@ -123,10 +123,8 @@ export class WeeklyProgress {
     return Math.round(((secondHalf - firstHalf) / firstHalf) * 100);
   });
 
-  setActiveTab(tab: 'calories' | 'protein' | 'carbs' | 'fat'): void {
-    // In a real implementation, this would emit an output
-    // For now, we just log it
-    console.log('Tab changed to:', tab);
+  setActiveTab(_tab: 'calories' | 'protein' | 'carbs' | 'fat'): void {
+    // Metodo preparado para emitir eventos cuando se implemente la funcionalidad completa
   }
 
   private getColors(tab: string, isDark: boolean): { bg: string; border: string } {
