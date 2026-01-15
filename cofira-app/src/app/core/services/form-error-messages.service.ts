@@ -1,4 +1,20 @@
 import { Injectable } from '@angular/core';
+import { ValidationErrors } from '@angular/forms';
+
+/**
+ * Tipo para el valor de un error de validación
+ * Los errores de Angular pueden contener diferentes propiedades según el validador
+ */
+type ValidationErrorValue = {
+  requiredLength?: number;
+  actualLength?: number;
+  min?: number;
+  max?: number;
+  minDate?: string | Date;
+  maxDate?: string | Date;
+  required?: number;
+  actual?: number;
+} | boolean | string | number;
 
 /**
  * Servicio centralizado para gestionar mensajes de error de formularios
@@ -26,7 +42,7 @@ export class FormErrorMessagesService {
    * Mapa de mensajes de error
    * Puede ser una cadena estática o una función que genera el mensaje
    */
-  private readonly errorMessages: Record<string, string | ((value: any) => string)> = {
+  private readonly errorMessages: Record<string, string | ((value: ValidationErrorValue) => string)> = {
     // Validadores de Angular built-in
     required: 'Este campo es obligatorio',
     email: 'El formato del email no es válido',
@@ -85,7 +101,7 @@ export class FormErrorMessagesService {
    * @param errorValue - El valor del error (puede contener metadata adicional)
    * @returns El mensaje de error formateado
    */
-  getErrorMessage(errorKey: string, errorValue?: any): string {
+  getErrorMessage(errorKey: string, errorValue?: ValidationErrorValue): string {
     const message = this.errorMessages[errorKey];
 
     if (!message) {
@@ -102,7 +118,7 @@ export class FormErrorMessagesService {
    * @param errors - El objeto de errores del FormControl
    * @returns Array de mensajes de error
    */
-  getAllErrorMessages(errors: Record<string, any> | null): string[] {
+  getAllErrorMessages(errors: ValidationErrors | null): string[] {
     if (!errors) return [];
 
     return Object.keys(errors).map(key =>
@@ -116,7 +132,7 @@ export class FormErrorMessagesService {
    * @param errors - El objeto de errores del FormControl
    * @returns El primer mensaje de error o cadena vacía
    */
-  getFirstErrorMessage(errors: Record<string, any> | null): string {
+  getFirstErrorMessage(errors: ValidationErrors | null): string {
     if (!errors || Object.keys(errors).length === 0) {
       return '';
     }
@@ -132,7 +148,7 @@ export class FormErrorMessagesService {
    * @param errorKey - La clave del error a verificar
    * @returns true si el error existe
    */
-  hasError(errors: Record<string, any> | null, errorKey: string): boolean {
+  hasError(errors: ValidationErrors | null, errorKey: string): boolean {
     return errors !== null && errors[errorKey] !== undefined;
   }
 
@@ -167,7 +183,7 @@ export class FormErrorMessagesService {
    * errorService.addCustomMessage('rangeError', (val) => `Fuera de rango: ${val.min}-${val.max}`);
    * ```
    */
-  addCustomMessage(key: string, message: string | ((value: any) => string)): void {
+  addCustomMessage(key: string, message: string | ((value: ValidationErrorValue) => string)): void {
     this.errorMessages[key] = message;
   }
 }
