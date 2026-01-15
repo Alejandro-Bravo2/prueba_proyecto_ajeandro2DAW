@@ -2,7 +2,7 @@ import { Response } from 'express';
 import { z } from 'zod';
 import { prisma } from '../index.js';
 import { AuthRequest, WorkoutGenerationRequest } from '../types/index.js';
-import { openRouterService } from '../services/openrouter.service.js';
+import { ollamaService } from '../services/ollama.service.js';
 import { Difficulty, WorkoutType } from '@prisma/client';
 
 // Validation schemas
@@ -73,8 +73,8 @@ export async function generateWorkouts(req: AuthRequest, res: Response): Promise
       muscleGroupFocus
     };
 
-    // Generate workouts with AI
-    const generatedWorkouts = await openRouterService.generateWorkoutPlan(generationRequest);
+    // Generate workouts with AI (Ollama local)
+    const generatedWorkouts = await ollamaService.generateWorkoutPlan(generationRequest);
 
     // Calculate scheduled dates
     const startDate = weekStartDate ? new Date(weekStartDate) : new Date();
