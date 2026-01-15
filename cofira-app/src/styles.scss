@@ -114,10 +114,10 @@ body {
 ::-webkit-scrollbar-thumb {
   background: var(--gris-medio);
   border-radius: 4px;
+}
 
-  &:hover {
-    background: var(--gris-oscuro);
-  }
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gris-oscuro);
 }
 
 // Firefox scrollbar

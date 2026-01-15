@@ -146,19 +146,19 @@ export class TooltipDirective implements OnDestroy {
     if (!text || this.tooltipElement) return;
 
     // Crear elemento del tooltip usando Renderer2 (SSR-safe)
-    this.tooltipElement = this.renderer.createElement('div');
+    this.tooltipElement = this.renderer.createElement('section');
 
-    // Añadir clases usando Renderer2
+    // Añadir clase base usando Renderer2
     this.renderer.addClass(this.tooltipElement, 'c-tooltip');
-    this.renderer.addClass(this.tooltipElement, `c-tooltip--${this.tooltipPosition()}`);
 
     // Crear elemento de texto y añadirlo al tooltip
     const textNode = this.renderer.createText(text);
     this.renderer.appendChild(this.tooltipElement, textNode);
 
-    // Crear flecha indicadora usando Renderer2
+    // Crear flecha indicadora usando Renderer2 con clases BEM planas
     const arrowElement = this.renderer.createElement('span');
     this.renderer.addClass(arrowElement, 'c-tooltip__arrow');
+    this.renderer.addClass(arrowElement, `c-tooltip__arrow--${this.tooltipPosition()}`);
     this.renderer.appendChild(this.tooltipElement, arrowElement);
 
     // Configurar atributos de accesibilidad usando Renderer2

@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { ValidationErrors } from '@angular/forms';
 
 /**
- * Tipo para el valor de un error de validación
+ * Tipo para el valor de un error de validación con propiedades conocidas
  * Los errores de Angular pueden contener diferentes propiedades según el validador
  */
-type ValidationErrorValue = {
+interface ValidationErrorObject {
   requiredLength?: number;
   actualLength?: number;
   min?: number;
@@ -14,7 +14,13 @@ type ValidationErrorValue = {
   maxDate?: string | Date;
   required?: number;
   actual?: number;
-} | boolean | string | number;
+}
+
+/**
+ * Tipo union para valores de error de validación
+ */
+type ValidationErrorValue = ValidationErrorObject | boolean | string | number;
+
 
 /**
  * Servicio centralizado para gestionar mensajes de error de formularios
@@ -46,10 +52,22 @@ export class FormErrorMessagesService {
     // Validadores de Angular built-in
     required: 'Este campo es obligatorio',
     email: 'El formato del email no es válido',
-    minlength: (val) => `Debe tener al menos ${val.requiredLength} caracteres (actual: ${val.actualLength})`,
-    maxlength: (val) => `No puede tener más de ${val.requiredLength} caracteres (actual: ${val.actualLength})`,
-    min: (val) => `El valor mínimo permitido es ${val.min}`,
-    max: (val) => `El valor máximo permitido es ${val.max}`,
+    minlength: (val) => {
+      const errorObj = val as ValidationErrorObject;
+      return `Debe tener al menos ${errorObj.requiredLength} caracteres (actual: ${errorObj.actualLength})`;
+    },
+    maxlength: (val) => {
+      const errorObj = val as ValidationErrorObject;
+      return `No puede tener más de ${errorObj.requiredLength} caracteres (actual: ${errorObj.actualLength})`;
+    },
+    min: (val) => {
+      const errorObj = val as ValidationErrorObject;
+      return `El valor mínimo permitido es ${errorObj.min}`;
+    },
+    max: (val) => {
+      const errorObj = val as ValidationErrorObject;
+      return `El valor máximo permitido es ${errorObj.max}`;
+    },
     pattern: 'El formato no es válido',
 
     // Validadores personalizados de contraseña
@@ -68,22 +86,49 @@ export class FormErrorMessagesService {
     // Validadores de fecha
     pastDate: 'La fecha no puede ser anterior a hoy',
     futureDate: 'La fecha no puede ser posterior a hoy',
-    minDate: (val) => `La fecha no puede ser anterior a ${this.formatDate(val.minDate)}`,
-    maxDate: (val) => `La fecha no puede ser posterior a ${this.formatDate(val.maxDate)}`,
-    minAge: (val) => `Debes tener al menos ${val.required} años (tienes ${val.actual} años)`,
+    minDate: (val) => {
+      const errorObj = val as ValidationErrorObject;
+      return `La fecha no puede ser anterior a ${this.formatDate(errorObj.minDate ?? new Date())}`;
+    },
+    maxDate: (val) => {
+      const errorObj = val as ValidationErrorObject;
+      return `La fecha no puede ser posterior a ${this.formatDate(errorObj.maxDate ?? new Date())}`;
+    },
+    minAge: (val) => {
+      const errorObj = val as ValidationErrorObject;
+      return `Debes tener al menos ${errorObj.required} años (tienes ${errorObj.actual} años)`;
+    },
 
     // Validadores de rango
-    range: (val) => `El valor debe estar entre ${val.min} y ${val.max}`,
+    range: (val) => {
+      const errorObj = val as ValidationErrorObject;
+      return `El valor debe estar entre ${errorObj.min} y ${errorObj.max}`;
+    },
     positiveNumber: 'El valor debe ser un número positivo',
     integer: 'El valor debe ser un número entero',
     notANumber: 'El valor debe ser un número',
-    maxDecimals: (val) => `No puede tener más de ${val.required} decimales`,
+    maxDecimals: (val) => {
+      const errorObj = val as ValidationErrorObject;
+      return `No puede tener más de ${errorObj.required} decimales`;
+    },
 
     // Validadores de FormArray
-    minArrayLength: (val) => `Debes agregar al menos ${val.required} elemento${val.required > 1 ? 's' : ''}`,
-    maxArrayLength: (val) => `No puedes agregar más de ${val.required} elemento${val.required > 1 ? 's' : ''}`,
+    minArrayLength: (val) => {
+      const errorObj = val as ValidationErrorObject;
+      const count = errorObj.required ?? 1;
+      return `Debes agregar al menos ${count} elemento${count > 1 ? 's' : ''}`;
+    },
+    maxArrayLength: (val) => {
+      const errorObj = val as ValidationErrorObject;
+      const count = errorObj.required ?? 1;
+      return `No puedes agregar más de ${count} elemento${count > 1 ? 's' : ''}`;
+    },
     atLeastOneRequired: 'Debes seleccionar al menos una opción',
-    minSelected: (val) => `Debes seleccionar al menos ${val.required} opción${val.required > 1 ? 'es' : ''}`,
+    minSelected: (val) => {
+      const errorObj = val as ValidationErrorObject;
+      const count = errorObj.required ?? 1;
+      return `Debes seleccionar al menos ${count} opción${count > 1 ? 'es' : ''}`;
+    },
     duplicateValues: 'No se permiten valores duplicados',
     allItemsValid: 'Algunos elementos tienen errores. Por favor, revísalos',
 
@@ -109,7 +154,12 @@ export class FormErrorMessagesService {
       return this.errorMessages['unknown'] as string;
     }
 
-    return typeof message === 'function' ? message(errorValue) : message;
+    if (typeof message === 'function') {
+      const defaultValue: ValidationErrorObject = {};
+      return message(errorValue ?? defaultValue);
+    }
+
+    return message;
   }
 
   /**

@@ -2,10 +2,21 @@
    05-COMPONENTS: Alerta
    Componentes de alerta y notificacion
    Nomenclatura BEM en espanol
-   SIN SELECTORES ANIDADOS
+   ESTRUCTURA PLANA - Sin selectores mixtos
    ============================================ */
 
 @import '../01-tools/mixins';
+
+/* --------------------------------------------
+   VARIABLES CSS CUSTOM PROPERTIES
+   Permiten cambiar colores sin selectores mixtos
+   -------------------------------------------- */
+
+:root {
+  --alerta-bg: var(--gris-normal);
+  --alerta-color: var(--text-dark);
+  --alerta-cerrar-hover: rgba(0, 0, 0, 0.1);
+}
 
 /* --------------------------------------------
    BLOQUE: .alerta
@@ -14,10 +25,9 @@
 
 .alerta {
   @include alerta-base;
-  background-color: var(--gris-normal);
-  color: var(--text-dark);
+  background-color: var(--alerta-bg);
+  color: var(--alerta-color);
 }
-
 
 /* --------------------------------------------
    ELEMENTOS DE LA ALERTA
@@ -30,7 +40,7 @@
   flex-shrink: 0;
 }
 
-.alerta__icono svg {
+.alerta__icono-svg {
   width: 1.5rem;
   height: 1.5rem;
 }
@@ -65,65 +75,53 @@
 }
 
 .alerta__cerrar:hover {
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: var(--alerta-cerrar-hover);
 }
 
-.alerta__cerrar svg {
+.alerta__cerrar-svg {
   width: 1.25rem;
   height: 1.25rem;
 }
-
 
 /* --------------------------------------------
    MODIFICADORES DE TIPO
    -------------------------------------------- */
 
-/* Alerta de exito */
 .alerta--exito {
-  background-color: var(--amarillo-normal);
-  color: var(--negro-normal);
+  --alerta-bg: var(--amarillo-normal);
+  --alerta-color: var(--negro-normal);
+  --alerta-cerrar-hover: var(--amarillo-dark);
 }
 
-.alerta--exito .alerta__cerrar:hover {
-  background-color: var(--amarillo-dark);
-}
-
-/* Alerta de error */
 .alerta--error {
-  background-color: var(--button-red);
-  color: var(--text-dark);
+  --alerta-bg: var(--button-red);
+  --alerta-color: var(--text-dark);
+  --alerta-cerrar-hover: var(--button-red-hover);
 }
 
-.alerta--error .alerta__cerrar:hover {
-  background-color: var(--button-red-hover);
-}
-
-/* Alerta de advertencia */
 .alerta--advertencia {
-  background-color: var(--amarillo-dark);
-  color: var(--negro-normal);
+  --alerta-bg: var(--amarillo-dark);
+  --alerta-color: var(--negro-normal);
+  --alerta-cerrar-hover: var(--amarillo-dark-hover);
 }
 
-.alerta--advertencia .alerta__cerrar:hover {
-  background-color: var(--amarillo-dark-hover);
-}
-
-/* Alerta de informacion */
 .alerta--info {
-  background-color: var(--gris-dark);
-  color: var(--text-dark);
+  --alerta-bg: var(--gris-dark);
+  --alerta-color: var(--text-dark);
+  --alerta-cerrar-hover: var(--gris-normal);
   border: 1px solid var(--gris-normal);
 }
-
-.alerta--info .alerta__cerrar:hover {
-  background-color: var(--gris-normal);
-}
-
 
 /* --------------------------------------------
    BLOQUE: .notificacion
    Notificaciones flotantes (toast)
    -------------------------------------------- */
+
+:root {
+  --notificacion-bg: var(--gris-normal);
+  --notificacion-color: var(--text-dark);
+  --notificacion-cerrar-hover: rgba(0, 0, 0, 0.1);
+}
 
 .notificacion {
   @include alerta-base;
@@ -131,14 +129,13 @@
   top: var(--spacing-size-m);
   right: var(--spacing-size-m);
   max-width: 400px;
-  background-color: var(--gris-normal);
-  color: var(--text-dark);
+  background-color: var(--notificacion-bg);
+  color: var(--notificacion-color);
   box-shadow: var(--shadow-lg);
   z-index: 9999;
   animation: notificacion-entrada var(--duration-base) ease-out;
 }
 
-/* Animacion de entrada */
 @keyframes notificacion-entrada {
   from {
     opacity: 0;
@@ -150,7 +147,6 @@
   }
 }
 
-/* Animacion de salida */
 .notificacion--saliendo {
   animation: notificacion-salida var(--duration-base) ease-in forwards;
 }
@@ -166,7 +162,6 @@
   }
 }
 
-
 /* --------------------------------------------
    ELEMENTOS DE LA NOTIFICACION
    -------------------------------------------- */
@@ -178,7 +173,7 @@
   flex-shrink: 0;
 }
 
-.notificacion__icono svg {
+.notificacion__icono-svg {
   width: 1.5rem;
   height: 1.5rem;
 }
@@ -213,44 +208,41 @@
 }
 
 .notificacion__cerrar:hover {
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: var(--notificacion-cerrar-hover);
 }
 
-.notificacion__cerrar svg {
+.notificacion__cerrar-svg {
   width: 1.25rem;
   height: 1.25rem;
 }
-
 
 /* --------------------------------------------
    MODIFICADORES DE TIPO (Notificacion)
    -------------------------------------------- */
 
 .notificacion--exito {
-  background-color: var(--amarillo-normal);
-  color: var(--negro-normal);
+  --notificacion-bg: var(--amarillo-normal);
+  --notificacion-color: var(--negro-normal);
 }
 
 .notificacion--error {
-  background-color: var(--button-red);
-  color: var(--text-dark);
+  --notificacion-bg: var(--button-red);
+  --notificacion-color: var(--text-dark);
 }
 
 .notificacion--advertencia {
-  background-color: var(--amarillo-dark);
-  color: var(--negro-normal);
+  --notificacion-bg: var(--amarillo-dark);
+  --notificacion-color: var(--negro-normal);
 }
 
 .notificacion--info {
-  background-color: var(--gris-dark);
-  color: var(--text-dark);
+  --notificacion-bg: var(--gris-dark);
+  --notificacion-color: var(--text-dark);
   border: 1px solid var(--gris-normal);
 }
 
-
 /* --------------------------------------------
    CONTENEDOR DE NOTIFICACIONES
-   Para apilar multiples notificaciones
    -------------------------------------------- */
 
 .notificaciones-contenedor {
@@ -263,18 +255,18 @@
   z-index: 9999;
 }
 
-
 /* ============================================
    BLOQUE: .c-toast
    Toast dinámico creado con Renderer2
-   Demuestra creación dinámica de elementos DOM
    ============================================ */
 
-/**
- * Contenedor de toasts dinámicos.
- * Creado programáticamente por ToastService.showDynamic()
- * usando Renderer2.createElement() y appendChild().
- */
+:root {
+  --toast-bg: var(--gris-normal);
+  --toast-color: var(--text-dark);
+  --toast-border: transparent;
+  --toast-close-hover: rgba(0, 0, 0, 0.1);
+}
+
 .c-toast-container {
   position: fixed;
   display: flex;
@@ -284,33 +276,24 @@
   pointer-events: none;
 }
 
-/* Modificador: posición dinámica (esquina inferior izquierda) */
 .c-toast-container--dynamic {
   bottom: var(--spacing-size-m);
   left: var(--spacing-size-m);
 }
 
-/**
- * Toast individual creado dinámicamente.
- * Estructura creada con Renderer2:
- * - div.c-toast (createElement)
- *   - span.c-toast__icon (createElement + createText)
- *   - span.c-toast__message (createElement + createText)
- *   - button.c-toast__close (createElement + listen)
- */
 .c-toast {
   display: flex;
   align-items: center;
   gap: var(--spacing-size-s);
   padding: var(--spacing-size-m) var(--spacing-size-l);
-  background-color: var(--gris-normal);
-  color: var(--text-dark);
+  background-color: var(--toast-bg);
+  color: var(--toast-color);
   border-radius: var(--radius-xss);
+  border-left: 4px solid var(--toast-border);
   box-shadow: var(--shadow-lg);
   pointer-events: auto;
   max-width: 400px;
   min-width: 280px;
-  /* Estado inicial (para animación de entrada) */
   opacity: 0;
   transform: translateX(-100%);
   transition:
@@ -318,26 +301,22 @@
     transform var(--duration-base) ease-out;
 }
 
-/* Estado visible (aplicado con Renderer2.addClass) */
 .c-toast--visible {
   opacity: 1;
   transform: translateX(0);
 }
 
-/* Estado de salida (aplicado antes de removeChild) */
 .c-toast--hiding {
   opacity: 0;
   transform: translateX(-100%);
 }
 
-/* Icono del toast */
 .c-toast__icon {
   flex-shrink: 0;
   font-size: 1.25rem;
   line-height: 1;
 }
 
-/* Mensaje del toast */
 .c-toast__message {
   flex: 1;
   font-size: var(--font-size-md);
@@ -345,7 +324,6 @@
   line-height: var(--line-height-tight);
 }
 
-/* Botón de cierre (creado con Renderer2.createElement) */
 .c-toast__close {
   flex-shrink: 0;
   display: flex;
@@ -365,7 +343,7 @@
 }
 
 .c-toast__close:hover {
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: var(--toast-close-hover);
 }
 
 .c-toast__close:focus-visible {
@@ -373,43 +351,33 @@
   outline-offset: 2px;
 }
 
-/* ─────────────────────────────────────────
-   Modificadores de tipo
-   ───────────────────────────────────────── */
-
+/* Modificadores de tipo usando CSS custom properties */
 .c-toast--success {
-  background-color: var(--amarillo-normal);
-  color: var(--negro-normal);
-  border-left: 4px solid var(--amarillo-dark);
-}
-
-.c-toast--success .c-toast__icon {
-  color: var(--negro-normal);
+  --toast-bg: var(--amarillo-normal);
+  --toast-color: var(--negro-normal);
+  --toast-border: var(--amarillo-dark);
 }
 
 .c-toast--error {
-  background-color: var(--button-red);
-  color: var(--blanco-puro);
-  border-left: 4px solid var(--button-red-hover);
-}
-
-.c-toast--error .c-toast__close:hover {
-  background-color: rgba(255, 255, 255, 0.2);
+  --toast-bg: var(--button-red);
+  --toast-color: var(--blanco-puro);
+  --toast-border: var(--button-red-hover);
+  --toast-close-hover: rgba(255, 255, 255, 0.2);
 }
 
 .c-toast--warning {
-  background-color: var(--amarillo-dark);
-  color: var(--negro-normal);
-  border-left: 4px solid var(--amarillo-normal);
+  --toast-bg: var(--amarillo-dark);
+  --toast-color: var(--negro-normal);
+  --toast-border: var(--amarillo-normal);
 }
 
 .c-toast--info {
-  background-color: var(--gris-dark);
-  color: var(--text-dark);
-  border-left: 4px solid var(--gris-normal);
+  --toast-bg: var(--gris-dark);
+  --toast-color: var(--text-dark);
+  --toast-border: var(--gris-normal);
 }
 
-/* Responsive: En móviles, toasts ocupan todo el ancho */
+/* Responsive */
 @media (max-width: 480px) {
   .c-toast-container--dynamic {
     left: var(--spacing-size-s);

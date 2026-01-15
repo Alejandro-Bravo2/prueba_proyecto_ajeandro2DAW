@@ -93,13 +93,13 @@
   right: 1rem;
 }
 
-/* Input dentro del grupo */
-.input-group .input {
+/* Input con icono a la izquierda - usar junto con .input */
+.input--con-icono {
   padding-left: 3rem;
 }
 
-/* Si el icono está a la derecha */
-.input-group--icon-right .input {
+/* Input con icono a la derecha - usar junto con .input */
+.input--con-icono-derecha {
   padding-left: 1rem;
   padding-right: 3rem;
 }

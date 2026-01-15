@@ -282,7 +282,8 @@
   color: var(--negro-normal);
 }
 
-.pie__red-social svg {
+/* SVG dentro de redes sociales - usar clase en lugar de selector de elemento */
+.pie__red-social-svg {
   width: 1.25rem;
   height: 1.25rem;
 }

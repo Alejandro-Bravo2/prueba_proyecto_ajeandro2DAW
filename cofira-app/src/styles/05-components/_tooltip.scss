@@ -1,17 +1,28 @@
 /* ============================================================================
-   TOOLTIP COMPONENT
-   SIN SELECTORES ANIDADOS
+   TOOLTIP COMPONENT - ESTRUCTURA PLANA BEM
    ============================================================================
    Estilos para tooltips accesibles con animación fade-in/out y flecha indicadora.
    Implementado con Renderer2 para manipulación segura del DOM (SSR-safe).
+
+   REFACTORIZADO: Selectores planos sin anidamiento ni selectores mixtos.
+   El tema oscuro se maneja con CSS custom properties.
 
    @example
    <button appTooltip="Guardar cambios" tooltipPosition="top">Guardar</button>
    ============================================================================ */
 
-/* Variables del tooltip */
-$tooltip-bg: var(--negro-puro);
-$tooltip-text: var(--blanco-puro);
+/* Variables del tooltip con soporte para tema */
+:root {
+  --tooltip-bg: var(--negro-puro);
+  --tooltip-text: var(--blanco-puro);
+}
+
+[data-theme='dark'] {
+  --tooltip-bg: var(--blanco-puro);
+  --tooltip-text: var(--negro-puro);
+}
+
+/* Constantes locales */
 $tooltip-padding-x: var(--spacing-size-s);
 $tooltip-padding-y: var(--spacing-size-xs);
 $tooltip-radius: var(--radius-s);
@@ -27,8 +38,8 @@ $tooltip-transition-duration: 200ms;
   z-index: $tooltip-z-index;
   max-width: $tooltip-max-width;
   padding: $tooltip-padding-y $tooltip-padding-x;
-  background-color: $tooltip-bg;
-  color: $tooltip-text;
+  background-color: var(--tooltip-bg);
+  color: var(--tooltip-text);
   font-size: $tooltip-font-size;
   font-weight: var(--font-weight-medium);
   line-height: var(--line-height-tight);
@@ -37,7 +48,6 @@ $tooltip-transition-duration: 200ms;
   box-shadow: var(--shadow-md);
   pointer-events: none;
   white-space: nowrap;
-  /* Animación fade-in/out */
   opacity: 0;
   transform: scale(0.95);
   transition:
@@ -45,7 +55,7 @@ $tooltip-transition-duration: 200ms;
     transform $tooltip-transition-duration ease-out;
 }
 
-/* Estado visible (activado con JS) */
+/* Estado visible */
 .c-tooltip--visible {
   opacity: 1;
   transform: scale(1);
@@ -60,67 +70,43 @@ $tooltip-transition-duration: 200ms;
   border-color: transparent;
 }
 
-/* === Posición TOP === */
-.c-tooltip--top .c-tooltip__arrow {
+/* Flecha posicion TOP */
+.c-tooltip__arrow--top {
   bottom: -$tooltip-arrow-size;
   left: 50%;
   transform: translateX(-50%);
   border-width: $tooltip-arrow-size $tooltip-arrow-size 0 $tooltip-arrow-size;
-  border-top-color: $tooltip-bg;
+  border-top-color: var(--tooltip-bg);
 }
 
-/* === Posición BOTTOM === */
-.c-tooltip--bottom .c-tooltip__arrow {
+/* Flecha posicion BOTTOM */
+.c-tooltip__arrow--bottom {
   top: -$tooltip-arrow-size;
   left: 50%;
   transform: translateX(-50%);
   border-width: 0 $tooltip-arrow-size $tooltip-arrow-size $tooltip-arrow-size;
-  border-bottom-color: $tooltip-bg;
+  border-bottom-color: var(--tooltip-bg);
 }
 
-/* === Posición LEFT === */
-.c-tooltip--left .c-tooltip__arrow {
+/* Flecha posicion LEFT */
+.c-tooltip__arrow--left {
   right: -$tooltip-arrow-size;
   top: 50%;
   transform: translateY(-50%);
   border-width: $tooltip-arrow-size 0 $tooltip-arrow-size $tooltip-arrow-size;
-  border-left-color: $tooltip-bg;
+  border-left-color: var(--tooltip-bg);
 }
 
-/* === Posición RIGHT === */
-.c-tooltip--right .c-tooltip__arrow {
+/* Flecha posicion RIGHT */
+.c-tooltip__arrow--right {
   left: -$tooltip-arrow-size;
   top: 50%;
   transform: translateY(-50%);
   border-width: $tooltip-arrow-size $tooltip-arrow-size $tooltip-arrow-size 0;
-  border-right-color: $tooltip-bg;
+  border-right-color: var(--tooltip-bg);
 }
 
-/* === TEMA OSCURO ===
-   En modo oscuro, invertimos los colores del tooltip */
-[data-theme='dark'] .c-tooltip {
-  background-color: var(--blanco-puro);
-  color: var(--negro-puro);
-}
-
-[data-theme='dark'] .c-tooltip--top .c-tooltip__arrow {
-  border-top-color: var(--blanco-puro);
-}
-
-[data-theme='dark'] .c-tooltip--bottom .c-tooltip__arrow {
-  border-bottom-color: var(--blanco-puro);
-}
-
-[data-theme='dark'] .c-tooltip--left .c-tooltip__arrow {
-  border-left-color: var(--blanco-puro);
-}
-
-[data-theme='dark'] .c-tooltip--right .c-tooltip__arrow {
-  border-right-color: var(--blanco-puro);
-}
-
-/* === REDUCED MOTION ===
-   Respetar preferencias de movimiento reducido */
+/* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   .c-tooltip {
     transition: opacity 0.01ms ease-out;

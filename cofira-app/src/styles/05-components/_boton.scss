@@ -186,7 +186,8 @@
   align-items: center;
 }
 
-.boton__icono svg {
+/* SVG dentro del icono del botón - usar clase en lugar de selector de elemento */
+.boton__icono-svg {
   width: 1.125rem;
   height: 1.125rem;
 }

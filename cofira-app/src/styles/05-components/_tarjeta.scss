@@ -2,10 +2,30 @@
    05-COMPONENTS: Tarjeta
    Estilo Minimalista Apple/Ferrari
    Nomenclatura BEM en espanol
-   SIN SELECTORES ANIDADOS
+   ESTRUCTURA PLANA - Sin selectores mixtos
    ============================================ */
 
 @import '../01-tools/mixins';
+
+/* --------------------------------------------
+   VARIABLES CSS CUSTOM PROPERTIES
+   -------------------------------------------- */
+
+:root {
+  --tarjeta-padding: var(--spacing-size-xl);
+  --tarjeta-text-align: left;
+  --tarjeta-titulo-size: var(--font-size-xl);
+  --tarjeta-titulo-margin: 0 0 var(--spacing-size-xss) 0;
+  --tarjeta-subtitulo-margin: 0 0 var(--spacing-size-xss) 0;
+  --tarjeta-precio-size: var(--font-size-4xl);
+  --tarjeta-precio-margin: 0;
+  --tarjeta-lista-margin: 0 0 var(--spacing-size-l) 0;
+  --tarjeta-acciones-justify: flex-start;
+  --tarjeta-acciones-padding: var(--spacing-size-m);
+  --tarjeta-imagen-width: 100%;
+  --tarjeta-imagen-margin-bottom: var(--spacing-size-m);
+  --tarjeta-imagen-margin-right: 0;
+}
 
 /* --------------------------------------------
    BLOQUE: .tarjeta
@@ -19,7 +39,8 @@
   background-color: var(--bg-card);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-m);
-  padding: var(--spacing-size-xl);
+  padding: var(--tarjeta-padding);
+  text-align: var(--tarjeta-text-align);
   @include transition-base;
 }
 
@@ -27,15 +48,15 @@
   border-color: var(--border-medium);
 }
 
-
 /* --------------------------------------------
    ELEMENTOS DE LA TARJETA
    -------------------------------------------- */
 
 .tarjeta__imagen {
-  width: 100%;
+  width: var(--tarjeta-imagen-width);
   border-radius: var(--radius-s);
-  margin-bottom: var(--spacing-size-m);
+  margin-bottom: var(--tarjeta-imagen-margin-bottom);
+  margin-right: var(--tarjeta-imagen-margin-right);
   object-fit: cover;
 }
 
@@ -48,9 +69,9 @@
 
 .tarjeta__titulo {
   @include tipografia-titulo;
-  font-size: var(--font-size-xl);
+  font-size: var(--tarjeta-titulo-size);
   color: var(--text-primary);
-  margin: 0 0 var(--spacing-size-xss) 0;
+  margin: var(--tarjeta-titulo-margin);
 }
 
 .tarjeta__subtitulo {
@@ -58,7 +79,7 @@
   font-size: var(--font-size-md);
   font-weight: var(--font-weight-medium);
   color: var(--gris-texto);
-  margin: 0 0 var(--spacing-size-xss) 0;
+  margin: var(--tarjeta-subtitulo-margin);
 }
 
 .tarjeta__contenido {
@@ -72,9 +93,9 @@
 
 .tarjeta__precio {
   @include tipografia-titulo;
-  font-size: var(--font-size-4xl);
+  font-size: var(--tarjeta-precio-size);
   color: var(--text-primary);
-  margin: 0;
+  margin: var(--tarjeta-precio-margin);
   letter-spacing: var(--letter-spacing-tight);
 }
 
@@ -88,7 +109,7 @@
 .tarjeta__lista {
   list-style: none;
   padding: 0;
-  margin: 0 0 var(--spacing-size-l) 0;
+  margin: var(--tarjeta-lista-margin);
 }
 
 .tarjeta__item {
@@ -118,7 +139,8 @@
   display: flex;
   gap: var(--spacing-size-s);
   margin-top: auto;
-  padding-top: var(--spacing-size-m);
+  padding-top: var(--tarjeta-acciones-padding);
+  justify-content: var(--tarjeta-acciones-justify);
 }
 
 .tarjeta__pie {
@@ -130,7 +152,6 @@
   margin-top: var(--spacing-size-m);
 }
 
-/* Badge/Etiqueta */
 .tarjeta__badge {
   display: inline-block;
   padding: var(--spacing-size-xss) var(--spacing-size-s);
@@ -143,25 +164,23 @@
   border-radius: var(--radius-xss);
 }
 
-
-/* --------------------------------------------
-   MODIFICADORES DE LA TARJETA
-   -------------------------------------------- */
-
-/* Tarjeta destacada (borde destacado) */
-.tarjeta--destacada {
-  border: 2px solid var(--text-primary);
-  position: relative;
-}
-
-.tarjeta--destacada .tarjeta__badge {
+/* Badge posicionado (para tarjeta destacada) */
+.tarjeta__badge--posicionado {
   position: absolute;
   top: 0;
   left: 50%;
   transform: translate(-50%, -50%);
 }
 
-/* Tarjeta con elevación */
+/* --------------------------------------------
+   MODIFICADORES DE LA TARJETA
+   -------------------------------------------- */
+
+.tarjeta--destacada {
+  border: 2px solid var(--text-primary);
+  position: relative;
+}
+
 .tarjeta--elevada {
   box-shadow: var(--shadow-md);
   border-color: transparent;
@@ -172,64 +191,53 @@
   transform: translateY(-4px);
 }
 
-/* Tarjeta horizontal */
 .tarjeta--horizontal {
   flex-direction: row;
   align-items: center;
+  --tarjeta-imagen-width: 200px;
+  --tarjeta-imagen-margin-bottom: 0;
+  --tarjeta-imagen-margin-right: var(--spacing-size-l);
 }
 
-.tarjeta--horizontal .tarjeta__imagen {
-  width: 200px;
+/* Imagen con altura fija para horizontal */
+.tarjeta__imagen--horizontal {
   height: 200px;
-  margin-bottom: 0;
-  margin-right: var(--spacing-size-l);
   flex-shrink: 0;
 }
 
 /* Tamanos de tarjeta */
 .tarjeta--pequena {
-  padding: var(--spacing-size-m);
+  --tarjeta-padding: var(--spacing-size-m);
 }
 
 .tarjeta--mediana {
-  padding: var(--spacing-size-l);
+  --tarjeta-padding: var(--spacing-size-l);
 }
 
 .tarjeta--grande {
-  padding: var(--spacing-size-xxl);
+  --tarjeta-padding: var(--spacing-size-xxl);
 }
 
-/* Tarjeta de precios (pricing card) */
+/* Tarjeta de precios */
 .tarjeta--precios {
-  text-align: center;
-  padding: var(--spacing-size-xxl) var(--spacing-size-xl);
+  --tarjeta-padding: var(--spacing-size-xxl) var(--spacing-size-xl);
+  --tarjeta-text-align: center;
+  --tarjeta-titulo-size: var(--font-size-2xl);
+  --tarjeta-titulo-margin: 0 0 var(--spacing-size-xss) 0;
+  --tarjeta-subtitulo-margin: 0 0 var(--spacing-size-l) 0;
+  --tarjeta-precio-size: var(--font-size-5xl);
+  --tarjeta-precio-margin: var(--spacing-size-m) 0;
+  --tarjeta-lista-margin: var(--spacing-size-l) 0;
+  --tarjeta-acciones-justify: center;
+  --tarjeta-acciones-padding: var(--spacing-size-l);
 }
 
-.tarjeta--precios .tarjeta__titulo {
-  font-size: var(--font-size-2xl);
-  margin-bottom: var(--spacing-size-xss);
-}
-
-.tarjeta--precios .tarjeta__subtitulo {
-  margin-bottom: var(--spacing-size-l);
-}
-
-.tarjeta--precios .tarjeta__precio {
-  font-size: var(--font-size-5xl);
-  margin: var(--spacing-size-m) 0;
-}
-
-.tarjeta--precios .tarjeta__lista {
+/* Lista alineada a la izquierda en precios */
+.tarjeta__lista--precios {
   text-align: left;
-  margin: var(--spacing-size-l) 0;
 }
 
-.tarjeta--precios .tarjeta__acciones {
-  justify-content: center;
-  padding-top: var(--spacing-size-l);
-}
-
-/* Tarjeta interactiva (clickeable) */
+/* Tarjeta interactiva */
 .tarjeta--interactiva {
   cursor: pointer;
 }
@@ -242,11 +250,11 @@
   transform: scale(0.99);
 }
 
-/* Tarjeta transparente (sin fondo) */
+/* Tarjeta transparente */
 .tarjeta--transparente {
   background-color: transparent;
   border: none;
-  padding: 0;
+  --tarjeta-padding: 0;
 }
 
 .tarjeta--transparente:hover {
