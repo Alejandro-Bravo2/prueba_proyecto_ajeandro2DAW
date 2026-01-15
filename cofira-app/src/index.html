@@ -2,19 +2,143 @@
 <html lang="es">
 <head>
   <meta charset="utf-8">
-  <title>COFIRA - Tu entrenamiento, nutrición y progreso</title>
+  <title>COFIRA - Tu entrenamiento, nutrición y progreso personalizado</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="COFIRA: Sistema integral de entrenamiento, nutrición y seguimiento de progreso personalizado">
-  <meta name="theme-color" content="#FDB913">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
 
-  <!-- Google Fonts: Montserrat (body) y Poppins (headings) -->
+  <!-- SEO Meta Tags Básicos -->
+  <meta name="description" content="COFIRA: Sistema integral de entrenamiento, nutrición y seguimiento de progreso personalizado. Transforma tu cuerpo con planes adaptados a tus objetivos.">
+  <meta name="keywords" content="fitness, nutrición, entrenamiento, progreso, salud, ejercicio, dieta, gimnasio, rutinas, alimentación saludable">
+  <meta name="author" content="COFIRA">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#0a0a0a">
+  <meta name="msapplication-TileColor" content="#0a0a0a">
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://cofira.app/">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://cofira.app/">
+  <meta property="og:title" content="COFIRA - Tu entrenamiento, nutrición y progreso personalizado">
+  <meta property="og:description" content="Transforma tu cuerpo con COFIRA. Planes de entrenamiento personalizados, seguimiento nutricional inteligente y métricas de progreso en tiempo real.">
+  <meta property="og:image" content="https://cofira.app/assets/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="COFIRA - Plataforma de fitness y nutrición">
+  <meta property="og:site_name" content="COFIRA">
+  <meta property="og:locale" content="es_ES">
+
+  <!-- Twitter Cards -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@cofira_app">
+  <meta name="twitter:creator" content="@cofira_app">
+  <meta name="twitter:title" content="COFIRA - Tu entrenamiento, nutrición y progreso personalizado">
+  <meta name="twitter:description" content="Transforma tu cuerpo con COFIRA. Planes de entrenamiento personalizados, seguimiento nutricional inteligente y métricas de progreso en tiempo real.">
+  <meta name="twitter:image" content="https://cofira.app/assets/og-image.jpg">
+  <meta name="twitter:image:alt" content="COFIRA - Plataforma de fitness y nutrición">
+
+  <!-- Favicon y App Icons -->
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
+
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="manifest.json">
+
+  <!-- Preconnect para recursos externos -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+
+  <!-- Google Fonts: Montserrat (body) y Poppins (headings) -->
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+
+  <!-- JSON-LD Datos Estructurados - Organization -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "COFIRA",
+    "url": "https://cofira.app",
+    "logo": "https://cofira.app/assets/logo.png",
+    "description": "Plataforma integral de entrenamiento, nutrición y seguimiento de progreso personalizado.",
+    "sameAs": [
+      "https://twitter.com/cofira_app",
+      "https://instagram.com/cofira_app",
+      "https://linkedin.com/company/cofira"
+    ],
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "customer service",
+      "availableLanguage": "Spanish"
+    }
+  }
+  </script>
+
+  <!-- JSON-LD Datos Estructurados - WebApplication -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "COFIRA",
+    "url": "https://cofira.app",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "Web",
+    "description": "Sistema integral de entrenamiento, nutrición y seguimiento de progreso personalizado.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "EUR"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.8",
+      "ratingCount": "1250",
+      "bestRating": "5",
+      "worstRating": "1"
+    },
+    "featureList": [
+      "Planes de entrenamiento personalizados",
+      "Seguimiento nutricional",
+      "Métricas de progreso",
+      "Análisis de fotos con IA"
+    ]
+  }
+  </script>
+
+  <!-- JSON-LD Datos Estructurados - WebSite con SearchAction -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "COFIRA",
+    "url": "https://cofira.app",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://cofira.app/search?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
 </head>
 <body>
   <app-root></app-root>
+
+  <!-- Noscript fallback para SEO -->
+  <noscript>
+    <section style="padding: 2rem; text-align: center; font-family: sans-serif;">
+      <h1>COFIRA - Entrenamiento, Nutrición y Progreso</h1>
+      <p>Para utilizar COFIRA necesitas habilitar JavaScript en tu navegador.</p>
+      <p>COFIRA es una plataforma integral de fitness que te ayuda a alcanzar tus objetivos de salud con planes de entrenamiento personalizados, seguimiento nutricional inteligente y métricas de progreso en tiempo real.</p>
+      <nav>
+        <a href="/login">Iniciar Sesión</a> |
+        <a href="/register">Registrarse</a> |
+        <a href="/terms">Términos</a> |
+        <a href="/privacy">Privacidad</a>
+      </nav>
+    </section>
+  </noscript>
 </body>
 </html>

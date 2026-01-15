@@ -1,0 +1,42 @@
+# Robots.txt para COFIRA
+# https://cofira.app
+
+User-agent: *
+Allow: /
+
+# Páginas públicas permitidas
+Allow: /
+Allow: /login
+Allow: /register
+Allow: /terms
+Allow: /privacy
+
+# Páginas protegidas - no indexar
+Disallow: /entrenamiento
+Disallow: /alimentacion
+Disallow: /seguimiento
+Disallow: /preferencias
+Disallow: /checkout
+Disallow: /onboarding
+Disallow: /reset-password
+
+# Archivos técnicos
+Disallow: /api/
+Disallow: /*.json$
+Disallow: /*.js$
+Disallow: /*.css$
+
+# Sitemap
+Sitemap: https://cofira.app/sitemap.xml
+
+# Crawl-delay para evitar sobrecarga
+Crawl-delay: 1
+
+# Bots específicos
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
