@@ -8,6 +8,7 @@ import { ProgressEvaluation } from './components/progress-evaluation/progress-ev
 import { ProgressService, NutrientData, ProgressEntry } from './services/progress.service';
 import { ProgressStore } from './stores/progress.store';
 import { InfiniteScrollDirective } from '../../shared/directives/infinite-scroll.directive';
+import { AuthService } from '../../core/auth/auth.service';
 
 @Component({
   selector: 'app-progress',
@@ -19,6 +20,7 @@ import { InfiniteScrollDirective } from '../../shared/directives/infinite-scroll
 export class Progress implements OnInit {
   private readonly progressService = inject(ProgressService);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly authService = inject(AuthService);
 
   /** Store de progreso para gestion de estado */
   readonly store = inject(ProgressStore);
@@ -96,12 +98,7 @@ export class Progress implements OnInit {
   }
 
   private getUserId(): string | null {
-    // Get user ID from localStorage or auth service
-    const user = localStorage.getItem('currentUser');
-    if (user) {
-      return JSON.parse(user).id;
-    }
-    return null;
+    return this.authService.currentUser()?.id ?? null;
   }
 
   /** Limpiar busqueda */

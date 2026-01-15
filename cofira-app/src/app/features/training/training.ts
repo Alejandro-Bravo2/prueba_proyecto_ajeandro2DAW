@@ -5,10 +5,11 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { WeeklyTable } from './components/weekly-table/weekly-table';
 import { FeedbackForm } from './components/feedback-form/feedback-form';
 import { ProgressCard } from './components/progress-card/progress-card';
-import { TrainingService, Exercise, WorkoutProgress } from './services/training.service';
+import { TrainingService, WorkoutProgress } from './services/training.service';
 import { TrainingStore } from './stores/training.store';
 import { EmptyState } from '../../shared/components/ui/empty-state/empty-state';
 import { InfiniteScrollDirective } from '../../shared/directives/infinite-scroll.directive';
+import { AuthService } from '../../core/auth/auth.service';
 
 @Component({
   selector: 'app-training',
@@ -20,6 +21,7 @@ import { InfiniteScrollDirective } from '../../shared/directives/infinite-scroll
 export class Training implements OnInit {
   private readonly trainingService = inject(TrainingService);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly authService = inject(AuthService);
 
   /** Store de entrenamiento para gestion de estado */
   readonly store = inject(TrainingStore);
@@ -75,16 +77,7 @@ export class Training implements OnInit {
   }
 
   private getUserId(): string | null {
-    try {
-      const user = localStorage.getItem('currentUser');
-      if (user) {
-        const parsed = JSON.parse(user);
-        return parsed?.id ?? null;
-      }
-    } catch {
-      return null;
-    }
-    return null;
+    return this.authService.currentUser()?.id ?? null;
   }
 
   /** Limpiar busqueda */

@@ -3,6 +3,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ProgressService, ProgressEntry } from '../../services/progress.service';
 import { ToastService } from '../../../../core/services/toast.service';
+import { AuthService } from '../../../../core/auth/auth.service';
 
 @Component({
   selector: 'app-add-progress-form',
@@ -13,9 +14,10 @@ import { ToastService } from '../../../../core/services/toast.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddProgressForm {
-  private formBuilder = inject(FormBuilder);
-  private progressService = inject(ProgressService);
-  private toastService = inject(ToastService);
+  private readonly formBuilder = inject(FormBuilder);
+  private readonly progressService = inject(ProgressService);
+  private readonly toastService = inject(ToastService);
+  private readonly authService = inject(AuthService);
 
   // Output event when progress is added
   progressAdded = output<ProgressEntry>();
@@ -105,10 +107,6 @@ export class AddProgressForm {
   }
 
   private getUserId(): string | null {
-    const user = localStorage.getItem('currentUser');
-    if (user) {
-      return JSON.parse(user).id;
-    }
-    return null;
+    return this.authService.currentUser()?.id ?? null;
   }
 }
