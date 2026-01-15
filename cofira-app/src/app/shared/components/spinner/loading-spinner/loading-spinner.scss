@@ -17,21 +17,22 @@
   display: flex;
   gap: var(--spacing-size-xss);
   margin: 0;
+}
 
-  &__dot {
-    width: var(--spacing-size-m);
-    height: var(--spacing-size-m);
-    background-color: var(--amarillo-normal);
-    border-radius: 50%;
-    animation: bounce 1.4s infinite ease-in-out both;
+.spinner__dot {
+  width: var(--spacing-size-m);
+  height: var(--spacing-size-m);
+  background-color: var(--amarillo-normal);
+  border-radius: 50%;
+  animation: bounce 1.4s infinite ease-in-out both;
+}
 
-    &:nth-child(1) {
-      animation-delay: -0.32s;
-    }
-    &:nth-child(2) {
-      animation-delay: -0.16s;
-    }
-  }
+.spinner__dot:nth-child(1) {
+  animation-delay: -0.32s;
+}
+
+.spinner__dot:nth-child(2) {
+  animation-delay: -0.16s;
 }
 
 @keyframes bounce {

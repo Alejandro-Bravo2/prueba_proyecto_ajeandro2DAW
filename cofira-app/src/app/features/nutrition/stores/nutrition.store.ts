@@ -1,5 +1,5 @@
 import { Injectable, inject, signal, computed } from '@angular/core';
-import { NutritionService, Meal, DailyNutrition } from '../services/nutrition.service';
+import { NutritionService, Meal, DailyNutrition, DiaAlimentacionDTO, ComidaDTO } from '../services/nutrition.service';
 import { ToastService } from '../../../core/services/toast.service';
 import { catchError, finalize } from 'rxjs/operators';
 import { of } from 'rxjs';
@@ -268,18 +268,18 @@ export class NutritionStore {
   /**
    * Transforma DiaAlimentacionDTO a Meal[]
    */
-  private transformDiaToMeals(dia: any): Meal[] {
+  private transformDiaToMeals(dia: DiaAlimentacionDTO): Meal[] {
     const meals: Meal[] = [];
-    const mealTypes = [
-      { key: 'desayuno', type: 'breakfast' as const, label: 'Desayuno' },
-      { key: 'almuerzo', type: 'snack' as const, label: 'Almuerzo' },
-      { key: 'comida', type: 'lunch' as const, label: 'Comida' },
-      { key: 'merienda', type: 'snack' as const, label: 'Merienda' },
-      { key: 'cena', type: 'dinner' as const, label: 'Cena' }
+    const mealTypes: { key: keyof DiaAlimentacionDTO; type: Meal['mealType']; label: string }[] = [
+      { key: 'desayuno', type: 'breakfast', label: 'Desayuno' },
+      { key: 'almuerzo', type: 'snack', label: 'Almuerzo' },
+      { key: 'comida', type: 'lunch', label: 'Comida' },
+      { key: 'merienda', type: 'snack', label: 'Merienda' },
+      { key: 'cena', type: 'dinner', label: 'Cena' }
     ];
 
-    mealTypes.forEach(({ key, type, label }) => {
-      const comida = dia[key];
+    mealTypes.forEach(({ key, type }) => {
+      const comida = dia[key] as ComidaDTO | null;
       if (comida && comida.alimentos && comida.alimentos.length > 0) {
         meals.push({
           id: `${dia.id}-${key}`,

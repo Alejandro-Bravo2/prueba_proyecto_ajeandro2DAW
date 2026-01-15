@@ -9,80 +9,79 @@
   box-shadow: var(--shadow-md);
   max-width: 400px;
   margin: 0 auto;
+}
 
-  &__header {
-    @include flex-between;
-    margin-bottom: var(--spacing-size-m);
+.calendar__header {
+  @include flex-between;
+  margin-bottom: var(--spacing-size-m);
+}
 
-    h2 {
-      font-size: var(--font-size-xl);
-      margin: 0;
-      color: var(--text-dark);
-      font-family: var(--font-secondary);
-    }
+.calendar__header h2 {
+  font-size: var(--font-size-xl);
+  margin: 0;
+  color: var(--text-dark);
+  font-family: var(--font-secondary);
+}
 
-    button {
-      @include boton-reset;
-      @include flex-center;
-      width: 40px;
-      height: 40px;
-      border-radius: var(--radius-circle);
-      color: var(--text-dark);
-      transition: all var(--duration-fast);
+.calendar__header button {
+  @include boton-reset;
+  @include flex-center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-circle);
+  color: var(--text-dark);
+  transition: all var(--duration-fast);
+}
 
-      &:hover {
-        background-color: var(--gris-dark);
-      }
-    }
-  }
+.calendar__header button:hover {
+  background-color: var(--gris-dark);
+}
 
-  &__weekdays,
-  &__days {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    text-align: center;
-  }
+.calendar__weekdays,
+.calendar__days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+}
 
-  &__weekdays {
-    margin-bottom: var(--spacing-size-xss);
-    span {
-      font-weight: var(--font-weight-semibold);
-      color: var(--text-dark);
-      font-size: var(--font-size-sm);
-      font-family: var(--font-primary);
-    }
-  }
+.calendar__weekdays {
+  margin-bottom: var(--spacing-size-xss);
+}
 
-  &__days {
-    button {
-      @include boton-reset;
-      height: 40px;
-      border-radius: var(--radius-xss);
-      @include flex-center;
-      font-size: var(--font-size-md);
-      font-family: var(--font-primary);
-      color: var(--text-dark);
-      transition: background-color var(--duration-fast);
+.calendar__weekdays span {
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-dark);
+  font-size: var(--font-size-sm);
+  font-family: var(--font-primary);
+}
 
-      &:hover {
-        background-color: var(--gris-dark);
-      }
+.calendar__days button {
+  @include boton-reset;
+  height: 40px;
+  border-radius: var(--radius-xss);
+  @include flex-center;
+  font-size: var(--font-size-md);
+  font-family: var(--font-primary);
+  color: var(--text-dark);
+  transition: background-color var(--duration-fast);
+}
 
-      &--disabled {
-        color: var(--blanco-dark);
-        cursor: not-allowed;
-        background-color: transparent;
-      }
+.calendar__days button:hover {
+  background-color: var(--gris-dark);
+}
 
-      &--today {
-        border: 2px solid var(--amarillo-normal);
-      }
+.calendar__days button--disabled {
+  color: var(--blanco-dark);
+  cursor: not-allowed;
+  background-color: transparent;
+}
 
-      &--selected {
-        background-color: var(--amarillo-normal);
-        color: var(--negro-normal);
-        font-weight: var(--font-weight-bold);
-      }
-    }
-  }
+.calendar__days button--today {
+  border: 2px solid var(--amarillo-normal);
+}
+
+.calendar__days button--selected {
+  background-color: var(--amarillo-normal);
+  color: var(--negro-normal);
+  font-weight: var(--font-weight-bold);
 }

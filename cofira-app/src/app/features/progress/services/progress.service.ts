@@ -54,6 +54,13 @@ export interface StrengthProgress {
   }[];
 }
 
+export interface NutritionTargetsResponse {
+  dailyCalories?: number;
+  proteinGrams?: number;
+  carbsGrams?: number;
+  fatGrams?: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -158,7 +165,7 @@ export class ProgressService extends BaseHttpService {
    */
   getNutrientDataByDate(userId: string, date: string): Observable<NutrientData> {
     // Intenta obtener los targets del perfil del usuario
-    return this.get<any>(`onboarding/nutrition-targets`).pipe(
+    return this.get<NutritionTargetsResponse>(`onboarding/nutrition-targets`).pipe(
       map(targets => ({
         date: date,
         protein: 0,

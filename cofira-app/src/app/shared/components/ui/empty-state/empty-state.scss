@@ -65,15 +65,15 @@
 
 .c-empty-state__action {
   margin-top: 0.5rem;
+}
 
-  &--secondary {
-    margin-left: 0.75rem;
-  }
+.c-empty-state__action--secondary {
+  margin-left: 0.75rem;
+}
 
-  // Asegurar que el botón tenga padding adecuado
-  &.c-button {
-    padding: 0.75rem 1.5rem;
-  }
+// Asegurar que el botón tenga padding adecuado
+.c-empty-state__action.c-button {
+  padding: 0.75rem 1.5rem;
 }
 
 // ============================================================================
@@ -83,43 +83,43 @@
 .c-empty-state--small {
   min-height: 200px;
   padding: 2rem 1.5rem;
+}
 
-  .c-empty-state__icon {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-  }
+.c-empty-state--small .c-empty-state__icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
 
-  .c-empty-state__title {
-    font-size: 1.25rem;
-    margin-bottom: 0.5rem;
-  }
+.c-empty-state--small .c-empty-state__title {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
 
-  .c-empty-state__message {
-    font-size: 0.875rem;
-    margin-bottom: 1.5rem;
-    max-width: 300px;
-  }
+.c-empty-state--small .c-empty-state__message {
+  font-size: 0.875rem;
+  margin-bottom: 1.5rem;
+  max-width: 300px;
 }
 
 .c-empty-state--large {
   min-height: 400px;
   padding: 4rem 2.5rem;
+}
 
-  .c-empty-state__icon {
-    font-size: 5rem;
-    margin-bottom: 2rem;
-  }
+.c-empty-state--large .c-empty-state__icon {
+  font-size: 5rem;
+  margin-bottom: 2rem;
+}
 
-  .c-empty-state__title {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-  }
+.c-empty-state--large .c-empty-state__title {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
 
-  .c-empty-state__message {
-    font-size: 1.125rem;
-    margin-bottom: 2.5rem;
-    max-width: 500px;
-  }
+.c-empty-state--large .c-empty-state__message {
+  font-size: 1.125rem;
+  margin-bottom: 2.5rem;
+  max-width: 500px;
 }
 
 // ============================================================================
@@ -132,10 +132,8 @@
 }
 
 // Sin botón de acción, reducir espacio inferior
-.c-empty-state:not(:has(.c-empty-state__action)) {
-  .c-empty-state__message {
-    margin-bottom: 0;
-  }
+.c-empty-state:not(:has(.c-empty-state__action)) .c-empty-state__message {
+  margin-bottom: 0;
 }
 
 // ============================================================================
@@ -163,24 +161,20 @@
     max-width: 320px;
   }
 
-  .c-empty-state__action {
-    &--secondary {
-      margin-left: 0;
-      margin-top: 0.5rem;
-    }
+  .c-empty-state__action--secondary {
+    margin-left: 0;
+    margin-top: 0.5rem;
   }
 
   // Apilar botones en móvil
-  .c-empty-state:has(.c-empty-state__action--secondary) {
-    .c-empty-state__action {
-      display: block;
-      width: 100%;
-      max-width: 280px;
+  .c-empty-state:has(.c-empty-state__action--secondary) .c-empty-state__action {
+    display: block;
+    width: 100%;
+    max-width: 280px;
+  }
 
-      + .c-empty-state__action {
-        margin-top: 0.75rem;
-      }
-    }
+  .c-empty-state:has(.c-empty-state__action--secondary) .c-empty-state__action + .c-empty-state__action {
+    margin-top: 0.75rem;
   }
 }
 
