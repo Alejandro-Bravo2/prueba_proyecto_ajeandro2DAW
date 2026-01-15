@@ -35,7 +35,7 @@ import { ToastService } from '../../../core/services/toast.service';
  */
 export const exerciseDetailResolver: ResolveFn<EjerciciosDTO | null> = (
   route: ActivatedRouteSnapshot,
-  state: RouterStateSnapshot
+  _state: RouterStateSnapshot
 ): Observable<EjerciciosDTO | null> => {
   const trainingService = inject(TrainingService);
   const router = inject(Router);
@@ -53,15 +53,11 @@ export const exerciseDetailResolver: ResolveFn<EjerciciosDTO | null> = (
   loadingService.show();
 
   return trainingService.obtenerEjercicio(Number(id)).pipe(
-    catchError((error) => {
-      console.error('Error al cargar ejercicio en resolver:', error);
+    catchError(() => {
       toastService.error(`No se encontró el ejercicio con ID ${id}`);
-
-      // Redirigir a la lista con mensaje de error en state
       router.navigate(['/entrenamiento'], {
         state: { error: `No existe el ejercicio con id ${id}` }
       });
-
       return of(null);
     }),
     finalize(() => {

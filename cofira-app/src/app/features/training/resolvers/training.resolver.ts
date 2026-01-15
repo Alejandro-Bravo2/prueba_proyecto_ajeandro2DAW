@@ -1,5 +1,5 @@
 import { inject } from '@angular/core';
-import { ResolveFn, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { ResolveFn, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { catchError, finalize } from 'rxjs/operators';
 import { TrainingService, EjerciciosDTO } from '../services/training.service';
@@ -35,28 +35,18 @@ import { ToastService } from '../../../core/services/toast.service';
  * ```
  */
 export const trainingResolver: ResolveFn<EjerciciosDTO[]> = (
-  route: ActivatedRouteSnapshot,
-  state: RouterStateSnapshot
+  _route: ActivatedRouteSnapshot,
+  _state: RouterStateSnapshot
 ): Observable<EjerciciosDTO[]> => {
   const trainingService = inject(TrainingService);
-  const router = inject(Router);
   const loadingService = inject(LoadingService);
   const toastService = inject(ToastService);
 
-  // Mostrar indicador de carga
   loadingService.show();
 
   return trainingService.listarEjercicios().pipe(
-    catchError((error) => {
-      console.error('Error al cargar ejercicios en resolver:', error);
-
-      // Mostrar toast de error
+    catchError(() => {
       toastService.error('No se pudieron cargar los ejercicios. Por favor, intenta más tarde.');
-
-      // Opcional: redirigir a una página de error o al home
-      // router.navigate(['/']);
-
-      // Retornar array vacío para permitir que la navegación continúe
       return of([]);
     }),
     finalize(() => {

@@ -39,10 +39,10 @@ export class DynamicFormArrayExample {
 
   onSubmit(): void {
     if (this.parentForm.valid) {
-      console.log('Submitted Phone Numbers:', this.parentForm.value);
+      // Formulario valido - procesar datos
+      // En una implementacion real, aqui se enviarian los datos al servidor
     } else {
       this.parentForm.markAllAsTouched();
-      console.log('Form is invalid');
     }
   }
 }

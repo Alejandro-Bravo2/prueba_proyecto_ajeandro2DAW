@@ -86,10 +86,9 @@ export class NutritionAIService {
         this.lastAnalysis.set(response.analysis);
         this.isAnalyzing.set(false);
       }),
-      catchError(error => {
+      catchError(() => {
         this.isAnalyzing.set(false);
-        // Fallback to mock for demo if backend unavailable
-        console.warn('AI analysis failed, using mock data:', error);
+        // Fallback a datos mock si el backend no esta disponible
         return this.getMockAnalysis();
       })
     );

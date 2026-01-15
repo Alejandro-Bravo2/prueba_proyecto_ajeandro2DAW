@@ -136,9 +136,8 @@ export class NutritionDashboard {
     return nutrition?.meals.length || 0;
   });
 
-  onFoodAnalyzed(analysis: FoodAnalysis): void {
-    // Handle analyzed food preview
-    console.log('Food analyzed:', analysis);
+  onFoodAnalyzed(_analysis: FoodAnalysis): void {
+    // Metodo preparado para mostrar preview del alimento analizado
   }
 
   onFoodConfirmed(analysis: FoodAnalysis): void {

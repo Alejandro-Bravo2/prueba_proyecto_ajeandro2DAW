@@ -1,5 +1,5 @@
 import { inject } from '@angular/core';
-import { ResolveFn, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { ResolveFn, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { catchError, finalize } from 'rxjs/operators';
 import { NutritionService, AlimentoDTO } from '../services/nutrition.service';
@@ -35,28 +35,18 @@ import { ToastService } from '../../../core/services/toast.service';
  * ```
  */
 export const nutritionResolver: ResolveFn<AlimentoDTO[]> = (
-  route: ActivatedRouteSnapshot,
-  state: RouterStateSnapshot
+  _route: ActivatedRouteSnapshot,
+  _state: RouterStateSnapshot
 ): Observable<AlimentoDTO[]> => {
   const nutritionService = inject(NutritionService);
-  const router = inject(Router);
   const loadingService = inject(LoadingService);
   const toastService = inject(ToastService);
 
-  // Mostrar indicador de carga
   loadingService.show();
 
   return nutritionService.listarAlimentos().pipe(
-    catchError((error) => {
-      console.error('Error al cargar alimentos en resolver:', error);
-
-      // Mostrar toast de error
+    catchError(() => {
       toastService.error('No se pudieron cargar los alimentos. Por favor, intenta más tarde.');
-
-      // Opcional: redirigir a una página de error o al home
-      // router.navigate(['/']);
-
-      // Retornar array vacío para permitir que la navegación continúe
       return of([]);
     }),
     finalize(() => {
