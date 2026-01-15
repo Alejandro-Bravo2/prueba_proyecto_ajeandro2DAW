@@ -1,0 +1,48 @@
+<article class="progress-card">
+  <div class="progress-card__image-wrapper">
+    <svg class="progress-card__illustration" viewBox="0 0 400 225" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#f0f4f8;stop-opacity:1" />
+          <stop offset="100%" style="stop-color:#e2e8f0;stop-opacity:1" />
+        </linearGradient>
+        <linearGradient id="chartGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+          <stop offset="100%" style="stop-color:#1d4ed8;stop-opacity:1" />
+        </linearGradient>
+      </defs>
+      <rect width="400" height="225" fill="url(#bgGrad)"/>
+      <g transform="translate(60, 40)">
+        <rect x="0" y="100" width="30" height="45" rx="4" fill="url(#chartGrad)" opacity="0.6"/>
+        <rect x="50" y="80" width="30" height="65" rx="4" fill="url(#chartGrad)" opacity="0.7"/>
+        <rect x="100" y="50" width="30" height="95" rx="4" fill="url(#chartGrad)" opacity="0.8"/>
+        <rect x="150" y="30" width="30" height="115" rx="4" fill="url(#chartGrad)" opacity="0.9"/>
+        <rect x="200" y="10" width="30" height="135" rx="4" fill="url(#chartGrad)"/>
+        <line x1="0" y1="145" x2="240" y2="145" stroke="#94a3b8" stroke-width="2"/>
+        <circle cx="215" cy="35" r="25" fill="#22c55e" opacity="0.9"/>
+        <text x="215" y="42" text-anchor="middle" fill="white" font-size="20" font-weight="bold">+</text>
+      </g>
+      <text x="200" y="210" text-anchor="middle" fill="#64748b" font-size="14" font-family="system-ui">Tu progreso semanal</text>
+    </svg>
+  </div>
+  <section class="progress-card__content">
+    <h3>Mira tu progreso</h3>
+    @if (workoutProgress(); as progress) {
+    <dl class="progress-stats">
+      <dt>Total entrenamientos:</dt>
+      <dd>{{ progress.totalWorkouts }}</dd>
+      <dt>Ejercicios completados:</dt>
+      <dd>{{ progress.completedExercises }}</dd>
+      <dt>Racha actual:</dt>
+      <dd>{{ progress.streak }} días</dd>
+      @if (progress.lastWorkout) {
+      <dt>Último entrenamiento:</dt>
+      <dd>{{ progress.lastWorkout }}</dd>
+      }
+    </dl>
+    } @else {
+    <p>Visualiza tus avances y mantente motivado con tus estadísticas.</p>
+    }
+    <button class="c-button c-button--primary" routerLink="/seguimiento">VER MI PROGRESO</button>
+  </section>
+</article>

@@ -1,0 +1,872 @@
+/*
+La capa Tools contiene funciones y mixins reutilizables.
+Estilo: Minimalista Apple/Ferrari
+*/
+
+@import '../00-settings/css-variables';
+
+
+/* ============================================
+   FLEXBOX MIXINS
+   ============================================ */
+
+// Centrado perfecto (horizontal y vertical)
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// Distribuir espacio entre elementos
+@mixin flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+// Flex con wrap (cuando los elementos no caben)
+@mixin flex-wrap($gap: 1rem) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $gap;
+}
+
+// Flex completo (ocupa todo el ancho)
+@mixin flex-full {
+  display: flex;
+  width: 100%;
+}
+
+// Flexbox en columna con gap opcional
+@mixin flex-columna($gap: 0) {
+  display: flex;
+  flex-direction: column;
+  gap: $gap;
+}
+
+// Flexbox en fila con gap opcional
+@mixin flex-fila($gap: 0) {
+  display: flex;
+  flex-direction: row;
+  gap: $gap;
+}
+
+
+/* ============================================
+   TRANSICIONES PREMIUM (Apple-like)
+   ============================================ */
+
+// Transición rápida para micro-interacciones
+@mixin transition-fast($property: all) {
+  transition: $property var(--duration-fast) var(--ease-out);
+}
+
+// Transición base para la mayoría de elementos
+@mixin transition-base($property: all) {
+  transition: $property var(--duration-base) var(--ease-premium);
+}
+
+// Transición premium para elementos importantes
+@mixin transition-premium($property: all) {
+  transition: $property var(--duration-slow) var(--ease-premium);
+}
+
+// Transición dramática para hero elements
+@mixin transition-dramatic($property: all) {
+  transition: $property var(--duration-slowest) var(--ease-dramatic);
+}
+
+// Transición suave estandar (legacy)
+@mixin transicion-suave($propiedad: all) {
+  transition: $propiedad var(--duration-base) var(--ease-premium);
+}
+
+
+/* ============================================
+   EFECTOS VISUALES PREMIUM
+   ============================================ */
+
+// Efecto glassmorphism (Apple-style)
+@mixin glass-effect($blur: 20px, $opacity: 0.8) {
+  background: rgba(255, 255, 255, $opacity);
+  backdrop-filter: blur($blur);
+  -webkit-backdrop-filter: blur($blur);
+}
+
+// Efecto glassmorphism oscuro
+@mixin glass-effect-dark($blur: 20px, $opacity: 0.8) {
+  background: rgba(0, 0, 0, $opacity);
+  backdrop-filter: blur($blur);
+  -webkit-backdrop-filter: blur($blur);
+}
+
+// Premium glass con noise texture
+@mixin glass-premium($blur: 24px) {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+  backdrop-filter: blur($blur) saturate(180%);
+  -webkit-backdrop-filter: blur($blur) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    opacity: 0.03;
+    pointer-events: none;
+    mix-blend-mode: overlay;
+  }
+}
+
+// Glow effect para elementos interactivos
+@mixin glow-effect($color: rgba(255, 255, 255, 0.5), $size: 20px) {
+  box-shadow:
+    0 0 $size $color,
+    0 0 ($size * 2) rgba($color, 0.3),
+    0 0 ($size * 3) rgba($color, 0.1);
+}
+
+// Glow on hover
+@mixin hover-glow($color: rgba(255, 255, 255, 0.3)) {
+  @include transition-premium(box-shadow);
+
+  &:hover {
+    box-shadow:
+      0 0 20px $color,
+      0 0 40px rgba($color, 0.2),
+      0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+}
+
+// Inner glow para tarjetas
+@mixin inner-glow($color: rgba(255, 255, 255, 0.1)) {
+  box-shadow:
+    inset 0 1px 0 $color,
+    inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+}
+
+// Gradient border animation
+@mixin gradient-border-animated {
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    background: linear-gradient(
+      45deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.3) 25%,
+      transparent 50%,
+      rgba(255, 255, 255, 0.3) 75%,
+      transparent 100%
+    );
+    background-size: 400% 400%;
+    animation: gradientShift 8s ease infinite;
+    z-index: -1;
+    opacity: 0;
+    @include transition-base(opacity);
+  }
+
+  &:hover::before {
+    opacity: 1;
+  }
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+// Premium shadow stack
+@mixin shadow-premium {
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.07),
+    0 2px 4px rgba(0, 0, 0, 0.07),
+    0 4px 8px rgba(0, 0, 0, 0.07),
+    0 8px 16px rgba(0, 0, 0, 0.07),
+    0 16px 32px rgba(0, 0, 0, 0.07);
+}
+
+// Shimmer effect
+@mixin shimmer-effect {
+  position: relative;
+  overflow: hidden;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.1) 50%,
+      transparent 100%
+    );
+    animation: shimmer 2s infinite;
+  }
+}
+
+@keyframes shimmer {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+// Efecto hover con elevación sutil
+@mixin hover-lift($distance: -4px) {
+  @include transition-premium(transform);
+
+  &:hover {
+    transform: translateY($distance);
+  }
+}
+
+// Efecto hover con escala sutil
+@mixin hover-scale($scale: 1.02) {
+  @include transition-premium(transform);
+
+  &:hover {
+    transform: scale($scale);
+  }
+}
+
+// Efecto hover con opacidad
+@mixin hover-fade($opacity: 0.8) {
+  @include transition-fast(opacity);
+
+  &:hover {
+    opacity: $opacity;
+  }
+}
+
+
+/* ============================================
+   TIPOGRAFIA PREMIUM
+   ============================================ */
+
+// Tipografía hero (títulos grandes)
+@mixin text-hero {
+  font-family: var(--font-secondary);
+  font-size: clamp(2.5rem, 8vw, 4.5rem);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--text-primary);
+}
+
+// Tipografía display
+@mixin text-display {
+  font-family: var(--font-secondary);
+  font-size: var(--font-size-5xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  letter-spacing: var(--letter-spacing-tight);
+  color: var(--text-primary);
+}
+
+// Tipografía headline
+@mixin text-headline {
+  font-family: var(--font-secondary);
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-snug);
+  color: var(--text-primary);
+}
+
+// Tipografía subtítulo
+@mixin text-subtitle {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-light);
+  line-height: var(--line-height-relaxed);
+  color: var(--text-secondary);
+}
+
+// Tipografia para titulos (legacy)
+@mixin tipografia-titulo {
+  font-family: var(--font-secondary);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  color: var(--text-primary);
+}
+
+// Tipografia para subtitulos
+@mixin tipografia-subtitulo {
+  font-family: var(--font-secondary);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-tight);
+  color: var(--text-primary);
+}
+
+// Tipografia para textos (legacy)
+@mixin tipografia-texto {
+  font-family: var(--font-primary);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-normal);
+}
+
+// Caption/etiqueta
+@mixin text-caption {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-wide);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+
+/* ============================================
+   FORM INPUT MIXINS (Minimalista)
+   ============================================ */
+
+// Mixin para inputs básicos minimalistas
+@mixin input-base {
+  width: 100%;
+  padding: var(--input-padding-vertical) var(--input-padding-horizontal);
+  background-color: var(--bg-input);
+  border: 1px solid transparent;
+  border-radius: var(--radius-s);
+  font-size: var(--font-size-md);
+  font-family: var(--font-primary);
+  color: var(--text-primary);
+  outline: none;
+  @include transition-base;
+
+  &::placeholder {
+    color: var(--text-muted);
+  }
+
+  &:hover {
+    background-color: var(--gris-ligero);
+  }
+
+  &:focus {
+    border-color: var(--negro-normal);
+    background-color: var(--blanco-puro);
+  }
+}
+
+// Mixin para placeholder de inputs
+@mixin input-placeholder {
+  color: var(--text-muted);
+}
+
+// Mixin para estado focus de inputs
+@mixin input-focus {
+  border-color: var(--negro-normal);
+  background-color: var(--blanco-puro);
+}
+
+// Mixin para estado hover de inputs
+@mixin input-hover {
+  background-color: var(--gris-ligero);
+}
+
+
+/* ============================================
+   FORM CONTAINER MIXINS
+   ============================================ */
+
+// Mixin para contenedor de formulario
+@mixin form-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-size-m);
+  background-color: var(--form-background);
+  padding: var(--form-padding);
+  border-radius: var(--radius-m);
+  max-width: var(--form-max-width);
+  margin: 0 auto;
+  width: 100%;
+}
+
+// Mixin para inputs de formulario de contacto
+@mixin form-contact-input {
+  background-color: var(--form-input-background);
+  color: var(--text-primary);
+  border: 1px solid transparent;
+  @include transition-base;
+
+  &:focus {
+    border-color: var(--negro-normal);
+    background-color: var(--blanco-puro);
+  }
+
+  &:hover:not(:focus) {
+    background-color: var(--gris-ligero);
+  }
+}
+
+// Mixin para labels de formulario
+@mixin form-label {
+  color: var(--text-primary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  font-family: var(--font-primary);
+  margin-bottom: var(--spacing-size-xss);
+}
+
+// Mixin para botón de formulario
+@mixin form-button {
+  width: 100%;
+  padding: var(--spacing-size-s) var(--spacing-size-m);
+  background-color: var(--negro-normal);
+  color: var(--blanco-puro);
+  border: none;
+  border-radius: var(--radius-s);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+  font-family: var(--font-primary);
+  cursor: pointer;
+  @include transition-base;
+
+  &:hover:not(:disabled) {
+    background-color: var(--negro-normal-hover);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+
+/* ============================================
+   RESPONSIVE MIXINS
+   ============================================ */
+
+// Mixin principal responsive (mobile-first, min-width)
+@mixin responsive($breakpoint) {
+  @if $breakpoint == 'xs' {
+    @media (min-width: $breakpoint-xs) {
+      @content;
+    }
+  } @else if $breakpoint == 's' {
+    @media (min-width: $breakpoint-s) {
+      @content;
+    }
+  } @else if $breakpoint == 'M' {
+    @media (min-width: $breakpoint-M) {
+      @content;
+    }
+  } @else if $breakpoint == 'L' {
+    @media (min-width: $breakpoint-L) {
+      @content;
+    }
+  } @else if $breakpoint == 'xl' {
+    @media (min-width: $breakpoint-xl) {
+      @content;
+    }
+  } @else if $breakpoint == '2xl' {
+    @media (min-width: $breakpoint-2xl) {
+      @content;
+    }
+  }
+}
+
+// Mixin responsive inverso (desktop-first, max-width)
+@mixin responsive-down($breakpoint) {
+  @if $breakpoint == 'xs' {
+    @media (max-width: #{$breakpoint-xs - 1px}) {
+      @content;
+    }
+  } @else if $breakpoint == 's' {
+    @media (max-width: #{$breakpoint-s - 1px}) {
+      @content;
+    }
+  } @else if $breakpoint == 'M' {
+    @media (max-width: #{$breakpoint-M - 1px}) {
+      @content;
+    }
+  } @else if $breakpoint == 'L' {
+    @media (max-width: #{$breakpoint-L - 1px}) {
+      @content;
+    }
+  } @else if $breakpoint == 'xl' {
+    @media (max-width: #{$breakpoint-xl - 1px}) {
+      @content;
+    }
+  } @else if $breakpoint == '2xl' {
+    @media (max-width: #{$breakpoint-2xl - 1px}) {
+      @content;
+    }
+  }
+}
+
+// Ocultar en móvil, mostrar en breakpoint
+@mixin hide-until($breakpoint) {
+  display: none;
+  @include responsive($breakpoint) {
+    display: block;
+  }
+}
+
+// Mostrar en móvil, ocultar en breakpoint
+@mixin show-until($breakpoint) {
+  display: block;
+  @include responsive($breakpoint) {
+    display: none;
+  }
+}
+
+// Grid responsive automático
+@mixin responsive-grid($min-col-width: 280px, $gap: var(--spacing-size-m)) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min($min-col-width, 100%), 1fr));
+  gap: $gap;
+}
+
+// Flex responsive (columna en móvil, fila en breakpoint)
+@mixin flex-responsive($breakpoint: 'M', $gap: var(--spacing-size-m)) {
+  display: flex;
+  flex-direction: column;
+  gap: $gap;
+
+  @include responsive($breakpoint) {
+    flex-direction: row;
+  }
+}
+
+// Padding responsive
+@mixin padding-responsive {
+  padding: var(--spacing-size-m);
+
+  @include responsive('s') {
+    padding: var(--spacing-size-l);
+  }
+
+  @include responsive('M') {
+    padding: var(--spacing-size-xl);
+  }
+
+  @include responsive('L') {
+    padding: var(--spacing-size-xxl);
+  }
+}
+
+// Spacing section responsive
+@mixin section-responsive {
+  padding-top: var(--spacing-size-xxl);
+  padding-bottom: var(--spacing-size-xxl);
+
+  @include responsive('M') {
+    padding-top: var(--spacing-size-xxxxl);
+    padding-bottom: var(--spacing-size-xxxxl);
+  }
+}
+
+// Tipografía responsive para títulos
+@mixin heading-responsive($mobile-size: var(--font-size-2xl), $desktop-size: var(--font-size-4xl)) {
+  font-size: $mobile-size;
+
+  @include responsive('xs') {
+    font-size: var(--font-size-2xl);
+  }
+
+  @include responsive('s') {
+    font-size: var(--font-size-3xl);
+  }
+
+  @include responsive('M') {
+    font-size: $desktop-size;
+  }
+
+  @include responsive('L') {
+    font-size: var(--font-size-5xl);
+  }
+}
+
+// Container responsive con max-width adaptativo
+@mixin container-responsive {
+  width: 100%;
+  margin: 0 auto;
+  padding-left: var(--spacing-size-m);
+  padding-right: var(--spacing-size-m);
+
+  @include responsive('s') {
+    padding-left: var(--spacing-size-l);
+    padding-right: var(--spacing-size-l);
+  }
+
+  @include responsive('M') {
+    max-width: 720px;
+  }
+
+  @include responsive('L') {
+    max-width: 960px;
+  }
+
+  @include responsive('xl') {
+    max-width: 1140px;
+  }
+
+  @include responsive('2xl') {
+    max-width: 1320px;
+  }
+}
+
+// Media query para pantallas táctiles
+@mixin touch-device {
+  @media (hover: none) and (pointer: coarse) {
+    @content;
+  }
+}
+
+// Media query para dispositivos con hover
+@mixin hover-device {
+  @media (hover: hover) and (pointer: fine) {
+    @content;
+  }
+}
+
+// Preferencia de movimiento reducido
+@mixin reduced-motion {
+  @media (prefers-reduced-motion: reduce) {
+    @content;
+  }
+}
+
+// Modo oscuro del sistema
+@mixin dark-mode {
+  @media (prefers-color-scheme: dark) {
+    @content;
+  }
+}
+
+
+/* ============================================
+   COMPONENTES BASE MIXINS (Minimalista)
+   ============================================ */
+
+// Base para botones reutilizables
+@mixin boton-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-size-xss);
+  font-family: var(--font-primary);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-md);
+  border: none;
+  border-radius: var(--radius-s);
+  cursor: pointer;
+  text-decoration: none;
+  user-select: none;
+  @include transition-base;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+}
+
+// Reset de botón (quitar estilos por defecto)
+@mixin boton-reset {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  outline: none;
+}
+
+// Alias en inglés para button-reset
+@mixin button-reset {
+  @include boton-reset;
+}
+
+// Base para tarjetas/cards (minimalista)
+@mixin tarjeta-base {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-m);
+  padding: var(--spacing-size-xl);
+  @include transition-base;
+
+  &:hover {
+    border-color: var(--border-medium);
+  }
+}
+
+// Tarjeta con elevación (para elementos destacados)
+@mixin tarjeta-elevada {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-m);
+  padding: var(--spacing-size-xl);
+  box-shadow: var(--shadow-sm);
+  @include transition-base;
+
+  &:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+}
+
+// Base para alertas/notificaciones
+@mixin alerta-base {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-size-s);
+  padding: var(--spacing-size-s) var(--spacing-size-m);
+  border-radius: var(--radius-s);
+  font-family: var(--font-primary);
+  font-size: var(--font-size-md);
+  border: 1px solid var(--border-light);
+}
+
+
+/* ============================================
+   UTILIDADES MIXINS
+   ============================================ */
+
+// Texto truncado con ellipsis
+@mixin texto-truncado {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// Texto truncado multilínea
+@mixin texto-truncado-lineas($lineas: 2) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lineas;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+// Centrar con position absolute
+@mixin centrar-absoluto {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+// Ocultar visualmente pero accesible para screen readers
+@mixin sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// Alias en inglés para visually-hidden
+@mixin visually-hidden {
+  @include sr-only;
+}
+
+// Container máximo con padding
+@mixin container($max-width: 1200px) {
+  width: 100%;
+  max-width: $max-width;
+  margin: 0 auto;
+  padding-left: var(--spacing-size-m);
+  padding-right: var(--spacing-size-m);
+}
+
+// Sección con spacing vertical
+@mixin section-spacing {
+  padding-top: var(--spacing-size-xxxxl);
+  padding-bottom: var(--spacing-size-xxxxl);
+}
+
+
+/* ============================================
+   ANIMACIONES PREMIUM
+   ============================================ */
+
+// Fade in desde abajo
+@mixin animate-fade-up {
+  animation: fadeUp var(--duration-slow) var(--ease-dramatic) forwards;
+}
+
+// Fade in
+@mixin animate-fade-in {
+  animation: fadeIn var(--duration-base) var(--ease-out) forwards;
+}
+
+// Scale in
+@mixin animate-scale-in {
+  animation: scaleIn var(--duration-base) var(--ease-bounce) forwards;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

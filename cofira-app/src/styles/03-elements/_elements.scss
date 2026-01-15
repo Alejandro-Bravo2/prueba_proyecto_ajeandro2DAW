@@ -1,0 +1,53 @@
+/*
+  03-ELEMENTS: Estilos base para elementos HTML
+
+  Estos son elementos HTML sin clases. ¿Cómo se ve un h1 sin una clase en él?
+  ¿Cómo se ve un a sin una clase? La capa de elementos solo usa selectores de tipo.
+*/
+
+// ========================================
+// BODY - Base y soporte de temas
+// ========================================
+body {
+  background-color: var(--bg-body);
+  color: var(--text-primary);
+  font-family: var(--font-primary);
+  transition: background-color var(--duration-base) ease,
+              color var(--duration-base) ease;
+}
+
+// ========================================
+// HEADINGS
+// ========================================
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-secondary);
+  color: var(--text-primary);
+  transition: color var(--duration-base) ease;
+}
+
+// ========================================
+// TEXTOS
+// ========================================
+p, span, li {
+  color: var(--text-primary);
+  transition: color var(--duration-base) ease;
+}
+
+// ========================================
+// INPUTS Y FORMULARIOS BASE
+// ========================================
+input, textarea, select {
+  background-color: var(--bg-input);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+  transition: background-color var(--duration-base) ease,
+              color var(--duration-base) ease,
+              border-color var(--duration-base) ease;
+}
+
+// ========================================
+// SECCIONES Y CONTENEDORES
+// ========================================
+section, article, aside {
+  transition: background-color var(--duration-base) ease;
+}

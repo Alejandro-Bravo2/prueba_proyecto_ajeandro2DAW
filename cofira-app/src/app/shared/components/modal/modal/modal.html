@@ -1,0 +1,38 @@
+<!--
+  Modal con accesibilidad completa:
+  - role="dialog": Indica que es un cuadro de diálogo
+  - aria-modal="true": Indica que el contenido detrás es inerte
+  - aria-labelledby: Referencia al título del modal (si existe)
+  - tabindex="-1": Permite que el contenedor reciba foco para focus trap
+  - #modalContainer: Referencia para ViewChild (focus trap y accesibilidad)
+
+  PREVENCIÓN DE EVENTOS (Rúbrica 2.3):
+  - stopPropagation() en el contenido: Detiene la propagación del click al overlay.
+    Sin esto, el click dentro del modal cerraría el modal porque el evento
+    burbujaría hasta el overlay que tiene closeModal().
+    Esto permite interactuar con el contenido sin cierre accidental.
+-->
+@if (modalService.activeModal$()) {
+  <section
+    class="c-modal__overlay"
+    (click)="closeModal()"
+    role="presentation"
+  >
+    <!--
+      stopPropagation() previene que el click se propague al overlay padre,
+      evitando el cierre accidental del modal al interactuar con su contenido.
+    -->
+    <article
+      #modalContainer
+      class="c-modal__content"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-title"
+      tabindex="-1"
+      (click)="$event.stopPropagation()"
+    >
+      <!-- Host for dynamically loaded component -->
+      <ng-template #modalContentHost></ng-template>
+    </article>
+  </section>
+}

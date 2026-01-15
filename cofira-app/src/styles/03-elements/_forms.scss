@@ -1,0 +1,89 @@
+/* ============================================
+   03-ELEMENTS: Forms
+   Estilos base para elementos de formulario
+   ============================================ */
+
+/* --------------------------------------------
+   INPUTS, TEXTAREA, SELECT
+   Usan --font-primary (Montserrat)
+   -------------------------------------------- */
+
+input,
+textarea,
+select {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-normal);
+  color: var(--text-light);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--gris-normal);
+  opacity: 0.7;
+}
+
+
+/* --------------------------------------------
+   LABELS
+   -------------------------------------------- */
+
+label {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-regular);
+  color: var(--text-light);
+  display: block;
+  margin-bottom: var(--spacing-size-xss);
+}
+
+
+/* --------------------------------------------
+   FIELDSET Y LEGEND
+   -------------------------------------------- */
+
+fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+legend {
+  font-family: var(--font-secondary);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-light);
+  padding: 0;
+  margin-bottom: var(--spacing-size-s);
+}
+
+
+/* --------------------------------------------
+   OTROS ELEMENTOS DE FORMULARIO
+   -------------------------------------------- */
+
+// Checkbox y radio base (reset)
+input[type="checkbox"],
+input[type="radio"] {
+  width: auto;
+  margin-right: var(--spacing-size-xss);
+}
+
+// Eliminar flechas de inputs numericos
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+// Eliminar X de inputs de busqueda en webkit
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+  -webkit-appearance: none;
+}

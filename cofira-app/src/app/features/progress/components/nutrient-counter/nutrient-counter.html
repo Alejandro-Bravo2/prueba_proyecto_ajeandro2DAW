@@ -1,0 +1,49 @@
+<section class="nutrient-counter c-card">
+  <header class="nutrient-counter__header">
+    <h3>Contador de Nutrientes</h3>
+  </header>
+  <section class="nutrient-counter__body">
+    <figure class="nutrient-counter__chart">
+      @if (hasNutrientData()) {
+      <figcaption class="nutrient-counter__chart-container">
+        <canvas baseChart [data]="doughnutChartData()" [options]="doughnutChartOptions" type="doughnut">
+        </canvas>
+      </figcaption>
+      } @else {
+      <aside class="nutrient-counter__empty-chart">
+        <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="60" cy="60" r="55" stroke="var(--border-medium)" stroke-width="8" stroke-dasharray="12 6"/>
+          <text x="60" y="55" text-anchor="middle" fill="var(--text-secondary)" font-size="12">Sin datos</text>
+          <text x="60" y="72" text-anchor="middle" fill="var(--text-tertiary)" font-size="10">registrados</text>
+        </svg>
+      </aside>
+      }
+    </figure>
+    <section class="nutrient-counter__details">
+      <h4>Desglose</h4>
+      @if (hasNutrientData()) {
+        @if (nutrientData(); as data) {
+        <ul>
+          <li><span class="nutrient-label">Proteínas</span> <data class="nutrient-value protein" [value]="data.protein">{{ data.protein }}g</data></li>
+          <li><span class="nutrient-label">Carbohidratos</span> <data class="nutrient-value carbs" [value]="data.carbs">{{ data.carbs }}g</data></li>
+          <li><span class="nutrient-label">Grasas</span> <data class="nutrient-value fat" [value]="data.fat">{{ data.fat }}g</data></li>
+          <li><span class="nutrient-label">Fibra</span> <data class="nutrient-value fiber" [value]="data.fiber">{{ data.fiber }}g</data></li>
+          <li><span class="nutrient-label">Agua</span> <data class="nutrient-value water" [value]="data.water">{{ data.water }}L</data></li>
+        </ul>
+        <p class="nutrient-counter__calories">
+          <span class="calories-label">Calorías</span>
+          <data class="calories-value" [value]="data.calories">{{ data.calories }} <small>/ {{ data.calorieGoal }} kcal</small></data>
+          <meter class="calories-progress" [value]="caloriePercentage()" min="0" max="100">
+            <span class="calories-progress__bar" [style.width.%]="caloriePercentage()"></span>
+          </meter>
+        </p>
+        }
+      } @else {
+      <aside class="nutrient-counter__empty-state">
+        <p>No hay datos de nutrientes para hoy</p>
+        <small>Registra tus comidas para ver el desglose</small>
+      </aside>
+      }
+    </section>
+  </section>
+</section>

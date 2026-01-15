@@ -1,0 +1,26 @@
+<section class="onboarding-goal">
+  <header class="onboarding-goal__header">
+    <h1>Vamos a establecer unos objetivos claros</h1>
+    <p>¿Cuál es tu principal objetivo con COFIRA?</p>
+  </header>
+  <form class="c-form onboarding-goal__form" [formGroup]="goalForm" (ngSubmit)="onSubmit()">
+    <section class="c-form__group">
+      <section class="onboarding-goal__options">
+        @for (option of goalOptions; track option.value) {
+          <button type="button" class="c-button"
+                  [ngClass]="{'c-button--primary': goalForm.get('goal')?.value === option.value, 'c-button--secondary': goalForm.get('goal')?.value !== option.value}"
+                  (click)="selectGoal(option.value)">
+            {{ option.label }}
+          </button>
+        }
+      </section>
+      @if (goalForm.get('goal')?.invalid && goalForm.get('goal')?.touched) {
+        <p class="c-form__error">La selección de objetivo es obligatoria.</p>
+      }
+    </section>
+
+    <footer class="onboarding-goal__footer">
+      <button type="submit" class="c-button c-button--primary c-button--large" [disabled]="goalForm.invalid">Continuar</button>
+    </footer>
+  </form>
+</section>

@@ -1,0 +1,41 @@
+<section class="login-page">
+  <article class="login-card c-card">
+    <header class="login-card__header">
+      <h1 class="login-card__title">Iniciar Sesión</h1>
+    </header>
+    <form class="c-form login-card__form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <section class="c-form__group">
+        <label for="username" class="c-form__label">Nombre de usuario</label>
+        <input type="text" id="username" class="c-form__input" formControlName="username" placeholder="nombre_usuario"
+               [ngClass]="{'c-form__input--error': loginForm.get('username')?.invalid && loginForm.get('username')?.touched}">
+        @if (loginForm.get('username')?.errors && loginForm.get('username')?.touched) {
+          <p class="c-form__error">
+            @if (loginForm.get('username')?.hasError('required')) {
+              El nombre de usuario es obligatorio.
+            }
+          </p>
+        }
+      </section>
+      <section class="c-form__group">
+        <label for="password" class="c-form__label">Contraseña</label>
+        <input type="password" id="password" class="c-form__input" formControlName="password" placeholder="********"
+               [ngClass]="{'c-form__input--error': loginForm.get('password')?.invalid && loginForm.get('password')?.touched}">
+        @if (loginForm.get('password')?.errors && loginForm.get('password')?.touched) {
+          <p class="c-form__error">
+            @if (loginForm.get('password')?.hasError('required')) {
+              La contraseña es obligatoria.
+            }
+          </p>
+        }
+      </section>
+      <button type="submit" class="c-button c-button--primary c-button--large login-card__submit" [disabled]="loginForm.invalid">Iniciar Sesión</button>
+    </form>
+    <footer class="login-card__footer">
+      <a routerLink="/reset-password" class="login-card__link">¿Has olvidado la contraseña?</a>
+      <p class="login-card__register-text">
+        ¿No tienes cuenta?
+        <a routerLink="/register" class="login-card__link">Regístrate</a>
+      </p>
+    </footer>
+  </article>
+</section>

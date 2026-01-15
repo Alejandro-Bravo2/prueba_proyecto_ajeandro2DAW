@@ -1,0 +1,172 @@
+@import '../../../../../styles/00-settings/css-variables';
+@import '../../../../../styles/01-tools/mixins';
+@import '../../../../../styles/05-components/tarjeta';
+@import '../../../../../styles/05-components/boton';
+
+.pricing {
+  @include section-spacing;
+  background-color: var(--bg-body);
+
+  &__container {
+    @include container(1200px);
+  }
+
+  // Header
+  &__header {
+    text-align: center;
+    margin-bottom: var(--spacing-size-xxxxl);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  &__label {
+    @include text-caption;
+    display: block;
+    margin-bottom: var(--spacing-size-s);
+  }
+
+  &__title {
+    @include text-display;
+    margin: 0 0 var(--spacing-size-m);
+  }
+
+  &__subtitle {
+    @include text-subtitle;
+    margin: 0;
+  }
+
+  // Grid
+  &__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-size-l);
+    max-width: 1100px;
+    margin: 0 auto;
+
+    @include responsive('M') {
+      grid-template-columns: repeat(3, 1fr);
+      align-items: stretch;
+    }
+  }
+
+  // Footer
+  &__footer {
+    text-align: center;
+    margin-top: var(--spacing-size-xxl);
+    padding-top: var(--spacing-size-xl);
+    border-top: 1px solid var(--border-light);
+
+    p {
+      @include tipografia-texto;
+      font-size: var(--font-size-sm);
+      color: var(--gris-texto);
+      margin: 0;
+    }
+  }
+}
+
+// Sobrescribir estilos de tarjeta para pricing
+.tarjeta--precios {
+  text-align: center;
+  padding: var(--spacing-size-xxl) var(--spacing-size-xl);
+  position: relative;
+  @include transition-base;
+
+  &:hover {
+    transform: translateY(-4px);
+  }
+
+  .tarjeta__titulo {
+    font-size: var(--font-size-2xl);
+    margin-bottom: var(--spacing-size-xss);
+  }
+
+  .tarjeta__subtitulo {
+    margin-bottom: var(--spacing-size-l);
+  }
+
+  .tarjeta__precio {
+    font-size: var(--font-size-6xl);
+    margin: var(--spacing-size-m) 0 var(--spacing-size-l);
+    line-height: 1;
+  }
+
+  .tarjeta__precio-periodo {
+    font-size: var(--font-size-md);
+    margin-left: var(--spacing-size-xss);
+  }
+
+  .tarjeta__lista {
+    text-align: left;
+    margin: var(--spacing-size-l) 0;
+  }
+
+  .tarjeta__item {
+    padding: var(--spacing-size-s) 0;
+
+    &::before {
+      width: 8px;
+      height: 8px;
+    }
+  }
+
+  .tarjeta__acciones {
+    justify-content: center;
+    padding-top: var(--spacing-size-l);
+    margin-top: auto;
+  }
+}
+
+// Tarjeta destacada
+.tarjeta--precios.tarjeta--destacada {
+  border: 2px solid var(--text-primary);
+  transform: none;
+  padding-top: var(--spacing-size-xxxl);
+
+  &:hover {
+    transform: translateY(-4px);
+  }
+
+  .tarjeta__badge {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  @include responsive('M') {
+    transform: scale(1.05);
+
+    &:hover {
+      transform: scale(1.05) translateY(-4px);
+    }
+  }
+}
+
+// Responsive para pricing
+.pricing {
+  &__header {
+    padding: 0 var(--spacing-size-s);
+
+    @include responsive('M') {
+      padding: 0;
+    }
+  }
+
+  &__title {
+    font-size: var(--font-size-3xl);
+
+    @include responsive('M') {
+      font-size: var(--font-size-5xl);
+    }
+  }
+
+  &__subtitle {
+    font-size: var(--font-size-md);
+
+    @include responsive('M') {
+      font-size: var(--font-size-xl);
+    }
+  }
+}

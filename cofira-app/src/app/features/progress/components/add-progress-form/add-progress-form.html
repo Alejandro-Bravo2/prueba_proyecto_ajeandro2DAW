@@ -1,0 +1,84 @@
+<aside class="add-progress-form">
+  <button type="button" class="c-button c-button--primary add-progress-form__toggle" (click)="toggleForm()">
+    @if (showForm()) {
+      Cancelar
+    } @else {
+      + Registrar Progreso
+    }
+  </button>
+
+  @if (showForm()) {
+    <form [formGroup]="progressForm" (ngSubmit)="onSubmit()" class="add-progress-form__form c-card">
+      <h3>Nuevo Registro de Progreso</h3>
+
+      <fieldset class="form-group">
+        <label for="exerciseName">Ejercicio</label>
+        <input type="text" id="exerciseName" formControlName="exerciseName" class="form-control"
+          list="exercises-list" placeholder="Ej: Press Banca" />
+        <datalist id="exercises-list">
+          @for (exercise of exercises(); track exercise) {
+            <option [value]="exercise">{{ exercise }}</option>
+          }
+        </datalist>
+        @if (progressForm.get('exerciseName')?.invalid && progressForm.get('exerciseName')?.touched) {
+          <small class="error-text">El nombre del ejercicio es requerido</small>
+        }
+      </fieldset>
+
+      <fieldset class="form-group">
+        <label for="date">Fecha</label>
+        <input type="date" id="date" formControlName="date" class="form-control" />
+      </fieldset>
+
+      <fieldset class="form-row">
+        <legend class="visually-hidden">Datos del ejercicio</legend>
+        <label class="form-group">
+          <span>Peso (kg)</span>
+          <input type="number" id="weight" formControlName="weight" class="form-control"
+            min="0" step="0.5" placeholder="0" />
+          @if (progressForm.get('weight')?.invalid && progressForm.get('weight')?.touched) {
+            <small class="error-text">El peso debe ser mayor o igual a 0</small>
+          }
+        </label>
+
+        <label class="form-group">
+          <span>Repeticiones</span>
+          <input type="number" id="reps" formControlName="reps" class="form-control"
+            min="1" placeholder="0" />
+          @if (progressForm.get('reps')?.invalid && progressForm.get('reps')?.touched) {
+            <small class="error-text">Las repeticiones deben ser al menos 1</small>
+          }
+        </label>
+
+        <label class="form-group">
+          <span>Series</span>
+          <input type="number" id="sets" formControlName="sets" class="form-control"
+            min="1" placeholder="0" />
+          @if (progressForm.get('sets')?.invalid && progressForm.get('sets')?.touched) {
+            <small class="error-text">Las series deben ser al menos 1</small>
+          }
+        </label>
+      </fieldset>
+
+      <fieldset class="form-group">
+        <label for="notes">Notas (opcional)</label>
+        <textarea id="notes" formControlName="notes" class="form-control" rows="3"
+          placeholder="Agrega notas sobre el entrenamiento..."></textarea>
+      </fieldset>
+
+      <footer class="form-actions">
+        <button type="submit" class="c-button c-button--primary"
+          [disabled]="!progressForm.valid || isSubmitting()">
+          @if (isSubmitting()) {
+            Guardando...
+          } @else {
+            Guardar Progreso
+          }
+        </button>
+        <button type="button" (click)="toggleForm()" class="c-button c-button--secondary">
+          Cancelar
+        </button>
+      </footer>
+    </form>
+  }
+</aside>

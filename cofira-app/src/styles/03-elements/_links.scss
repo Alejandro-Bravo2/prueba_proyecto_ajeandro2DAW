@@ -1,0 +1,25 @@
+/*
+ * 03-ELEMENTS: Links
+ * Estilos base para todos los enlaces <a> de la aplicación
+ */
+
+a {
+  font-family: var(--font-primary);
+  color: var(--text-light);
+  text-decoration: none;
+  transition: color var(--duration-fast);
+  cursor: pointer;
+
+  &:hover {
+    color: var(--amarillo-normal);
+  }
+
+  &:focus {
+    outline: 2px solid var(--amarillo-normal);
+    outline-offset: 2px;
+  }
+
+  &:active {
+    color: var(--amarillo-normal-active);
+  }
+}

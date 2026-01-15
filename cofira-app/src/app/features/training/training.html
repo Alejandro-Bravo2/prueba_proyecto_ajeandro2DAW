@@ -1,0 +1,160 @@
+<section class="training-page">
+  <header class="training-page__header">
+    <h1>Tu Entrenamiento Semanal</h1>
+  </header>
+
+  @if (error()) {
+    <aside class="error-message" role="alert">{{ error() }}</aside>
+  }
+
+  @if (!store.hasRoutines() && !store.loading()) {
+    <app-empty-state
+      icon="🏋️"
+      title="No hay ejercicios programados"
+      message="Aún no tienes ejercicios para esta semana. Comienza creando tu primera rutina de entrenamiento."
+      actionLabel="Crear rutina"
+      (actionClicked)="createRoutine()"
+    />
+  } @else {
+    <!-- Barra de busqueda -->
+    <search class="training-page__search">
+      <fieldset class="search-input-wrapper">
+        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="8"/>
+          <path d="m21 21-4.3-4.3"/>
+        </svg>
+        <input
+          type="search"
+          [formControl]="searchControl"
+          placeholder="Buscar ejercicios..."
+          class="search-input"
+          aria-label="Buscar ejercicios"
+        />
+        @if (store.searchTerm()) {
+          <button
+            type="button"
+            class="search-clear"
+            (click)="clearSearch()"
+            aria-label="Limpiar busqueda"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M18 6 6 18"/>
+              <path d="m6 6 12 12"/>
+            </svg>
+          </button>
+        }
+      </fieldset>
+      @if (store.searchTerm()) {
+        <output class="search-results-count" aria-live="polite">
+          {{ store.filteredExercises().length }} resultado(s) encontrado(s)
+        </output>
+      }
+    </search>
+
+    <!-- Toggle de modo de visualizacion -->
+    <div class="view-mode-toggle" role="group" aria-label="Modo de visualizacion">
+      <button
+        type="button"
+        [class.active]="store.viewMode() === 'pagination'"
+        (click)="setViewMode('pagination')"
+        aria-pressed="{{ store.viewMode() === 'pagination' }}"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect width="7" height="7" x="3" y="3" rx="1"/>
+          <rect width="7" height="7" x="14" y="3" rx="1"/>
+          <rect width="7" height="7" x="14" y="14" rx="1"/>
+          <rect width="7" height="7" x="3" y="14" rx="1"/>
+        </svg>
+        Paginas
+      </button>
+      <button
+        type="button"
+        [class.active]="store.viewMode() === 'infinite'"
+        (click)="setViewMode('infinite')"
+        aria-pressed="{{ store.viewMode() === 'infinite' }}"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 2v20"/>
+          <path d="m19 15-7 7-7-7"/>
+        </svg>
+        Continuo
+      </button>
+    </div>
+
+    @if (store.viewMode() === 'pagination') {
+      <!-- Modo paginacion -->
+      <app-weekly-table
+        [exercises]="store.paginatedExercises()"
+        [selectedDay]="store.selectedDay()"
+        [availableDays]="store.availableDays()"
+        (previousDayClicked)="onPreviousDay()"
+        (nextDayClicked)="onNextDay()"
+      />
+
+      <!-- Controles de paginacion -->
+      @if (store.totalPages() > 1) {
+        <nav class="pagination" aria-label="Paginacion de ejercicios">
+          <button
+            type="button"
+            class="pagination__btn"
+            (click)="previousPage()"
+            [disabled]="store.currentPage() === 1"
+            aria-label="Pagina anterior"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m15 18-6-6 6-6"/>
+            </svg>
+            Anterior
+          </button>
+
+          <span class="pagination__info">
+            Pagina {{ store.currentPage() }} de {{ store.totalPages() }}
+          </span>
+
+          <button
+            type="button"
+            class="pagination__btn"
+            (click)="nextPage()"
+            [disabled]="store.currentPage() >= store.totalPages()"
+            aria-label="Pagina siguiente"
+          >
+            Siguiente
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m9 18 6-6-6-6"/>
+            </svg>
+          </button>
+        </nav>
+      }
+    } @else {
+      <!-- Modo infinite scroll -->
+      <app-weekly-table
+        [exercises]="store.infiniteScrollItems()"
+        [selectedDay]="store.selectedDay()"
+        [availableDays]="store.availableDays()"
+        (previousDayClicked)="onPreviousDay()"
+        (nextDayClicked)="onNextDay()"
+      />
+
+      <!-- Sentinel para infinite scroll -->
+      <div
+        class="infinite-scroll-sentinel"
+        appInfiniteScroll
+        (scrolled)="loadMore()"
+      ></div>
+
+      @if (store.isLoadingMore()) {
+        <div class="loading-more" role="status" aria-live="polite">
+          <span class="loading-more__spinner"></span>
+          Cargando mas ejercicios...
+        </div>
+      }
+
+      @if (!store.hasMore() && store.infiniteScrollItems().length > 0) {
+        <p class="end-of-list">No hay mas ejercicios</p>
+      }
+    }
+
+    <app-feedback-form />
+    <app-progress-card [workoutProgress]="workoutProgress()" />
+  }
+</section>

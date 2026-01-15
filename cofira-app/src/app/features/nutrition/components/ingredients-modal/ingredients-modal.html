@@ -1,0 +1,26 @@
+<section class="c-modal__overlay">
+  <article class="c-modal__content">
+    <header class="c-modal__header">
+      <h3 class="c-modal__title">Ingredientes - {{ mealName() }}</h3>
+      <button class="c-modal__close" aria-label="Cerrar modal">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </header>
+    <section class="c-modal__body">
+      <ul class="ingredients-list">
+        @for (ingredient of ingredients(); track ingredient.name) {
+        <li class="ingredient-item">
+          <span class="ingredient-item__name">{{ ingredient.name }}</span>
+          <span class="ingredient-item__quantity">{{ ingredient.quantity }}</span>
+          <span class="ingredient-item__price">€{{ ingredient.price | number:'1.2-2' }}</span>
+        </li>
+        }
+      </ul>
+      <p class="total-cost">Costo Total: <span class="total-cost__value">€{{ totalCost() | number:'1.2-2' }}</span></p>
+    </section>
+  </article>
+</section>

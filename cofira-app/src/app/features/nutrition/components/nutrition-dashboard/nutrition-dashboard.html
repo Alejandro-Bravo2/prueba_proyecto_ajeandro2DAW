@@ -1,0 +1,176 @@
+<article class="dashboard" role="region" aria-label="Panel de nutrición">
+  <!-- Calories Ring - Main Focus -->
+  <section
+    class="dashboard__calories"
+    aria-label="Calorías del día"
+    role="figure"
+    tabindex="0"
+  >
+    <figure class="dashboard__calories-ring" aria-hidden="true">
+      <svg viewBox="0 0 120 120" class="dashboard__ring-svg" role="img" aria-label="Gráfico circular de calorías">
+        <circle
+          class="dashboard__ring-bg"
+          cx="60"
+          cy="60"
+          r="52"
+          fill="none"
+          stroke-width="8"
+        />
+        <circle
+          class="dashboard__ring-progress"
+          cx="60"
+          cy="60"
+          r="52"
+          fill="none"
+          stroke-width="8"
+          [style.stroke-dasharray]="caloriesCircumference"
+          [style.stroke-dashoffset]="caloriesOffset()"
+          stroke-linecap="round"
+        />
+      </svg>
+      <figcaption class="dashboard__calories-center">
+        <data class="dashboard__calories-value" [value]="currentCalories()">{{ currentCalories() }}</data>
+        <span class="dashboard__calories-label">kcal</span>
+      </figcaption>
+    </figure>
+    <aside class="dashboard__calories-info">
+      <p class="dashboard__calories-remaining" role="status" aria-live="polite">
+        @if (remainingCalories() > 0) {
+          <data class="dashboard__remaining-value" [value]="remainingCalories()">{{ remainingCalories() }}</data>
+          <span class="dashboard__remaining-text">kcal restantes</span>
+        } @else {
+          <mark class="dashboard__remaining-exceeded">Meta alcanzada</mark>
+        }
+      </p>
+      <p class="dashboard__calories-goal">Objetivo: {{ goals().calories }} kcal</p>
+    </aside>
+    <span class="sr-only">
+      Has consumido {{ currentCalories() }} de {{ goals().calories }} calorías hoy.
+      Te quedan {{ remainingCalories() }} calorías.
+    </span>
+  </section>
+
+  <!-- Macros Grid -->
+  <section class="dashboard__macros" aria-label="Macronutrientes">
+    <h2 class="dashboard__section-title">Macros</h2>
+    <ul class="dashboard__macros-grid">
+      <li>
+        <app-macro-chart
+          label="Proteína"
+          [data]="proteinData()"
+          color="#2563eb"
+        />
+      </li>
+      <li>
+        <app-macro-chart
+          label="Carbohidratos"
+          [data]="carbsData()"
+          color="#f59e0b"
+        />
+      </li>
+      <li>
+        <app-macro-chart
+          label="Grasas"
+          [data]="fatData()"
+          color="#10b981"
+        />
+      </li>
+      @if (showFiber()) {
+        <li>
+          <app-macro-chart
+            label="Fibra"
+            [data]="fiberData()"
+            color="#8b5cf6"
+          />
+        </li>
+      }
+    </ul>
+  </section>
+
+  <!-- Quick Stats -->
+  <section class="dashboard__stats" aria-label="Estadísticas rápidas">
+    <ul class="dashboard__stats-list">
+      <li
+        class="dashboard__stat"
+        tabindex="0"
+        aria-label="{{ mealsCount() }} comidas registradas hoy"
+      >
+        <data class="dashboard__stat-value" [value]="mealsCount()" aria-hidden="true">{{ mealsCount() }}</data>
+        <span class="dashboard__stat-label">comidas</span>
+      </li>
+      <li
+        class="dashboard__stat"
+        tabindex="0"
+        aria-label="{{ waterGlasses() }} vasos de agua consumidos"
+      >
+        <data class="dashboard__stat-value" [value]="waterGlasses()" aria-hidden="true">{{ waterGlasses() }}</data>
+        <span class="dashboard__stat-label">vasos agua</span>
+      </li>
+      <li
+        class="dashboard__stat"
+        tabindex="0"
+        aria-label="{{ currentStreak() }} días de racha actual"
+      >
+        <data class="dashboard__stat-value" [value]="currentStreak()" aria-hidden="true">{{ currentStreak() }}</data>
+        <span class="dashboard__stat-label">días racha</span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- Photo Analyzer -->
+  <section class="dashboard__analyzer" aria-label="Analizar comida con IA">
+    <h2 class="dashboard__section-title">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/>
+        <circle cx="12" cy="13" r="3"/>
+      </svg>
+      Analizar con IA
+    </h2>
+    <app-photo-analyzer
+      (foodAnalyzed)="onFoodAnalyzed($event)"
+      (foodConfirmed)="onFoodConfirmed($event)"
+    />
+  </section>
+
+  <!-- Macro Distribution -->
+  <section class="dashboard__distribution" aria-label="Distribución de macros">
+    <h2 class="dashboard__section-title">Distribución</h2>
+    <meter
+      class="dashboard__distribution-bar"
+      min="0"
+      max="100"
+      [value]="proteinPercentage() + carbsPercentage() + fatPercentage()"
+      aria-hidden="true"
+    >
+      <span
+        class="dashboard__distribution-segment dashboard__distribution-segment--protein"
+        [style.width.%]="proteinPercentage()"
+        aria-label="Proteína {{ proteinPercentage() }}%"
+      ></span>
+      <span
+        class="dashboard__distribution-segment dashboard__distribution-segment--carbs"
+        [style.width.%]="carbsPercentage()"
+        aria-label="Carbohidratos {{ carbsPercentage() }}%"
+      ></span>
+      <span
+        class="dashboard__distribution-segment dashboard__distribution-segment--fat"
+        [style.width.%]="fatPercentage()"
+        aria-label="Grasas {{ fatPercentage() }}%"
+      ></span>
+    </meter>
+    <figcaption class="dashboard__distribution-legend">
+      <span class="dashboard__legend-item dashboard__legend-item--protein">
+        <span class="dashboard__legend-dot" aria-hidden="true"></span>
+        Proteína {{ proteinPercentage() }}%
+      </span>
+      <span class="dashboard__legend-item dashboard__legend-item--carbs">
+        <span class="dashboard__legend-dot" aria-hidden="true"></span>
+        Carbos {{ carbsPercentage() }}%
+      </span>
+      <span class="dashboard__legend-item dashboard__legend-item--fat">
+        <span class="dashboard__legend-dot" aria-hidden="true"></span>
+        Grasas {{ fatPercentage() }}%
+      </span>
+    </figcaption>
+  </section>
+</article>

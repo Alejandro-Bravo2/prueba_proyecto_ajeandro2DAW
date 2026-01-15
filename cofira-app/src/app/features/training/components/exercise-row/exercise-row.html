@@ -1,0 +1,14 @@
+<tr class="exercise-row" *ngIf="exercise()">
+  <td class="c-table__cell" data-label="Ejercicio">
+    <span>{{ exercise()!.name }}</span>
+  </td>
+  <td class="c-table__cell" data-label="Series">
+    <span>{{ exercise()!.sets }}</span>
+  </td>
+  <td class="c-table__cell" data-label="Repeticiones">
+    <span>{{ exercise()!.reps }}</span>
+  </td>
+  <td class="c-table__cell" data-label="Completado">
+    <input type="checkbox" [checked]="exercise()!.completed" aria-label="Marcar ejercicio como completado">
+  </td>
+</tr>

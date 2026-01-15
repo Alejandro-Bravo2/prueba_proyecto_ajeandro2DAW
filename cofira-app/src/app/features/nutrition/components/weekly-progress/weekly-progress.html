@@ -1,0 +1,47 @@
+<article class="weekly-progress">
+  <header class="weekly-progress__header">
+    <h3 class="weekly-progress__title">Progreso Semanal</h3>
+    <nav class="weekly-progress__tabs" role="tablist" aria-label="Selección de métrica">
+      @for (tab of tabs; track tab.key) {
+        <button
+          type="button"
+          role="tab"
+          class="weekly-progress__tab"
+          [class.weekly-progress__tab--active]="activeTab() === tab.key"
+          [attr.aria-selected]="activeTab() === tab.key"
+          (click)="setActiveTab(tab.key)"
+        >
+          {{ tab.label }}
+        </button>
+      }
+    </nav>
+  </header>
+
+  <figure class="weekly-progress__chart">
+    <canvas
+      baseChart
+      [data]="chartData()"
+      [options]="chartOptions()"
+      [type]="'bar'"
+    ></canvas>
+  </figure>
+
+  <footer class="weekly-progress__summary">
+    <dl class="weekly-progress__avg">
+      <dt class="weekly-progress__avg-label">Promedio diario</dt>
+      <dd class="weekly-progress__avg-value">
+        <data [value]="averageValue()">{{ averageValue() }}</data> {{ currentUnit() }}
+      </dd>
+    </dl>
+    <aside class="weekly-progress__trend" [class.weekly-progress__trend--positive]="trend() > 0">
+      @if (trend() !== 0) {
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" [style.transform]="trend() < 0 ? 'rotate(180deg)' : ''" aria-hidden="true">
+          <path d="m18 15-6-6-6 6"/>
+        </svg>
+        <span>{{ Math.abs(trend()) }}% vs semana anterior</span>
+      } @else {
+        <span>Sin cambios</span>
+      }
+    </aside>
+  </footer>
+</article>

@@ -1,0 +1,195 @@
+<article class="payment-form">
+  <header class="payment-form__header">
+    <h2 class="payment-form__title">Metodo de pago</h2>
+    <p class="payment-form__subtitle">Selecciona como quieres pagar</p>
+  </header>
+
+  <!-- Payment Methods Selector -->
+  <section class="payment-form__methods">
+    @for (metodo of metodosPago; track metodo.id) {
+      <button
+        type="button"
+        class="payment-form__method"
+        [class.payment-form__method--selected]="selectedMethod() === metodo.id"
+        (click)="selectMethod(metodo.id)"
+      >
+        <svg class="payment-form__method-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          @switch (metodo.id) {
+            @case ('TARJETA') {
+              <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+              <line x1="1" y1="10" x2="23" y2="10"/>
+            }
+            @case ('PAYPAL') {
+              <path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944 3.72a.77.77 0 0 1 .757-.629h6.5c2.886 0 4.9 1.418 4.415 4.63-.548 3.63-3.147 5.017-5.765 5.017H8.467l-.89 5.9a.641.641 0 0 1-.633.7H7.076z"/>
+              <path d="M19.074 7.95c-.548 3.63-3.147 5.017-5.765 5.017h-2.384l-.89 5.9a.641.641 0 0 1-.633.7h-2.38"/>
+            }
+            @case ('BIZUM') {
+              <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/>
+              <line x1="12" y1="18" x2="12.01" y2="18"/>
+            }
+          }
+        </svg>
+        <span class="payment-form__method-name">{{ metodo.nombre }}</span>
+        <span class="payment-form__method-desc">{{ metodo.descripcion }}</span>
+      </button>
+    }
+  </section>
+
+  <!-- Card Form -->
+  @if (selectedMethod() === 'TARJETA') {
+    <form [formGroup]="cardForm" class="payment-form__form">
+      <div class="payment-form__field">
+        <label class="payment-form__label" for="nombreTitular">Nombre del titular</label>
+        <input
+          type="text"
+          id="nombreTitular"
+          formControlName="nombreTitular"
+          class="payment-form__input"
+          [class.payment-form__input--error]="cardForm.get('nombreTitular')?.invalid && cardForm.get('nombreTitular')?.touched"
+          placeholder="Como aparece en la tarjeta"
+          autocomplete="cc-name"
+        >
+        @if (cardForm.get('nombreTitular')?.invalid && cardForm.get('nombreTitular')?.touched) {
+          <span class="payment-form__error">El nombre es obligatorio</span>
+        }
+      </div>
+
+      <div class="payment-form__field">
+        <label class="payment-form__label" for="numeroTarjeta">Numero de tarjeta</label>
+        <input
+          type="text"
+          id="numeroTarjeta"
+          formControlName="numeroTarjeta"
+          class="payment-form__input"
+          [class.payment-form__input--error]="cardForm.get('numeroTarjeta')?.invalid && cardForm.get('numeroTarjeta')?.touched"
+          placeholder="1234 5678 9012 3456"
+          (input)="formatCardNumber($event)"
+          maxlength="19"
+          autocomplete="cc-number"
+        >
+        @if (cardForm.get('numeroTarjeta')?.invalid && cardForm.get('numeroTarjeta')?.touched) {
+          <span class="payment-form__error">Introduce un numero de tarjeta valido</span>
+        }
+      </div>
+
+      <div class="payment-form__row">
+        <div class="payment-form__field">
+          <label class="payment-form__label" for="fechaExpiracion">Fecha expiracion</label>
+          <input
+            type="text"
+            id="fechaExpiracion"
+            formControlName="fechaExpiracion"
+            class="payment-form__input"
+            [class.payment-form__input--error]="cardForm.get('fechaExpiracion')?.invalid && cardForm.get('fechaExpiracion')?.touched"
+            placeholder="MM/AA"
+            (input)="formatExpiryDate($event)"
+            maxlength="5"
+            autocomplete="cc-exp"
+          >
+          @if (cardForm.get('fechaExpiracion')?.invalid && cardForm.get('fechaExpiracion')?.touched) {
+            <span class="payment-form__error">Formato MM/AA</span>
+          }
+        </div>
+
+        <div class="payment-form__field">
+          <label class="payment-form__label" for="cvv">CVV</label>
+          <input
+            type="text"
+            id="cvv"
+            formControlName="cvv"
+            class="payment-form__input"
+            [class.payment-form__input--error]="cardForm.get('cvv')?.invalid && cardForm.get('cvv')?.touched"
+            placeholder="123"
+            maxlength="4"
+            autocomplete="cc-csc"
+          >
+          @if (cardForm.get('cvv')?.invalid && cardForm.get('cvv')?.touched) {
+            <span class="payment-form__error">3-4 digitos</span>
+          }
+        </div>
+      </div>
+    </form>
+  }
+
+  <!-- PayPal Form -->
+  @if (selectedMethod() === 'PAYPAL') {
+    <form [formGroup]="paypalForm" class="payment-form__form">
+      <div class="payment-form__field">
+        <label class="payment-form__label" for="emailPaypal">Email de PayPal</label>
+        <input
+          type="email"
+          id="emailPaypal"
+          formControlName="emailPaypal"
+          class="payment-form__input"
+          [class.payment-form__input--error]="paypalForm.get('emailPaypal')?.invalid && paypalForm.get('emailPaypal')?.touched"
+          placeholder="tu@email.com"
+          autocomplete="email"
+        >
+        @if (paypalForm.get('emailPaypal')?.invalid && paypalForm.get('emailPaypal')?.touched) {
+          <span class="payment-form__error">Introduce un email valido</span>
+        }
+      </div>
+      <p class="payment-form__info">
+        Seras redirigido a PayPal para completar el pago de forma segura.
+      </p>
+    </form>
+  }
+
+  <!-- Bizum Form -->
+  @if (selectedMethod() === 'BIZUM') {
+    <form [formGroup]="bizumForm" class="payment-form__form">
+      <div class="payment-form__field">
+        <label class="payment-form__label" for="telefonoBizum">Numero de telefono</label>
+        <input
+          type="tel"
+          id="telefonoBizum"
+          formControlName="telefonoBizum"
+          class="payment-form__input"
+          [class.payment-form__input--error]="bizumForm.get('telefonoBizum')?.invalid && bizumForm.get('telefonoBizum')?.touched"
+          placeholder="612345678"
+          maxlength="9"
+          autocomplete="tel"
+        >
+        @if (bizumForm.get('telefonoBizum')?.invalid && bizumForm.get('telefonoBizum')?.touched) {
+          <span class="payment-form__error">Introduce un numero de movil valido</span>
+        }
+      </div>
+      <p class="payment-form__info">
+        Recibiras una notificacion en tu app de Bizum para confirmar el pago.
+      </p>
+    </form>
+  }
+
+  <!-- Error Message -->
+  @if (store.error()) {
+    <div class="payment-form__error-banner">
+      {{ store.error() }}
+    </div>
+  }
+
+  <!-- Actions -->
+  <footer class="payment-form__actions">
+    <button
+      type="button"
+      class="boton boton--primario boton--completo"
+      [class.boton--cargando]="store.processing()"
+      [disabled]="!store.canProcessPayment() || store.processing()"
+      (click)="processPayment()"
+    >
+      @if (store.processing()) {
+        Procesando...
+      } @else {
+        Pagar &euro;{{ planInfo?.precio || 0 }}
+      }
+    </button>
+
+    <button
+      type="button"
+      class="payment-form__back-btn"
+      [disabled]="store.processing()"
+      (click)="onVolver()"
+    >
+      Volver al resumen
+    </button>
+  </footer>
+</article>

@@ -1,0 +1,17 @@
+@import '../../../../../styles/settings/colors';
+@import '../../../../../styles/settings/spacing';
+@import '../../../../../styles/components/_forms.scss'; // For checkbox styling
+
+.exercise-row {
+  .c-table__cell {
+    padding-top: $spacing-s;
+    padding-bottom: $spacing-s;
+
+    input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+      accent-color: $color-brand-primary;
+    }
+  }
+}

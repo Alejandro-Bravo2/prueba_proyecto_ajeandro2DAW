@@ -1,0 +1,346 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ========================================
+// USER & AUTHENTICATION
+// ========================================
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  name      String
+  avatarUrl String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Onboarding
+  onboarding   UserOnboarding?
+  isOnboarded  Boolean         @default(false)
+
+  // Relations
+  meals     Meal[]
+  workouts  Workout[]
+  goals     Goal[]
+  progress  DailyProgress[]
+
+  @@map("users")
+}
+
+// ========================================
+// ONBOARDING
+// ========================================
+
+model UserOnboarding {
+  id     String @id @default(uuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Objetivos principales
+  primaryGoal  PrimaryGoal
+  targetWeight Float?
+  currentWeight Float?
+
+  // Nivel fisico
+  fitnessLevel FitnessLevel
+
+  // Preferencias de entrenamiento
+  trainingDays    Int // 1-7
+  sessionDuration Int // minutos
+  preferredTime   PreferredTime
+
+  // Alimentacion
+  dietType    DietType
+  mealsPerDay Int      @default(3)
+  allergies   String[] @default([])
+
+  // Limitaciones fisicas
+  injuries  String[] @default([])
+  equipment String[] @default([])
+
+  completedAt DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("user_onboarding")
+}
+
+enum PrimaryGoal {
+  LOSE_WEIGHT
+  GAIN_MUSCLE
+  MAINTAIN
+  IMPROVE_HEALTH
+  INCREASE_STRENGTH
+  IMPROVE_ENDURANCE
+}
+
+enum FitnessLevel {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+}
+
+enum PreferredTime {
+  MORNING
+  AFTERNOON
+  EVENING
+  FLEXIBLE
+}
+
+enum DietType {
+  OMNIVORE
+  VEGETARIAN
+  VEGAN
+  PESCATARIAN
+  KETO
+  PALEO
+  MEDITERRANEAN
+}
+
+// ========================================
+// NUTRITION
+// ========================================
+
+model Meal {
+  id     String @id @default(uuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  name        String
+  description String?
+  imageUrl    String?
+
+  // Valores nutricionales
+  calories Int
+  protein  Float
+  carbs    Float
+  fat      Float
+  fiber    Float?
+  sugar    Float?
+  sodium   Float?
+
+  // Metadata
+  ingredients String[]
+  confidence  Float    @default(0) // 0-100 porcentaje de confianza del AI
+  isManual    Boolean  @default(false) // Si fue ingresado manualmente
+
+  mealType MealType
+  date     DateTime @default(now())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId, date])
+  @@map("meals")
+}
+
+enum MealType {
+  BREAKFAST
+  MORNING_SNACK
+  LUNCH
+  AFTERNOON_SNACK
+  DINNER
+  EVENING_SNACK
+}
+
+// ========================================
+// TRAINING
+// ========================================
+
+model Workout {
+  id     String @id @default(uuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  name         String
+  description  String?
+  duration     Int // minutos estimados
+  difficulty   Difficulty
+  muscleGroups String[]
+  workoutType  WorkoutType
+
+  // Exercises
+  exercises Exercise[]
+
+  // Scheduling
+  scheduledFor DateTime?
+  completedAt  DateTime?
+  isCompleted  Boolean   @default(false)
+
+  // AI generated
+  isAiGenerated Boolean @default(false)
+  aiPromptUsed  String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId, scheduledFor])
+  @@map("workouts")
+}
+
+model Exercise {
+  id        String  @id @default(uuid())
+  workoutId String
+  workout   Workout @relation(fields: [workoutId], references: [id], onDelete: Cascade)
+
+  name        String
+  description String?
+  sets        Int
+  reps        String // "12" o "8-12" o "30s" o "AMRAP"
+  weight      Float? // kg, opcional
+  restSeconds Int
+
+  muscleGroup  String?
+  equipmentNeeded String?
+  videoUrl     String?
+  notes        String?
+
+  order       Int
+  isCompleted Boolean @default(false)
+
+  @@map("exercises")
+}
+
+enum Difficulty {
+  EASY
+  MEDIUM
+  HARD
+  EXTREME
+}
+
+enum WorkoutType {
+  STRENGTH
+  CARDIO
+  HIIT
+  FLEXIBILITY
+  MIXED
+  CUSTOM
+}
+
+// ========================================
+// GOALS & PROGRESS
+// ========================================
+
+model Goal {
+  id     String @id @default(uuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  type        GoalType
+  name        String
+  description String?
+
+  targetValue  Float
+  currentValue Float   @default(0)
+  startValue   Float
+  unit         String
+
+  startDate  DateTime @default(now())
+  targetDate DateTime
+
+  status GoalStatus @default(IN_PROGRESS)
+
+  // AI estimaciones
+  estimatedCompletionDate DateTime?
+  weeklyRate              Float?
+  lastCalculatedAt        DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId, status])
+  @@map("goals")
+}
+
+enum GoalType {
+  WEIGHT
+  BODY_FAT
+  MUSCLE_MASS
+  DAILY_CALORIES
+  DAILY_PROTEIN
+  WEEKLY_WORKOUTS
+  STRENGTH_PR
+  ENDURANCE
+  CUSTOM
+}
+
+enum GoalStatus {
+  IN_PROGRESS
+  ACHIEVED
+  FAILED
+  PAUSED
+}
+
+model DailyProgress {
+  id     String @id @default(uuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  date DateTime @default(now()) @db.Date
+
+  // Peso
+  weight   Float?
+  bodyFat  Float?
+
+  // Nutricion totales del dia
+  totalCalories Int?
+  totalProtein  Float?
+  totalCarbs    Float?
+  totalFat      Float?
+  waterIntake   Float? // litros
+
+  // Entrenamiento
+  workoutsCompleted Int?
+  activeMinutes     Int?
+  stepsCount        Int?
+
+  // Bienestar
+  sleepHours   Float?
+  energyLevel  Int? // 1-10
+  moodLevel    Int? // 1-10
+
+  notes String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, date])
+  @@index([userId, date])
+  @@map("daily_progress")
+}
+
+// ========================================
+// AI INTERACTIONS LOG
+// ========================================
+
+model AiInteraction {
+  id String @id @default(uuid())
+
+  type       AiInteractionType
+  prompt     String
+  response   String
+  model      String
+  tokens     Int?
+  costUsd    Float?
+  durationMs Int?
+
+  userId String?
+
+  createdAt DateTime @default(now())
+
+  @@index([type, createdAt])
+  @@map("ai_interactions")
+}
+
+enum AiInteractionType {
+  FOOD_ANALYSIS
+  WORKOUT_GENERATION
+  GOAL_ESTIMATION
+  RECOMMENDATION
+  CHAT
+}

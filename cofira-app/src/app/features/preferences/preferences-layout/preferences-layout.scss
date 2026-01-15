@@ -1,0 +1,292 @@
+@import '../../../../styles/00-settings/css-variables';
+@import '../../../../styles/01-tools/mixins';
+
+.preferences-layout {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: var(--spacing-size-m);
+  animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+
+  @include responsive('xs') {
+    padding: var(--spacing-size-l);
+  }
+
+  @include responsive('s') {
+    padding: var(--spacing-size-xl);
+  }
+
+  @include responsive('M') {
+    padding: var(--spacing-size-xxl);
+  }
+
+  &__header {
+    margin-bottom: var(--spacing-size-l);
+    text-align: center;
+
+    @include responsive('s') {
+      margin-bottom: var(--spacing-size-xl);
+      text-align: left;
+    }
+  }
+
+  &__title {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--text-primary);
+    margin: 0 0 var(--spacing-size-xs);
+    letter-spacing: var(--letter-spacing-tight);
+
+    @include responsive('s') {
+      font-size: var(--font-size-2xl);
+    }
+  }
+
+  &__subtitle {
+    color: var(--text-muted);
+    margin: 0;
+    font-size: var(--font-size-sm);
+
+    @include responsive('s') {
+      font-size: var(--font-size-md);
+    }
+  }
+
+  // Navegación premium con glass effect
+  &__nav {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-size-xs);
+    margin-bottom: var(--spacing-size-l);
+    padding: var(--spacing-size-s);
+    border-radius: var(--radius-xl);
+
+    // Premium glass effect
+    background: linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.06) 0%,
+      rgba(255, 255, 255, 0.02) 100%
+    );
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow:
+      0 4px 24px rgba(0, 0, 0, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+
+    @include responsive('xs') {
+      gap: var(--spacing-size-s);
+      padding: var(--spacing-size-m);
+    }
+
+    @include responsive('s') {
+      flex-direction: row;
+      margin-bottom: var(--spacing-size-xl);
+      padding: var(--spacing-size-s);
+    }
+  }
+
+  &__nav-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-size-s);
+    padding: var(--spacing-size-m) var(--spacing-size-l);
+    border-radius: var(--radius-l);
+    text-decoration: none;
+    color: var(--text-secondary);
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-sm);
+    position: relative;
+    overflow: hidden;
+    @include transition-premium;
+
+    // Subtle background
+    background: transparent;
+
+    @include responsive('s') {
+      justify-content: center;
+      flex: 1;
+    }
+
+    // Shimmer effect on hover
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.1),
+        transparent
+      );
+      transform: translateX(-100%);
+      @include transition-premium;
+    }
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text-primary);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+
+      &::before {
+        transform: translateX(100%);
+      }
+    }
+
+    @include touch-device {
+      padding: var(--spacing-size-m);
+    }
+
+    // Estado activo con efecto premium
+    &--active {
+      background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.15) 0%,
+        rgba(255, 255, 255, 0.08) 100%
+      );
+      color: var(--text-primary);
+      box-shadow:
+        0 4px 20px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+
+      // Active indicator dot
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -8px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 6px;
+        height: 6px;
+        background: var(--text-primary);
+        border-radius: 50%;
+        box-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
+        animation: pulseGlow 2s ease-in-out infinite;
+
+        @include responsive('s') {
+          bottom: -10px;
+        }
+      }
+
+      &:hover {
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.18) 0%,
+          rgba(255, 255, 255, 0.1) 100%
+        );
+        color: var(--text-primary);
+        transform: translateY(-2px);
+      }
+    }
+  }
+
+  &__nav-icon {
+    font-size: var(--font-size-lg);
+    @include transition-premium;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+
+    .preferences-layout__nav-link:hover & {
+      transform: scale(1.15) rotate(5deg);
+    }
+
+    &--nutrition::before { content: '🥗'; }
+    &--account::before { content: '👤'; }
+    &--notifications::before { content: '🔔'; }
+  }
+
+  &__nav-label {
+    font-size: var(--font-size-sm);
+    letter-spacing: var(--letter-spacing-wide);
+  }
+
+  // Contenido premium con glass effect
+  &__content {
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-size-l);
+    min-height: 300px;
+    animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s backwards;
+
+    // Premium glass background
+    background: linear-gradient(
+      160deg,
+      rgba(255, 255, 255, 0.06) 0%,
+      rgba(255, 255, 255, 0.02) 100%
+    );
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+
+    @include responsive('xs') {
+      padding: var(--spacing-size-xl);
+      min-height: 350px;
+    }
+
+    @include responsive('s') {
+      padding: var(--spacing-size-xxl);
+      min-height: 400px;
+    }
+  }
+}
+
+// Animations
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
+  }
+  50% {
+    opacity: 0.7;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+  }
+}
+
+// Reduced motion support
+@media (prefers-reduced-motion: reduce) {
+  .preferences-layout {
+    animation: none;
+
+    &__content {
+      animation: none;
+    }
+
+    &__nav-link {
+      transition: none;
+
+      &::before {
+        display: none;
+      }
+
+      &:hover {
+        transform: none;
+      }
+
+      &--active::after {
+        animation: none;
+      }
+    }
+
+    &__nav-icon {
+      transition: none;
+
+      .preferences-layout__nav-link:hover & {
+        transform: none;
+      }
+    }
+  }
+}

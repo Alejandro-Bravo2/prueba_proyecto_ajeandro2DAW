@@ -1,0 +1,126 @@
+<aside class="add-meal-form">
+  <button type="button" class="c-button c-button--primary add-meal-form__toggle" (click)="toggleForm()">
+    @if (showForm()) {
+      Cancelar
+    } @else {
+      + Agregar Comida
+    }
+  </button>
+
+  @if (showForm()) {
+    <form [formGroup]="mealForm" (ngSubmit)="onSubmit()" class="add-meal-form__form c-card">
+      <h3>Nueva Comida</h3>
+
+      <fieldset class="form-group">
+        <label for="mealType">Tipo de Comida</label>
+        <select id="mealType" formControlName="mealType" class="form-control">
+          @for (type of mealTypes; track type) {
+            <option [value]="type">{{ type }}</option>
+          }
+        </select>
+      </fieldset>
+
+      <fieldset class="form-group">
+        <label for="date">Fecha</label>
+        <input type="date" id="date" formControlName="date" class="form-control" />
+      </fieldset>
+
+      <section formArrayName="foods" class="add-meal-form__foods">
+        <h4>Alimentos</h4>
+        @for (food of foods.controls; track $index; let i = $index) {
+          <article [formGroupName]="i" class="food-item c-card">
+            <header class="food-item__header">
+              <h5>Alimento {{ i + 1 }}</h5>
+              @if (foods.length > 1) {
+                <button type="button" (click)="removeFood(i)"
+                  class="c-button c-button--secondary"
+                  aria-label="Eliminar alimento">
+                  ✕
+                </button>
+              }
+            </header>
+
+            <fieldset class="form-row">
+              <legend class="visually-hidden">Información básica</legend>
+              <label class="form-group">
+                <span>Nombre</span>
+                <input [id]="'name-' + i" type="text" formControlName="name"
+                  class="form-control"
+                  placeholder="Ej: Pechuga de pollo" />
+                @if (food.get('name')?.invalid && food.get('name')?.touched) {
+                  <small class="error-text">El nombre es requerido</small>
+                }
+              </label>
+
+              <label class="form-group">
+                <span>Cantidad</span>
+                <input [id]="'quantity-' + i" type="text"
+                  formControlName="quantity" class="form-control"
+                  placeholder="Ej: 150g" />
+              </label>
+            </fieldset>
+
+            <fieldset class="form-row">
+              <legend class="visually-hidden">Macronutrientes</legend>
+              <label class="form-group">
+                <span>Calorías</span>
+                <input [id]="'calories-' + i" type="number"
+                  formControlName="calories" class="form-control"
+                  min="0" />
+              </label>
+
+              <label class="form-group">
+                <span>Proteína (g)</span>
+                <input [id]="'protein-' + i" type="number"
+                  formControlName="protein" class="form-control"
+                  min="0" />
+              </label>
+
+              <label class="form-group">
+                <span>Carbohidratos (g)</span>
+                <input [id]="'carbs-' + i" type="number"
+                  formControlName="carbs" class="form-control"
+                  min="0" />
+              </label>
+            </fieldset>
+
+            <fieldset class="form-row">
+              <legend class="visually-hidden">Otros nutrientes</legend>
+              <label class="form-group">
+                <span>Grasas (g)</span>
+                <input [id]="'fat-' + i" type="number" formControlName="fat"
+                  class="form-control" min="0" />
+              </label>
+
+              <label class="form-group">
+                <span>Fibra (g)</span>
+                <input [id]="'fiber-' + i" type="number"
+                  formControlName="fiber" class="form-control"
+                  min="0" />
+              </label>
+            </fieldset>
+          </article>
+        }
+
+        <button type="button" (click)="addFood()"
+          class="c-button c-button--secondary add-meal-form__add-food">
+          + Agregar Alimento
+        </button>
+      </section>
+
+      <footer class="form-actions">
+        <button type="submit" class="c-button c-button--primary"
+          [disabled]="!mealForm.valid || isSubmitting()">
+          @if (isSubmitting()) {
+            Guardando...
+          } @else {
+            Guardar Comida
+          }
+        </button>
+        <button type="button" (click)="toggleForm()" class="c-button c-button--secondary">
+          Cancelar
+        </button>
+      </footer>
+    </form>
+  }
+</aside>

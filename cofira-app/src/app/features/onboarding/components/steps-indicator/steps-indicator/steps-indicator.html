@@ -1,0 +1,10 @@
+<nav class="steps-indicator" aria-label="Progreso del onboarding">
+  <ol class="steps-indicator__list">
+    @for (step of steps(); track step.index) {
+      <li class="steps-indicator__item" [ngClass]="{'steps-indicator__item--active': currentStep() === step.index}">
+        <span class="steps-indicator__number">{{ step.index }}</span>
+        <span class="steps-indicator__label u-sr-only">{{ step.label }}</span>
+      </li>
+    }
+  </ol>
+</nav>

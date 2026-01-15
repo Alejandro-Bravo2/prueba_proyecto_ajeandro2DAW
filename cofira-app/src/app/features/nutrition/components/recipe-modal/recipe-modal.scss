@@ -1,0 +1,213 @@
+@import '../../../../../styles/00-settings/css-variables';
+@import '../../../../../styles/01-tools/mixins';
+
+.recipe-modal {
+  max-width: 500px;
+
+  &__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-size-s);
+    margin-bottom: var(--spacing-size-m);
+    padding-bottom: var(--spacing-size-s);
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  &__meta-item {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-size-xs);
+    font-size: var(--font-size-s);
+    color: var(--text-secondary);
+
+    svg {
+      color: var(--accent-color);
+    }
+  }
+
+  &__difficulty {
+    padding: var(--spacing-size-2xs) var(--spacing-size-xs);
+    border-radius: var(--border-radius-s);
+    font-weight: var(--font-weight-medium);
+    text-transform: uppercase;
+    font-size: var(--font-size-xs);
+
+    &.difficulty--easy {
+      background-color: var(--success-light, #dcfce7);
+      color: var(--success-dark, #166534);
+    }
+
+    &.difficulty--medium {
+      background-color: var(--warning-light, #fef3c7);
+      color: var(--warning-dark, #92400e);
+    }
+
+    &.difficulty--hard {
+      background-color: var(--error-light, #fee2e2);
+      color: var(--error-dark, #991b1b);
+    }
+  }
+
+  &__description {
+    font-size: var(--font-size-s);
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-size-m);
+    line-height: 1.5;
+  }
+
+  &__tabs {
+    display: flex;
+    gap: var(--spacing-size-xs);
+    margin-bottom: var(--spacing-size-m);
+    border-bottom: 2px solid var(--border-light);
+  }
+
+  &__tab {
+    flex: 1;
+    padding: var(--spacing-size-s) var(--spacing-size-m);
+    background: none;
+    border: none;
+    font-size: var(--font-size-s);
+    font-weight: var(--font-weight-medium);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background-color: transparent;
+      transition: background-color 0.2s ease;
+    }
+
+    &:hover {
+      color: var(--text-primary);
+    }
+
+    &.active {
+      color: var(--accent-color);
+
+      &::after {
+        background-color: var(--accent-color);
+      }
+    }
+  }
+
+  &__no-recipe {
+    text-align: center;
+    padding: var(--spacing-size-m);
+    color: var(--text-secondary);
+
+    p {
+      margin-bottom: var(--spacing-size-s);
+    }
+  }
+
+  &__hint {
+    font-size: var(--font-size-xs);
+    font-style: italic;
+    margin-top: var(--spacing-size-m) !important;
+  }
+}
+
+.ingredients-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ingredient-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-size-s);
+  padding: var(--spacing-size-s) 0;
+  border-bottom: 1px dashed var(--border-light);
+  color: var(--text-primary);
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &.optional {
+    opacity: 0.7;
+  }
+
+  &__check {
+    color: var(--text-muted);
+    flex-shrink: 0;
+  }
+
+  &__name {
+    flex: 1;
+    font-weight: var(--font-weight-medium);
+  }
+
+  &__optional {
+    font-size: var(--font-size-xs);
+    color: var(--text-muted);
+    font-weight: var(--font-weight-normal);
+    font-style: italic;
+  }
+
+  &__quantity {
+    color: var(--text-secondary);
+    font-size: var(--font-size-s);
+    white-space: nowrap;
+  }
+}
+
+.recipe-steps {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  counter-reset: step;
+}
+
+.recipe-step {
+  display: flex;
+  gap: var(--spacing-size-m);
+  padding: var(--spacing-size-s) 0;
+
+  &:not(:last-child) {
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  &__number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    background-color: var(--accent-color);
+    color: var(--text-on-accent, white);
+    border-radius: 50%;
+    font-size: var(--font-size-s);
+    font-weight: var(--font-weight-bold);
+    flex-shrink: 0;
+  }
+
+  &__text {
+    flex: 1;
+    margin: 0;
+    line-height: 1.6;
+    color: var(--text-primary);
+    padding-top: 4px;
+  }
+}
+
+.foods-list {
+  list-style: disc;
+  padding-left: var(--spacing-size-l);
+  margin: var(--spacing-size-s) 0;
+  text-align: left;
+
+  .food-item {
+    padding: var(--spacing-size-2xs) 0;
+    color: var(--text-primary);
+  }
+}

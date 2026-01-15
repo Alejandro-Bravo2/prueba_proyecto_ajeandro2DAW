@@ -1,0 +1,18 @@
+<section class="account-settings c-card">
+  <header class="account-settings__header">
+    <h1>Configuración de la Cuenta</h1>
+    <p>Actualiza tu información personal, email y contraseña.</p>
+  </header>
+  <form class="c-form account-settings__form" [formGroup]="accountSettingsForm" (ngSubmit)="onSubmit()">
+    <app-input label="Nombre" type="text" placeholder="Tu nombre" [control]="accountSettingsForm.controls.name"></app-input>
+    <app-input label="Email" type="email" placeholder="tu.email@ejemplo.com" [control]="accountSettingsForm.controls.email"></app-input>
+    <app-input label="Contraseña Actual" type="password" placeholder="********" [control]="accountSettingsForm.controls.currentPassword"></app-input>
+    <app-input label="Nueva Contraseña" type="password" placeholder="********" [control]="accountSettingsForm.controls.newPassword"
+               errorMessage="La contraseña debe tener al menos 12 caracteres, mayúsculas, minúsculas, números y símbolos."></app-input>
+    <app-input label="Confirmar Nueva Contraseña" type="password" placeholder="********" [control]="accountSettingsForm.controls.confirmNewPassword"
+               errorMessage="Las contraseñas no coinciden."></app-input>
+    <footer class="account-settings__footer">
+      <app-button variant="primario" size="grande" type="submit" [disabled]="accountSettingsForm.invalid || accountSettingsForm.pending">Guardar Cambios</app-button>
+    </footer>
+  </form>
+</section>

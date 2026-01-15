@@ -1,0 +1,350 @@
+/* ============================================
+   05-COMPONENTS: Formulario
+   Estilo Minimalista Apple/Ferrari
+   Nomenclatura BEM en espanol
+   ============================================ */
+
+@import '../01-tools/mixins';
+
+/* --------------------------------------------
+   BLOQUE: .formulario
+   Contenedor principal del formulario
+   -------------------------------------------- */
+
+.formulario {
+  @include flex-columna(var(--spacing-size-l));
+  width: 100%;
+  max-width: 480px;
+}
+
+.formulario--ancho {
+  max-width: 100%;
+}
+
+
+/* --------------------------------------------
+   ELEMENTOS DEL FORMULARIO
+   -------------------------------------------- */
+
+// Titulo del formulario
+.formulario__titulo {
+  @include text-headline;
+  text-align: center;
+  margin-bottom: var(--spacing-size-xss);
+  color: var(--text-primary);
+}
+
+// Subtitulo/descripcion
+.formulario__descripcion {
+  @include tipografia-texto;
+  text-align: center;
+  color: var(--gris-texto);
+  margin-bottom: var(--spacing-size-l);
+}
+
+// Grupo de campo (label + input + error)
+.formulario__grupo {
+  @include flex-columna(var(--spacing-size-xss));
+}
+
+// Fila de campos (para campos lado a lado)
+.formulario__fila {
+  display: flex;
+  gap: var(--spacing-size-m);
+
+  .formulario__grupo {
+    flex: 1;
+  }
+}
+
+// Etiqueta/label
+.formulario__etiqueta {
+  @include form-label;
+  color: var(--text-primary);
+}
+
+// Indicador de campo requerido
+.formulario__requerido {
+  color: var(--button-red);
+  margin-left: 2px;
+}
+
+// Campo de entrada (input, textarea, select)
+.formulario__campo {
+  @include input-base;
+  background-color: var(--bg-input, var(--bg-tertiary));
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  box-sizing: border-box;
+
+  &::placeholder {
+    color: var(--text-muted);
+  }
+
+  &:hover:not(:focus) {
+    border-color: var(--border-medium);
+  }
+
+  &:focus {
+    border-color: var(--text-primary);
+    background-color: var(--bg-card);
+  }
+}
+
+// Campo con error
+.formulario__campo--error {
+  border-color: var(--button-red);
+  background-color: rgba(220, 38, 38, 0.02);
+
+  &:focus {
+    border-color: var(--button-red);
+  }
+}
+
+// Campo valido
+.formulario__campo--valido {
+  border-color: var(--text-primary);
+}
+
+// Mensaje de error
+.formulario__error {
+  @include tipografia-texto;
+  font-size: var(--font-size-sm);
+  color: var(--button-red);
+  margin-top: var(--spacing-size-xss);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-size-xss);
+}
+
+// Mensaje de ayuda
+.formulario__ayuda {
+  @include tipografia-texto;
+  font-size: var(--font-size-sm);
+  color: var(--gris-texto);
+  margin-top: var(--spacing-size-xss);
+}
+
+// Textarea especifico
+.formulario__textarea {
+  @include input-base;
+  background-color: var(--bg-input, var(--bg-tertiary));
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  min-height: 120px;
+  resize: vertical;
+  box-sizing: border-box;
+
+  &::placeholder {
+    color: var(--text-muted);
+  }
+
+  &:hover:not(:focus) {
+    border-color: var(--border-medium);
+  }
+
+  &:focus {
+    border-color: var(--text-primary);
+    background-color: var(--bg-card);
+  }
+}
+
+// Select especifico
+.formulario__select {
+  @include input-base;
+  background-color: var(--bg-input, var(--bg-tertiary));
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1rem;
+  padding-right: 3rem;
+  box-sizing: border-box;
+
+  &:hover:not(:focus) {
+    border-color: var(--border-medium);
+  }
+
+  &:focus {
+    border-color: var(--text-primary);
+    background-color: var(--bg-card);
+  }
+}
+
+// Checkbox container
+.formulario__checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-size-s);
+  cursor: pointer;
+}
+
+.formulario__checkbox-input {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-top: 2px;
+  accent-color: var(--text-primary);
+  cursor: pointer;
+}
+
+.formulario__checkbox-texto {
+  @include tipografia-texto;
+  font-size: var(--font-size-md);
+  color: var(--text-primary);
+}
+
+// Radio button container
+.formulario__radio {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-size-s);
+  cursor: pointer;
+}
+
+.formulario__radio-input {
+  width: 1.25rem;
+  height: 1.25rem;
+  accent-color: var(--text-primary);
+  cursor: pointer;
+}
+
+.formulario__radio-texto {
+  @include tipografia-texto;
+  font-size: var(--font-size-md);
+  color: var(--text-primary);
+}
+
+// Grupo de radios
+.formulario__radio-grupo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-size-s);
+}
+
+.formulario__radio-grupo--horizontal {
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+// Contenedor de acciones (botones)
+.formulario__acciones {
+  display: flex;
+  gap: var(--spacing-size-m);
+  margin-top: var(--spacing-size-m);
+
+  &--centrado {
+    justify-content: center;
+  }
+
+  &--derecha {
+    justify-content: flex-end;
+  }
+
+  &--columna {
+    flex-direction: column;
+  }
+}
+
+// Separador
+.formulario__separador {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-size-m);
+  margin: var(--spacing-size-l) 0;
+
+  &::before,
+  &::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background-color: var(--border-light);
+  }
+}
+
+.formulario__separador-texto {
+  @include tipografia-texto;
+  font-size: var(--font-size-sm);
+  color: var(--gris-texto);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-wide);
+}
+
+// Enlace dentro del formulario
+.formulario__enlace {
+  color: var(--text-primary);
+  text-decoration: none;
+  font-weight: var(--font-weight-medium);
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: var(--text-primary);
+    transform: scaleX(0);
+    transition: transform var(--duration-base) var(--ease-premium);
+  }
+
+  &:hover::after {
+    transform: scaleX(1);
+  }
+}
+
+// Pie de formulario
+.formulario__pie {
+  text-align: center;
+  margin-top: var(--spacing-size-l);
+  padding-top: var(--spacing-size-l);
+  border-top: 1px solid var(--border-light);
+
+  p {
+    @include tipografia-texto;
+    font-size: var(--font-size-sm);
+    color: var(--gris-texto);
+    margin: 0;
+  }
+}
+
+
+/* --------------------------------------------
+   MODIFICADORES DE ESTILO
+   -------------------------------------------- */
+
+// Formulario con tarjeta
+.formulario--tarjeta {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-m);
+  padding: var(--spacing-size-xxl);
+}
+
+// Formulario inline
+.formulario--inline {
+  flex-direction: row;
+  align-items: flex-end;
+  gap: var(--spacing-size-s);
+  max-width: none;
+
+  .formulario__grupo {
+    flex: 1;
+  }
+
+  .formulario__acciones {
+    margin-top: 0;
+  }
+}
+
+// Formulario compacto
+.formulario--compacto {
+  gap: var(--spacing-size-m);
+
+  .formulario__campo {
+    padding: var(--spacing-size-xs) var(--spacing-size-s);
+  }
+}

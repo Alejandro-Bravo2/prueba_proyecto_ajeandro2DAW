@@ -1,0 +1,24 @@
+<section class="preferences-layout">
+  <header class="preferences-layout__header">
+    <h1 class="preferences-layout__title">Tus Preferencias</h1>
+    <p class="preferences-layout__subtitle">Gestiona tu cuenta, alimentacion y preferencias de notificacion.</p>
+  </header>
+
+  <!-- Navegacion de rutas hijas usando routerLink y routerLinkActive -->
+  <nav class="preferences-layout__nav" aria-label="Navegacion de preferencias">
+    @for (item of navItems; track item.path) {
+      <a
+        [routerLink]="item.path"
+        routerLinkActive="preferences-layout__nav-link--active"
+        class="preferences-layout__nav-link">
+        <span class="preferences-layout__nav-icon preferences-layout__nav-icon--{{ item.icon }}"></span>
+        <span class="preferences-layout__nav-label">{{ item.label }}</span>
+      </a>
+    }
+  </nav>
+
+  <!-- Router outlet para renderizar los componentes hijos -->
+  <main class="preferences-layout__content">
+    <router-outlet></router-outlet>
+  </main>
+</section>

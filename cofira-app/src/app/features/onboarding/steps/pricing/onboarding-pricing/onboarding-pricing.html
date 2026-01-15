@@ -1,0 +1,26 @@
+<section class="onboarding-pricing">
+  <header class="onboarding-pricing__header">
+    <h1>Rango de precio medio por comida</h1>
+    <p>¿Cuánto sueles gastar por comida?</p>
+  </header>
+  <form class="c-form onboarding-pricing__form" [formGroup]="pricingForm" (ngSubmit)="onSubmit()">
+    <section class="c-form__group">
+      <section class="onboarding-pricing__options">
+        @for (option of priceRangeOptions; track option.value) {
+          <button type="button" class="c-button"
+                  [ngClass]="{'c-button--primary': pricingForm.get('priceRange')?.value === option.value, 'c-button--secondary': pricingForm.get('priceRange')?.value !== option.value}"
+                  (click)="selectPriceRange(option.value)">
+            {{ option.label }}
+          </button>
+        }
+      </section>
+      @if (pricingForm.get('priceRange')?.invalid && pricingForm.get('priceRange')?.touched) {
+        <p class="c-form__error">La selección de rango de precio es obligatoria.</p>
+      }
+    </section>
+
+    <footer class="onboarding-pricing__footer">
+      <button type="submit" class="c-button c-button--primary c-button--large" [disabled]="pricingForm.invalid">Continuar</button>
+    </footer>
+  </form>
+</section>

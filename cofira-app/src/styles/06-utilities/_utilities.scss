@@ -1,0 +1,495 @@
+/* ============================================
+   06-UTILITIES: Clases utilitarias
+   Clases de una sola propiedad para ajustes rapidos
+   ============================================ */
+
+/* --------------------------------------------
+   DISPLAY
+   -------------------------------------------- */
+
+.oculto {
+  display: none !important;
+}
+
+.visible {
+  display: block !important;
+}
+
+.invisible {
+  visibility: hidden;
+}
+
+
+/* --------------------------------------------
+   TEXTO
+   -------------------------------------------- */
+
+.texto-centrado {
+  text-align: center;
+}
+
+.texto-derecha {
+  text-align: right;
+}
+
+.texto-izquierda {
+  text-align: left;
+}
+
+.texto-mayusculas {
+  text-transform: uppercase;
+}
+
+.texto-capitalizado {
+  text-transform: capitalize;
+}
+
+
+/* --------------------------------------------
+   ESPACIADO - MARGENES
+   -------------------------------------------- */
+
+.sin-margen {
+  margin: 0;
+}
+
+.margen-auto {
+  margin: 0 auto;
+}
+
+.margen-superior-s {
+  margin-top: var(--spacing-size-s);
+}
+
+.margen-superior-m {
+  margin-top: var(--spacing-size-m);
+}
+
+.margen-superior-l {
+  margin-top: var(--spacing-size-l);
+}
+
+.margen-inferior-s {
+  margin-bottom: var(--spacing-size-s);
+}
+
+.margen-inferior-m {
+  margin-bottom: var(--spacing-size-m);
+}
+
+.margen-inferior-l {
+  margin-bottom: var(--spacing-size-l);
+}
+
+
+/* --------------------------------------------
+   ESPACIADO - PADDING
+   -------------------------------------------- */
+
+.sin-padding {
+  padding: 0;
+}
+
+.padding-s {
+  padding: var(--spacing-size-s);
+}
+
+.padding-m {
+  padding: var(--spacing-size-m);
+}
+
+.padding-l {
+  padding: var(--spacing-size-l);
+}
+
+
+/* --------------------------------------------
+   ANCHO
+   -------------------------------------------- */
+
+.ancho-completo {
+  width: 100%;
+}
+
+.ancho-auto {
+  width: auto;
+}
+
+.ancho-maximo {
+  max-width: 100%;
+}
+
+
+/* --------------------------------------------
+   FLEXBOX UTILIDADES
+   -------------------------------------------- */
+
+.flex {
+  display: flex;
+}
+
+.flex-centrado {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-columna {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-fila {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-envolver {
+  flex-wrap: wrap;
+}
+
+.flex-crecer {
+  flex-grow: 1;
+}
+
+.espacio-entre {
+  justify-content: space-between;
+}
+
+.espacio-alrededor {
+  justify-content: space-around;
+}
+
+.alinear-centro {
+  align-items: center;
+}
+
+.alinear-inicio {
+  align-items: flex-start;
+}
+
+.alinear-fin {
+  align-items: flex-end;
+}
+
+
+/* --------------------------------------------
+   GAP (Espaciado flex/grid)
+   -------------------------------------------- */
+
+.gap-xs {
+  gap: var(--spacing-size-xss);
+}
+
+.gap-s {
+  gap: var(--spacing-size-s);
+}
+
+.gap-m {
+  gap: var(--spacing-size-m);
+}
+
+.gap-l {
+  gap: var(--spacing-size-l);
+}
+
+
+/* --------------------------------------------
+   COLORES DE FONDO
+   -------------------------------------------- */
+
+.fondo-primario {
+  background-color: var(--amarillo-normal);
+}
+
+.fondo-secundario {
+  background-color: var(--gris-normal);
+}
+
+.fondo-oscuro {
+  background-color: var(--gris-dark);
+}
+
+.fondo-claro {
+  background-color: var(--blanco-normal);
+}
+
+
+/* --------------------------------------------
+   COLORES DE TEXTO
+   -------------------------------------------- */
+
+.color-primario {
+  color: var(--amarillo-normal);
+}
+
+.color-texto-claro {
+  color: var(--text-dark);
+}
+
+.color-texto-oscuro {
+  color: var(--text-light);
+}
+
+
+/* --------------------------------------------
+   ACCESIBILIDAD
+   -------------------------------------------- */
+
+// Ocultar visualmente pero mantener accesible
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// Skip link para navegacion por teclado
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--negro-normal);
+  color: var(--text-dark);
+  padding: var(--spacing-size-s);
+  z-index: 9999;
+
+  &:focus {
+    top: 0;
+  }
+}
+
+
+/* --------------------------------------------
+   CURSORES
+   -------------------------------------------- */
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.cursor-no-permitido {
+  cursor: not-allowed;
+}
+
+
+/* --------------------------------------------
+   OVERFLOW
+   -------------------------------------------- */
+
+.overflow-oculto {
+  overflow: hidden;
+}
+
+.overflow-auto {
+  overflow: auto;
+}
+
+.overflow-x-auto {
+  overflow-x: auto;
+}
+
+.overflow-y-auto {
+  overflow-y: auto;
+}
+
+
+/* --------------------------------------------
+   POSICION
+   -------------------------------------------- */
+
+.relativo {
+  position: relative;
+}
+
+.absoluto {
+  position: absolute;
+}
+
+.fijo {
+  position: fixed;
+}
+
+.pegajoso {
+  position: sticky;
+  top: 0;
+}
+
+
+/* --------------------------------------------
+   CONTENEDORES DE CONTENIDO
+   -------------------------------------------- */
+
+.contenedor-demo {
+  max-width: 800px;
+  margin: var(--spacing-size-xl) auto;
+}
+
+.margen-xs {
+  margin: var(--spacing-size-xs);
+}
+
+
+/* ============================================
+   LEGACY CLASS ALIASES
+   Compatibilidad con clases antiguas (c-form, c-button, c-card)
+   ============================================ */
+
+/* --------------------------------------------
+   C-FORM (Alias para formulario)
+   -------------------------------------------- */
+
+.c-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-size-m);
+  width: 100%;
+}
+
+.c-form__group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-size-xss);
+}
+
+.c-form__label {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-size-xss);
+}
+
+.c-form__input {
+  width: 100%;
+  padding: var(--spacing-size-s) var(--spacing-size-m);
+  background-color: var(--bg-input, var(--bg-tertiary));
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-s);
+  font-size: var(--font-size-md);
+  font-family: var(--font-primary);
+  color: var(--text-primary);
+  outline: none;
+  transition: all var(--duration-base) var(--ease-premium);
+  box-sizing: border-box;
+
+  &::placeholder {
+    color: var(--text-muted);
+  }
+
+  &:hover:not(:focus) {
+    border-color: var(--border-medium);
+  }
+
+  &:focus {
+    border-color: var(--text-primary);
+    background-color: var(--bg-card);
+    box-shadow: 0 0 0 3px var(--focus-ring, rgba(10, 10, 10, 0.05));
+  }
+
+  &--error {
+    border-color: var(--button-red) !important;
+    background-color: rgba(220, 38, 38, 0.02);
+  }
+}
+
+.c-form__error {
+  font-size: var(--font-size-sm);
+  color: var(--button-red);
+  margin-top: var(--spacing-size-xss);
+}
+
+.c-form__hint {
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+  margin-top: var(--spacing-size-xss);
+}
+
+/* --------------------------------------------
+   C-BUTTON (Alias para boton)
+   -------------------------------------------- */
+
+.c-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-size-xss);
+  font-family: var(--font-primary);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-md);
+  border: none;
+  border-radius: var(--radius-s);
+  cursor: pointer;
+  text-decoration: none;
+  user-select: none;
+  padding: var(--spacing-size-s) var(--spacing-size-l);
+  transition: all var(--duration-base) var(--ease-premium);
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+}
+
+.c-button--primary {
+  background-color: var(--text-primary);
+  color: var(--bg-body);
+  border: 1px solid var(--text-primary);
+
+  &:hover:not(:disabled) {
+    opacity: 0.85;
+  }
+
+  &:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--text-primary);
+    outline-offset: 2px;
+  }
+}
+
+.c-button--secondary {
+  background-color: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--text-primary);
+
+  &:hover:not(:disabled) {
+    background-color: var(--text-primary);
+    color: var(--bg-body);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--text-primary);
+    outline-offset: 2px;
+  }
+}
+
+.c-button--large {
+  padding: var(--spacing-size-s) var(--spacing-size-xl);
+  font-size: var(--font-size-lg);
+}
+
+.c-button--small {
+  padding: var(--spacing-size-xss) var(--spacing-size-s);
+  font-size: var(--font-size-sm);
+}
+
+/* --------------------------------------------
+   C-CARD (Alias para tarjeta)
+   -------------------------------------------- */
+
+.c-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-m);
+  padding: var(--spacing-size-xl);
+  transition: all var(--duration-base) var(--ease-premium);
+}

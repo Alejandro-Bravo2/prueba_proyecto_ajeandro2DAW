@@ -1,0 +1,92 @@
+<section class="pricing" id="pricing">
+  <article class="pricing__container">
+    <!-- Header -->
+    <header class="pricing__header">
+      <span class="pricing__label">Planes</span>
+      <h2 class="pricing__title">Elige tu camino</h2>
+      <p class="pricing__subtitle">
+        Planes flexibles para cada etapa de tu transformacion.
+      </p>
+    </header>
+
+    <!-- Cards Grid -->
+    <section class="pricing__grid">
+      <!-- Plan Individual -->
+      <article class="tarjeta tarjeta--precios">
+        <h3 class="tarjeta__titulo">Individual</h3>
+        <p class="tarjeta__subtitulo">Para empezar</p>
+        <data class="tarjeta__precio" value="9">
+          &euro;9<span class="tarjeta__precio-periodo">/mes</span>
+        </data>
+        <ul class="tarjeta__lista">
+          <li class="tarjeta__item">Acceso basico a rutinas</li>
+          <li class="tarjeta__item">Seguimiento de nutricion</li>
+          <li class="tarjeta__item">Soporte por email</li>
+          <li class="tarjeta__item">App movil</li>
+        </ul>
+        <footer class="tarjeta__acciones">
+          <button
+            class="boton boton--secundario boton--completo"
+            (click)="selectPlan('INDIVIDUAL')"
+          >
+            Comenzar
+          </button>
+        </footer>
+      </article>
+
+      <!-- Plan Mensual (Destacado) -->
+      <article class="tarjeta tarjeta--precios tarjeta--destacada">
+        <mark class="tarjeta__badge">Recomendado</mark>
+        <h3 class="tarjeta__titulo">Mensual</h3>
+        <p class="tarjeta__subtitulo">Mas popular</p>
+        <data class="tarjeta__precio" value="19">
+          &euro;19<span class="tarjeta__precio-periodo">/mes</span>
+        </data>
+        <ul class="tarjeta__lista">
+          <li class="tarjeta__item">Todas las rutinas premium</li>
+          <li class="tarjeta__item">Plan nutricional avanzado</li>
+          <li class="tarjeta__item">Soporte prioritario</li>
+          <li class="tarjeta__item">Acceso a comunidad</li>
+          <li class="tarjeta__item">Analisis de progreso</li>
+        </ul>
+        <footer class="tarjeta__acciones">
+          <button
+            class="boton boton--primario boton--completo"
+            (click)="selectPlan('MENSUAL')"
+          >
+            Comenzar
+          </button>
+        </footer>
+      </article>
+
+      <!-- Plan Anual -->
+      <article class="tarjeta tarjeta--precios">
+        <h3 class="tarjeta__titulo">Anual</h3>
+        <p class="tarjeta__subtitulo">Mejor valor</p>
+        <data class="tarjeta__precio" value="199">
+          &euro;199<span class="tarjeta__precio-periodo">/ano</span>
+        </data>
+        <ul class="tarjeta__lista">
+          <li class="tarjeta__item">Todo lo del plan mensual</li>
+          <li class="tarjeta__item">Sesiones 1 a 1 con coach</li>
+          <li class="tarjeta__item">Acceso anticipado</li>
+          <li class="tarjeta__item">Descuentos exclusivos</li>
+          <li class="tarjeta__item">2 meses gratis</li>
+        </ul>
+        <footer class="tarjeta__acciones">
+          <button
+            class="boton boton--secundario boton--completo"
+            (click)="selectPlan('ANUAL')"
+          >
+            Comenzar
+          </button>
+        </footer>
+      </article>
+    </section>
+
+    <!-- Footer Note -->
+    <footer class="pricing__footer">
+      <p>Todos los planes incluyen 14 dias de prueba gratis. Cancela cuando quieras.</p>
+    </footer>
+  </article>
+</section>

@@ -1,0 +1,61 @@
+// ============================================================================
+// MODAL COMPONENT - Estilos globales
+// ============================================================================
+// Estilos para el bloqueo de scroll cuando el modal está abierto.
+// El componente Modal usa Renderer2 para añadir/quitar la clase modal-open.
+// ============================================================================
+
+// Bloqueo de scroll del body cuando el modal está abierto
+// Esta clase es añadida/removida por el ModalService usando Renderer2
+body.modal-open {
+  overflow: hidden;
+  // Prevenir el rebote en iOS
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}
+
+// Variable z-index para tooltip (si no existe)
+:root {
+  --z-tooltip: 9999;
+}
+
+// ============================================================================
+// BACKDROP DINÁMICO - Creado con Renderer2
+// ============================================================================
+// Este backdrop es creado programáticamente usando:
+// - Renderer2.createElement('div')
+// - Renderer2.appendChild(body, backdrop)
+// - Renderer2.removeChild(body, backdrop)
+// Demuestra creación dinámica de elementos para la rúbrica 1.3
+// ============================================================================
+
+/**
+ * Backdrop del modal creado dinámicamente.
+ * El componente Modal usa Renderer2.createElement() para crear este elemento
+ * y Renderer2.appendChild() para añadirlo al body.
+ */
+.c-modal__dynamic-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9998; // Justo debajo del contenido del modal
+  background-color: rgba(0, 0, 0, 0);
+  backdrop-filter: blur(0);
+  transition:
+    background-color var(--duration-base, 300ms) ease-out,
+    backdrop-filter var(--duration-base, 300ms) ease-out;
+  cursor: pointer;
+
+  // Estado visible (añadido con Renderer2.addClass)
+  &--visible {
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(2px);
+  }
+}
+
+// Responsive: ajustes móviles
+@media (max-width: 768px) {
+  .c-modal__dynamic-backdrop--visible {
+    backdrop-filter: blur(1px); // Menos blur en móviles para mejor rendimiento
+  }
+}

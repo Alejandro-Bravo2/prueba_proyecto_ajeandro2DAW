@@ -1,0 +1,26 @@
+<section class="searchable-tags">
+  <header class="searchable-tags__header">
+    <input type="text" [formControl]="searchControl" [placeholder]="searchPlaceholder" class="c-form__input">
+  </header>
+  <section class="searchable-tags__tags">
+    @for (tag of selectedTags; track tag.value) {
+      <span class="tag" [ngClass]="{'tag--red': tagType === 'red', 'tag--yellow': tagType === 'yellow'}">
+        {{ tag.label }}
+        <button (click)="removeTag(tag)" aria-label="Eliminar tag">x</button>
+      </span>
+    }
+  </section>
+  <section class="searchable-tags__suggestions">
+    @for (tag of filteredTags; track tag.value) {
+      <button class="c-button c-button--ghost" (click)="addTag(tag)">
+        {{ tag.label }}
+      </button>
+    } @empty {
+        @if (searchControl.value && searchControl.value.length > 0) {
+          <p class="u-text-secondary">No hay sugerencias para "{{ searchControl.value }}".</p>
+        } @else {
+          <p class="u-text-secondary">Empieza a escribir para buscar tags.</p>
+        }
+    }
+  </section>
+</section>

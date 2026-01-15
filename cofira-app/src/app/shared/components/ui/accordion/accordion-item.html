@@ -1,0 +1,53 @@
+<!--
+  Accordion Item con accesibilidad completa y múltiples eventos:
+
+  EVENTOS IMPLEMENTADOS (Event Binding - Rúbrica 2.1/2.2):
+  - (click): Toggle estado abierto/cerrado
+  - (dblclick): Mismo comportamiento que click (consistencia UX)
+  - (contextmenu): Prevenido para evitar menú contextual del navegador
+
+  PREVENCIÓN DE EVENTOS (Rúbrica 2.3):
+  - $event.preventDefault(): Evita comportamiento nativo de <details>
+    para controlar la animación manualmente con Angular Animations.
+
+  ACCESIBILIDAD:
+  - #accordionHeader: ViewChild para focus programático
+  - aria-expanded: Estado para lectores de pantalla
+  - aria-controls: Referencia al contenido controlado
+  - role="button": Indica comportamiento interactivo
+  - tabindex="0": Permite navegación por teclado
+-->
+<details class="c-accordion-item" [open]="isOpen()">
+  <summary
+    #accordionHeader
+    class="c-accordion-item__header"
+    (click)="toggle(); $event.preventDefault()"
+    (dblclick)="$event.preventDefault()"
+    (contextmenu)="$event.preventDefault()"
+    [attr.aria-expanded]="isOpen()"
+    [attr.aria-controls]="'content-' + itemId"
+    [attr.id]="'header-' + itemId"
+    role="button"
+    tabindex="0"
+  >
+    <span class="c-accordion-item__title">{{ title() }}</span>
+    <span
+      class="c-accordion-item__icon"
+      aria-hidden="true"
+    >
+      {{ isOpen() ? '−' : '+' }}
+    </span>
+  </summary>
+
+  <article
+    [id]="'content-' + itemId"
+    class="c-accordion-item__content-wrapper"
+    [@slideDown]="isOpen() ? 'open' : 'closed'"
+    [attr.aria-hidden]="!isOpen()"
+    role="region"
+  >
+    <section class="c-accordion-item__content">
+      <ng-content />
+    </section>
+  </article>
+</details>

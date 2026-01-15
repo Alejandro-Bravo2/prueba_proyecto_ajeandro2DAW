@@ -1,0 +1,27 @@
+<section class="onboarding-muscles">
+  <header class="onboarding-muscles__header">
+    <h1>¿Estás interesado en enfocarte en algunos grupos musculares?</h1>
+    <p>Puedes seleccionar uno o varios grupos musculares.</p>
+  </header>
+  <form class="c-form onboarding-muscles__form" [formGroup]="musclesForm" (ngSubmit)="onSubmit()">
+    <section class="c-form__group">
+      <section class="onboarding-muscles__options">
+        @for (muscle of muscleOptions; track muscle.value; let i = $index) {
+          <button type="button" class="c-button"
+                  [ngClass]="{'c-button--primary': musclesFormArray.at(i).value, 'c-button--secondary': !musclesFormArray.at(i).value}"
+                  (click)="musclesFormArray.at(i).setValue(!musclesFormArray.at(i).value)">
+            {{ muscle.label }}
+          </button>
+        }
+      </section>
+      @if (!hasSelectedMuscles && musclesForm.touched) {
+        <p class="c-form__error u-text-center">Debes seleccionar al menos un grupo muscular.</p>
+      }
+    </section>
+
+    <footer class="onboarding-muscles__footer">
+      <button type="submit" class="c-button c-button--primary c-button--large"
+              [disabled]="!hasSelectedMuscles">Continuar</button>
+    </footer>
+  </form>
+</section>

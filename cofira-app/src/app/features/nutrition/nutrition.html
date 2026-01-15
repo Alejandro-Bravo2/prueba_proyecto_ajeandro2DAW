@@ -1,0 +1,277 @@
+<section class="nutrition" role="main" aria-label="Gestión de alimentación">
+  <!-- Hero section with 3D scene -->
+  <figure class="nutrition__hero">
+    <app-nutrition-scene class="nutrition__canvas" />
+    <header class="nutrition__header">
+      <span class="nutrition__label">Alimentación</span>
+      <h1 class="nutrition__title">Tu Menú</h1>
+      <p class="nutrition__subtitle">Controla tu alimentación diaria</p>
+    </header>
+  </figure>
+
+  <article class="nutrition__content">
+    @if (isLoading()) {
+      <aside class="nutrition__loading" role="status" aria-live="polite">
+        <ul class="nutrition__skeleton" aria-hidden="true">
+          <li class="nutrition__skeleton-nav"></li>
+          <li class="nutrition__skeleton-grid">
+            <span class="nutrition__skeleton-card"></span>
+            <span class="nutrition__skeleton-card"></span>
+          </li>
+        </ul>
+        <span class="sr-only">Cargando datos de nutrición...</span>
+      </aside>
+    } @else if (error()) {
+      <article class="nutrition__error" role="alert">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" x2="12" y1="8" y2="12"/>
+          <line x1="12" x2="12.01" y1="16" y2="16"/>
+        </svg>
+        <p>{{ error() }}</p>
+        <button type="button" class="nutrition__retry" (click)="retryLoad()">
+          Reintentar
+        </button>
+      </article>
+    } @else {
+      <!-- View Tabs -->
+      <nav class="nutrition__nav" role="tablist" aria-label="Vistas de nutrición">
+        <button
+          type="button"
+          role="tab"
+          class="nutrition__nav-btn"
+          [class.nutrition__nav-btn--active]="activeView() === 'dashboard'"
+          [attr.aria-selected]="activeView() === 'dashboard'"
+          (click)="setActiveView('dashboard')"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect width="7" height="9" x="3" y="3" rx="1"/>
+            <rect width="7" height="5" x="14" y="3" rx="1"/>
+            <rect width="7" height="9" x="14" y="12" rx="1"/>
+            <rect width="7" height="5" x="3" y="16" rx="1"/>
+          </svg>
+          Dashboard
+        </button>
+        <button
+          type="button"
+          role="tab"
+          class="nutrition__nav-btn"
+          [class.nutrition__nav-btn--active]="activeView() === 'meals'"
+          [attr.aria-selected]="activeView() === 'meals'"
+          (click)="setActiveView('meals')"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/>
+            <path d="M7 2v20"/>
+            <path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/>
+          </svg>
+          Comidas
+        </button>
+      </nav>
+
+      @if (activeView() === 'dashboard') {
+        <!-- Dashboard View -->
+        <section class="nutrition__dashboard">
+          @if (isLoadingGoals()) {
+            <aside class="nutrition__goals-loading" aria-busy="true">
+              <span class="nutrition__skeleton-card"></span>
+            </aside>
+          } @else if (nutritionGoals()) {
+            <app-nutrition-dashboard
+              [dailyNutrition]="dailyNutrition()"
+              [goals]="nutritionGoals()!"
+              [waterGlasses]="waterGlasses()"
+              [currentStreak]="currentStreak()"
+              (foodAdded)="onFoodAdded($event)"
+            />
+
+            <!-- Weekly Progress -->
+            @if (weeklyData().length > 0) {
+              <app-weekly-progress
+                [weeklyData]="weeklyData()"
+                [calorieGoal]="nutritionGoals()!.calories"
+              />
+            }
+          } @else {
+            <article class="nutrition__no-goals">
+              <h2>Completa tu perfil</h2>
+              <p>Necesitas completar el onboarding para ver tus objetivos nutricionales personalizados.</p>
+            </article>
+          }
+        </section>
+      } @else {
+        <!-- Meals View -->
+        @if (!store.hasMealPlan() && !store.loading()) {
+          <article class="nutrition__empty">
+            <h2 class="nutrition__empty-title">Sin plan de comidas</h2>
+            <p class="nutrition__empty-text">Aún no tienes un plan de alimentación generado. Completa el onboarding para generar tu plan personalizado.</p>
+            <button type="button" class="nutrition__empty-action" (click)="addMeal()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 5v14"/>
+                <path d="M5 12h14"/>
+              </svg>
+              Agregar comida manual
+            </button>
+          </article>
+        } @else {
+          <!-- Barra de busqueda para comidas -->
+          <search class="nutrition__search">
+            <fieldset class="search-input-wrapper">
+              <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="11" cy="11" r="8"/>
+                <path d="m21 21-4.3-4.3"/>
+              </svg>
+              <input
+                type="search"
+                [formControl]="searchControl"
+                placeholder="Buscar comidas o alimentos..."
+                class="search-input"
+                aria-label="Buscar comidas"
+              />
+              @if (store.searchTerm()) {
+                <button
+                  type="button"
+                  class="search-clear"
+                  (click)="clearSearch()"
+                  aria-label="Limpiar busqueda"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M18 6 6 18"/>
+                    <path d="m6 6 12 12"/>
+                  </svg>
+                </button>
+              }
+            </fieldset>
+            @if (store.searchTerm()) {
+              <output class="search-results-count" aria-live="polite">
+                {{ store.filteredMeals().length }} comida(s) encontrada(s)
+              </output>
+            }
+          </search>
+
+          <!-- Toggle de modo de visualizacion -->
+          <div class="view-mode-toggle" role="group" aria-label="Modo de visualizacion">
+            <button
+              type="button"
+              [class.active]="store.viewMode() === 'pagination'"
+              (click)="setViewMode('pagination')"
+              aria-pressed="{{ store.viewMode() === 'pagination' }}"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect width="7" height="7" x="3" y="3" rx="1"/>
+                <rect width="7" height="7" x="14" y="3" rx="1"/>
+                <rect width="7" height="7" x="14" y="14" rx="1"/>
+                <rect width="7" height="7" x="3" y="14" rx="1"/>
+              </svg>
+              Paginas
+            </button>
+            <button
+              type="button"
+              [class.active]="store.viewMode() === 'infinite'"
+              (click)="setViewMode('infinite')"
+              aria-pressed="{{ store.viewMode() === 'infinite' }}"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 2v20"/>
+                <path d="m19 15-7 7-7-7"/>
+              </svg>
+              Continuo
+            </button>
+          </div>
+
+          <!-- Day Navigation (similar to training) -->
+          <header class="day-navigation">
+            <button
+              class="day-navigation__btn"
+              aria-label="Día anterior"
+              [disabled]="!store.canGoPreviousDay()"
+              (click)="onPreviousMealDay()"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m15 18-6-6 6-6" />
+              </svg>
+            </button>
+
+            <div class="day-navigation__info">
+              <span class="day-navigation__label">Día de alimentación</span>
+              <h2 class="day-navigation__day">{{ store.formattedDayName() }}</h2>
+            </div>
+
+            <button
+              class="day-navigation__btn"
+              aria-label="Día siguiente"
+              [disabled]="!store.canGoNextDay()"
+              (click)="onNextMealDay()"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m9 18 6-6-6-6" />
+              </svg>
+            </button>
+          </header>
+
+          <app-daily-menu
+            [meals]="store.meals()"
+            [selectedDay]="store.selectedDay()"
+          />
+
+          @if (store.viewMode() === 'pagination') {
+            <!-- Controles de paginacion -->
+            @if (store.totalPages() > 1) {
+              <nav class="pagination" aria-label="Paginacion de comidas">
+                <button
+                  type="button"
+                  class="pagination__btn"
+                  (click)="previousPage()"
+                  [disabled]="store.currentPage() === 1"
+                  aria-label="Pagina anterior"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m15 18-6-6 6-6"/>
+                  </svg>
+                  Anterior
+                </button>
+
+                <span class="pagination__info">
+                  Pagina {{ store.currentPage() }} de {{ store.totalPages() }}
+                </span>
+
+                <button
+                  type="button"
+                  class="pagination__btn"
+                  (click)="nextPage()"
+                  [disabled]="store.currentPage() >= store.totalPages()"
+                  aria-label="Pagina siguiente"
+                >
+                  Siguiente
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m9 18 6-6-6-6"/>
+                  </svg>
+                </button>
+              </nav>
+            }
+          } @else {
+            <!-- Sentinel para infinite scroll -->
+            <div
+              class="infinite-scroll-sentinel"
+              appInfiniteScroll
+              (scrolled)="loadMore()"
+            ></div>
+
+            @if (store.isLoadingMore()) {
+              <div class="loading-more" role="status" aria-live="polite">
+                <span class="loading-more__spinner"></span>
+                Cargando mas comidas...
+              </div>
+            }
+
+            @if (!store.hasMore() && store.infiniteScrollItems().length > 0) {
+              <p class="end-of-list">No hay mas comidas</p>
+            }
+          }
+        }
+      }
+    }
+  </article>
+</section>

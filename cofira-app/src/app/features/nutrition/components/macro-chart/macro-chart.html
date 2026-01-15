@@ -1,0 +1,39 @@
+<article
+  class="macro-chart"
+  role="figure"
+  [attr.aria-label]="ariaLabel()"
+  tabindex="0"
+>
+  <figure class="macro-chart__ring" aria-hidden="true">
+    <canvas
+      baseChart
+      [data]="chartData()"
+      [options]="chartOptions"
+      [type]="'doughnut'"
+    ></canvas>
+    <figcaption class="macro-chart__center">
+      <data class="macro-chart__value" [value]="displayValue()">{{ displayValue() }}</data>
+      <span class="macro-chart__unit">%</span>
+    </figcaption>
+  </figure>
+  <aside class="macro-chart__info">
+    <h3 class="macro-chart__label">{{ label() }}</h3>
+    <p class="macro-chart__progress">
+      <data class="macro-chart__current" [value]="data().current">{{ data().current }}</data>
+      <span class="macro-chart__separator" aria-hidden="true">/</span>
+      <data class="macro-chart__goal" [value]="data().goal">{{ data().goal }}{{ data().unit }}</data>
+    </p>
+    <progress
+      class="macro-chart__bar"
+      [value]="data().current"
+      [max]="data().goal"
+      [attr.aria-label]="label() + ' progress'"
+    >
+      <span
+        class="macro-chart__bar-fill"
+        [style.width.%]="percentage()"
+        [style.background]="barGradient()"
+      ></span>
+    </progress>
+  </aside>
+</article>

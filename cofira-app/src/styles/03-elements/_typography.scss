@@ -1,0 +1,117 @@
+/* ============================================
+   03-ELEMENTS: Typography
+   Estilos base para elementos tipograficos
+   ============================================ */
+
+/* --------------------------------------------
+   TITULOS (h1-h6)
+   Usan --font-secondary (Poppins)
+   -------------------------------------------- */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-secondary);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  color: var(--text-light);
+  margin: 0 0 var(--spacing-size-s) 0;
+}
+
+h1 {
+  font-size: var(--font-size-4xl);
+}
+
+h2 {
+  font-size: var(--font-size-3xl);
+}
+
+h3 {
+  font-size: var(--font-size-2xl);
+}
+
+h4 {
+  font-size: var(--font-size-xl);
+}
+
+h5 {
+  font-size: var(--font-size-lg);
+}
+
+h6 {
+  font-size: var(--font-size-md);
+}
+
+
+/* --------------------------------------------
+   CUERPO Y PARRAFOS
+   Usan --font-primary (Montserrat)
+   -------------------------------------------- */
+
+body {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-normal);
+  color: var(--text-light);
+}
+
+p {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-normal);
+  margin: 0 0 var(--spacing-size-s) 0;
+}
+
+span {
+  font-family: var(--font-primary);
+}
+
+
+/* --------------------------------------------
+   TEXTOS ESPECIALES
+   -------------------------------------------- */
+
+small {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-sm);
+}
+
+strong, b {
+  font-family: var(--font-primary);
+  font-weight: var(--font-weight-bold);
+}
+
+em, i {
+  font-family: var(--font-primary);
+  font-style: italic;
+}
+
+mark {
+  background-color: var(--amarillo-normal);
+  color: var(--negro-normal);
+  padding: 0 var(--spacing-size-xss);
+}
+
+code, pre {
+  font-family: monospace;
+  font-size: var(--font-size-sm);
+  background-color: var(--gris-normal);
+  border-radius: var(--radius-xss);
+}
+
+code {
+  padding: var(--spacing-size-xss);
+}
+
+pre {
+  padding: var(--spacing-size-s);
+  overflow-x: auto;
+}
+
+blockquote {
+  font-family: var(--font-primary);
+  font-style: italic;
+  border-left: 4px solid var(--amarillo-normal);
+  padding-left: var(--spacing-size-m);
+  margin: var(--spacing-size-m) 0;
+  color: var(--text-light);
+}

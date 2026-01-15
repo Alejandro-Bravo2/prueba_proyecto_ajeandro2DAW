@@ -1,0 +1,188 @@
+<section class="weekly-schedule">
+  <!-- Day Navigation -->
+  <header class="weekly-schedule__nav">
+    <button
+      class="nav-btn"
+      aria-label="Día anterior"
+      [disabled]="!canGoPrevious()"
+      (click)="onPreviousDay()"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m15 18-6-6 6-6" />
+      </svg>
+    </button>
+
+    <div class="day-info">
+      <span class="day-label">Día de entrenamiento</span>
+      <h2 class="day-name">{{ formatDayName() }}</h2>
+    </div>
+
+    <button
+      class="nav-btn"
+      aria-label="Día siguiente"
+      [disabled]="!canGoNext()"
+      (click)="onNextDay()"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m9 18 6-6-6-6" />
+      </svg>
+    </button>
+  </header>
+
+  <!-- Exercise List -->
+  <div class="exercise-list">
+    @for (exercise of exercises(); track exercise.id; let i = $index) {
+      <article 
+        class="exercise-item" 
+        [class.completed]="exercise.completed"
+        [class.expanded]="isExpanded(exercise.id)"
+      >
+        <!-- Main Row - Clickable -->
+        <div class="exercise-item__main" (click)="toggleExpanded(exercise.id)">
+          <!-- Checkbox -->
+          <label class="exercise-item__checkbox" (click)="$event.stopPropagation()">
+            <input
+              type="checkbox"
+              [checked]="exercise.completed"
+              (change)="toggleComplete(exercise.id, $event)"
+              class="checkbox-input"
+              aria-label="Marcar {{ exercise.name }} como completado"
+            >
+            <span class="checkbox-custom">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+            </span>
+          </label>
+
+          <!-- Exercise Info -->
+          <div class="exercise-item__info">
+            <h3 class="exercise-item__name">{{ exercise.name }}</h3>
+            @if (exercise.muscleGroup) {
+              <span class="exercise-item__muscle">{{ exercise.muscleGroup }}</span>
+            }
+          </div>
+
+          <!-- Stats -->
+          <div class="exercise-item__stats">
+            <div class="stat">
+              <span class="stat__value">{{ exercise.sets }}</span>
+              <span class="stat__label">Series</span>
+            </div>
+            <div class="stat">
+              <span class="stat__value">{{ exercise.reps }}</span>
+              <span class="stat__label">Reps</span>
+            </div>
+            <div class="stat">
+              <span class="stat__value">{{ formatRestTime(exercise.restSeconds) }}</span>
+              <span class="stat__label">Descanso</span>
+            </div>
+          </div>
+
+          <!-- Expand Icon -->
+          <div class="exercise-item__expand">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              [class.rotated]="isExpanded(exercise.id)">
+              <path d="m6 9 6 6 6-6"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Expandable Details -->
+        @if (isExpanded(exercise.id)) {
+          <div class="exercise-item__details">
+            <div class="details-content">
+              <h4 class="details-title">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"/>
+                  <path d="M12 16v-4"/>
+                  <path d="M12 8h.01"/>
+                </svg>
+                Cómo realizar este ejercicio
+              </h4>
+              <div class="details-description">
+                @if (exercise.description && hasStepsFormat(exercise.description)) {
+                  <ol class="technique-steps">
+                    @for (step of parseDescriptionSteps(exercise.description); track $index) {
+                      <li>{{ step }}</li>
+                    }
+                  </ol>
+                } @else if (exercise.description) {
+                  <p>{{ exercise.description }}</p>
+                } @else {
+                  <p class="details-placeholder">
+                    Realiza {{ exercise.sets }} series de {{ exercise.reps }} repeticiones.
+                    Descansa {{ formatRestTime(exercise.restSeconds) }} entre cada serie.
+                    Mantén una buena postura y controla el movimiento en todo momento.
+                  </p>
+                }
+              </div>
+              
+              <div class="details-summary">
+                <div class="summary-item">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 12h16"/>
+                    <path d="M4 6h16"/>
+                    <path d="M4 18h16"/>
+                  </svg>
+                  <span>{{ exercise.sets }} series</span>
+                </div>
+                <div class="summary-item">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2v4"/>
+                    <path d="M12 18v4"/>
+                    <path d="m4.93 4.93 2.83 2.83"/>
+                    <path d="m16.24 16.24 2.83 2.83"/>
+                    <path d="M2 12h4"/>
+                    <path d="M18 12h4"/>
+                    <path d="m4.93 19.07 2.83-2.83"/>
+                    <path d="m16.24 7.76 2.83-2.83"/>
+                  </svg>
+                  <span>{{ exercise.reps }} reps por serie</span>
+                </div>
+                <div class="summary-item">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/>
+                    <polyline points="12 6 12 12 16 14"/>
+                  </svg>
+                  <span>{{ formatRestTime(exercise.restSeconds) }} descanso</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+      </article>
+    } @empty {
+      <div class="empty-state">
+        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 20V10" />
+          <path d="M12 20V4" />
+          <path d="M6 20v-6" />
+        </svg>
+        <p>No hay ejercicios programados para este día</p>
+        <span>Descansa o entrena otro grupo muscular</span>
+      </div>
+    }
+  </div>
+
+  <!-- Summary Footer -->
+  @if (exercises().length > 0) {
+    <footer class="weekly-schedule__footer">
+      <div class="progress-info">
+        <span class="progress-text">{{ completedCount() }} de {{ totalCount() }} completados</span>
+        <div class="progress-bar">
+          <div class="progress-bar__fill" [style.width.%]="totalCount() > 0 ? (completedCount() / totalCount()) * 100 : 0"></div>
+        </div>
+      </div>
+    </footer>
+  }
+</section>

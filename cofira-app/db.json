@@ -1,0 +1,154 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "Test User",
+      "email": "test@test.com",
+      "password": "Test12345678!",
+      "createdAt": "2025-12-11T00:00:00.000Z"
+    }
+  ],
+  "exercises": [
+    {
+      "id": "1",
+      "userId": "1",
+      "name": "Press Banca",
+      "muscleGroup": "pecho",
+      "description": "Ejercicio para pecho"
+    },
+    {
+      "id": "2",
+      "userId": "1",
+      "name": "Sentadilla",
+      "muscleGroup": "piernas",
+      "description": "Ejercicio para piernas"
+    },
+    {
+      "id": "3",
+      "userId": "1",
+      "name": "Peso Muerto",
+      "muscleGroup": "espalda",
+      "description": "Ejercicio para espalda"
+    }
+  ],
+  "meals": [
+    {
+      "id": "1",
+      "userId": "1",
+      "date": "2025-12-11",
+      "mealType": "breakfast",
+      "foods": [
+        {
+          "icon": "egg",
+          "quantity": "2 unidades",
+          "name": "Huevos cocidos",
+          "calories": 140,
+          "protein": 12,
+          "carbs": 2,
+          "fat": 10,
+          "fiber": 0
+        },
+        {
+          "icon": "bread",
+          "quantity": "2 rebanadas",
+          "name": "Pan Integral",
+          "calories": 160,
+          "protein": 8,
+          "carbs": 28,
+          "fat": 2,
+          "fiber": 4
+        }
+      ],
+      "totalCalories": 300,
+      "totalProtein": 20,
+      "totalCarbs": 30,
+      "totalFat": 12,
+      "totalFiber": 4
+    },
+    {
+      "id": "2",
+      "userId": "1",
+      "date": "2025-12-11",
+      "mealType": "lunch",
+      "foods": [
+        {
+          "icon": "chicken",
+          "quantity": "200g",
+          "name": "Pollo a la plancha",
+          "calories": 330,
+          "protein": 62,
+          "carbs": 0,
+          "fat": 7,
+          "fiber": 0
+        },
+        {
+          "icon": "rice",
+          "quantity": "150g",
+          "name": "Arroz integral",
+          "calories": 180,
+          "protein": 4,
+          "carbs": 38,
+          "fat": 1,
+          "fiber": 3
+        }
+      ],
+      "totalCalories": 510,
+      "totalProtein": 66,
+      "totalCarbs": 38,
+      "totalFat": 8,
+      "totalFiber": 3
+    }
+  ],
+  "progress": [
+    {
+      "id": "1",
+      "userId": "1",
+      "date": "2025-12-01",
+      "exerciseName": "Press Banca",
+      "weight": 60,
+      "reps": 10,
+      "sets": 3,
+      "notes": "Buen día"
+    },
+    {
+      "id": "2",
+      "userId": "1",
+      "date": "2025-12-05",
+      "exerciseName": "Press Banca",
+      "weight": 65,
+      "reps": 8,
+      "sets": 3,
+      "notes": "Aumenté peso"
+    },
+    {
+      "id": "3",
+      "userId": "1",
+      "date": "2025-12-11",
+      "exerciseName": "Press Banca",
+      "weight": 70,
+      "reps": 6,
+      "sets": 3,
+      "notes": "Nuevo PR!"
+    },
+    {
+      "id": "4",
+      "userId": "1",
+      "date": "2025-12-01",
+      "exerciseName": "Sentadilla",
+      "weight": 80,
+      "reps": 10,
+      "sets": 3,
+      "notes": ""
+    },
+    {
+      "id": "5",
+      "userId": "1",
+      "date": "2025-12-11",
+      "exerciseName": "Sentadilla",
+      "weight": 90,
+      "reps": 8,
+      "sets": 3,
+      "notes": "Progreso constante"
+    }
+  ]
+}

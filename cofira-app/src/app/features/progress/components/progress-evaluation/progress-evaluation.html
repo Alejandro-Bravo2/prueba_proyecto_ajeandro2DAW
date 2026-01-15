@@ -1,0 +1,187 @@
+<div class="progress-evaluation">
+  <header class="progress-evaluation__header">
+    <h2 class="progress-evaluation__title">Evaluacion de Progreso</h2>
+    <div class="progress-evaluation__tabs">
+      <button
+        class="progress-evaluation__tab"
+        [class.progress-evaluation__tab--active]="activeTab() === 'training'"
+        (click)="setTab('training')">
+        Entrenamiento
+      </button>
+      <button
+        class="progress-evaluation__tab"
+        [class.progress-evaluation__tab--active]="activeTab() === 'nutrition'"
+        (click)="setTab('nutrition')">
+        Nutricion
+      </button>
+      <button
+        class="progress-evaluation__tab"
+        [class.progress-evaluation__tab--active]="activeTab() === 'full'"
+        (click)="setTab('full')">
+        Integral
+      </button>
+    </div>
+  </header>
+
+  @if (store.loading()) {
+    <div class="progress-evaluation__loading">
+      <div class="spinner"></div>
+      <span>Analizando tu progreso...</span>
+    </div>
+  } @else if (store.error()) {
+    <div class="progress-evaluation__error">
+      <span class="error-icon">⚠️</span>
+      <p>{{ store.error() }}</p>
+      <button class="btn btn--secondary" (click)="refresh()">Reintentar</button>
+    </div>
+  } @else if (store.hasData()) {
+    <div class="progress-evaluation__content">
+      <!-- Trend Indicators -->
+      <section class="progress-evaluation__trends">
+        @if (store.trainingTrend()) {
+          <div class="trend-card" [ngClass]="getTrendClass(store.trainingTrend())">
+            <span class="trend-card__icon">{{ getTrendIcon(store.trainingTrend()) }}</span>
+            <div class="trend-card__info">
+              <span class="trend-card__label">Entrenamiento</span>
+              <span class="trend-card__value">{{ getTrendText(store.trainingTrend()) }}</span>
+            </div>
+          </div>
+        }
+        @if (store.nutritionTrend()) {
+          <div class="trend-card" [ngClass]="getTrendClass(store.nutritionTrend())">
+            <span class="trend-card__icon">{{ getTrendIcon(store.nutritionTrend()) }}</span>
+            <div class="trend-card__info">
+              <span class="trend-card__label">Nutricion</span>
+              <span class="trend-card__value">{{ getTrendText(store.nutritionTrend()) }}</span>
+            </div>
+          </div>
+        }
+      </section>
+
+      <!-- Plateau Alert -->
+      @if (store.hasPlateau()) {
+        <div class="progress-evaluation__alert progress-evaluation__alert--warning">
+          <span class="alert-icon">⚠️</span>
+          <div class="alert-content">
+            <strong>Plateau detectado</strong>
+            <p>{{ store.plateauMessage() || 'No se ha detectado mejora significativa en las ultimas semanas. Revisa las recomendaciones.' }}</p>
+          </div>
+        </div>
+      }
+
+      <!-- Metrics Cards -->
+      <section class="progress-evaluation__metrics">
+        @if (store.currentEvaluation()?.entrenamientoResumen) {
+          <div class="metric-card">
+            <span class="metric-card__icon">🎯</span>
+            <div class="metric-card__content">
+              <span class="metric-card__value">{{ store.trainingConsistency() | number:'1.0-0' }}%</span>
+              <span class="metric-card__label">Consistencia</span>
+            </div>
+          </div>
+          <div class="metric-card">
+            <span class="metric-card__icon">💪</span>
+            <div class="metric-card__content">
+              <span class="metric-card__value">{{ store.trainingVolume() | number:'1.0-0' }} kg</span>
+              <span class="metric-card__label">Volumen Total</span>
+            </div>
+          </div>
+          <div class="metric-card" [class.metric-card--positive]="store.strengthImprovement() > 0" [class.metric-card--negative]="store.strengthImprovement() < 0">
+            <span class="metric-card__icon">📈</span>
+            <div class="metric-card__content">
+              <span class="metric-card__value">{{ store.strengthImprovement() > 0 ? '+' : '' }}{{ store.strengthImprovement() | number:'1.1-1' }}%</span>
+              <span class="metric-card__label">Mejora Fuerza</span>
+            </div>
+          </div>
+        }
+        @if (store.currentEvaluation()?.nutricionResumen) {
+          <div class="metric-card">
+            <span class="metric-card__icon">🍎</span>
+            <div class="metric-card__content">
+              <span class="metric-card__value">{{ store.calorieAdherence() | number:'1.0-0' }}%</span>
+              <span class="metric-card__label">Adherencia Calorias</span>
+            </div>
+          </div>
+          <div class="metric-card">
+            <span class="metric-card__icon">🥩</span>
+            <div class="metric-card__content">
+              <span class="metric-card__value">{{ store.proteinAdherence() | number:'1.0-0' }}%</span>
+              <span class="metric-card__label">Adherencia Proteinas</span>
+            </div>
+          </div>
+          <div class="metric-card">
+            <span class="metric-card__icon">🔥</span>
+            <div class="metric-card__content">
+              <span class="metric-card__value">{{ store.averageCalories() | number:'1.0-0' }}</span>
+              <span class="metric-card__label">Calorias Promedio</span>
+            </div>
+          </div>
+        }
+      </section>
+
+      <!-- Nutrition Patterns -->
+      @if (store.nutritionPatterns().length > 0) {
+        <section class="progress-evaluation__patterns">
+          <h4>Patrones Detectados</h4>
+          <div class="pattern-list">
+            @for (pattern of store.nutritionPatterns(); track pattern) {
+              <span class="pattern-tag">{{ getPatternText(pattern) }}</span>
+            }
+          </div>
+        </section>
+      }
+
+      <!-- AI Feedback -->
+      @if (store.aiFeedback()) {
+        <section class="progress-evaluation__feedback">
+          <header class="feedback-header">
+            <span class="ai-icon">🤖</span>
+            <h3>Feedback Personalizado</h3>
+          </header>
+          <div class="feedback-content">
+            <p>{{ store.aiFeedback() }}</p>
+          </div>
+        </section>
+      }
+
+      <!-- Achievements -->
+      @if (store.achievements().length > 0) {
+        <section class="progress-evaluation__achievements">
+          <h4>🏆 Logros Destacados</h4>
+          <ul>
+            @for (achievement of store.achievements(); track $index) {
+              <li>{{ achievement }}</li>
+            }
+          </ul>
+        </section>
+      }
+
+      <!-- Recommendations -->
+      @if (store.recommendations().length > 0) {
+        <section class="progress-evaluation__recommendations">
+          <h4>💡 Recomendaciones</h4>
+          <ul>
+            @for (rec of store.recommendations(); track $index) {
+              <li>{{ rec }}</li>
+            }
+          </ul>
+        </section>
+      }
+    </div>
+  } @else {
+    <div class="progress-evaluation__empty">
+      <span class="empty-icon">📊</span>
+      <h3>No hay suficientes datos</h3>
+      <p>Registra tu entrenamiento y comidas para obtener feedback personalizado sobre tu progreso.</p>
+    </div>
+  }
+
+  <footer class="progress-evaluation__footer">
+    <button
+      class="btn btn--primary"
+      (click)="refresh()"
+      [disabled]="store.loading()">
+      {{ store.loading() ? 'Actualizando...' : 'Actualizar Evaluacion' }}
+    </button>
+  </footer>
+</div>

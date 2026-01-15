@@ -1,0 +1,11 @@
+@if (isActive()) {
+  <article
+    class="c-tab-panel"
+    [@fadeIn]
+    role="tabpanel"
+    [attr.aria-labelledby]="'tab-' + tabId()"
+    [id]="'panel-' + tabId()"
+  >
+    <ng-content />
+  </article>
+}

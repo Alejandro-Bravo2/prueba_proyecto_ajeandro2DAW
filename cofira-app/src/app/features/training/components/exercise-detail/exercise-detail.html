@@ -1,0 +1,113 @@
+<section class="exercise-detail">
+  <!-- Breadcrumb de navegación -->
+  <nav class="exercise-detail__breadcrumb" aria-label="Migas de pan">
+    <a routerLink="/entrenamiento" class="exercise-detail__breadcrumb-link">
+      Entrenamiento
+    </a>
+    <span class="exercise-detail__breadcrumb-separator" aria-hidden="true">/</span>
+    @if (exercise()) {
+      <span class="exercise-detail__breadcrumb-current" aria-current="page">{{ exercise()?.nombreEjercicio }}</span>
+    } @else {
+      <span class="exercise-detail__breadcrumb-current" aria-current="page">Detalle</span>
+    }
+  </nav>
+
+  <!-- Estado de carga -->
+  @if (isLoading()) {
+    <aside class="exercise-detail__loading" role="status" aria-live="polite">
+      <output class="exercise-detail__spinner" aria-hidden="true"></output>
+      <p>Cargando ejercicio...</p>
+    </aside>
+  }
+
+  <!-- Estado de error -->
+  @if (error()) {
+    <aside class="exercise-detail__error" role="alert">
+      <mark class="exercise-detail__error-icon" aria-hidden="true">!</mark>
+      <h2>Error al cargar</h2>
+      <p>{{ error() }}</p>
+      <button class="exercise-detail__btn exercise-detail__btn--primary" (click)="goBack()">
+        Volver a Entrenamiento
+      </button>
+    </aside>
+  }
+
+  <!-- Contenido del ejercicio -->
+  @if (exercise() && !isLoading() && !error()) {
+    <article class="exercise-detail__content">
+      <header class="exercise-detail__header">
+        <hgroup class="exercise-detail__title-group">
+          <h1 class="exercise-detail__title">{{ exercise()?.nombreEjercicio }}</h1>
+          <mark
+            class="exercise-detail__muscle-badge"
+            [style.background-color]="getMuscleGroupColor(exercise()?.grupoMuscular || '')">
+            {{ exercise()?.grupoMuscular }}
+          </mark>
+        </hgroup>
+        <p class="exercise-detail__id">ID: #{{ exerciseId() }}</p>
+      </header>
+
+      <main class="exercise-detail__body">
+        <!-- Descripción -->
+        <section class="exercise-detail__section">
+          <h2 class="exercise-detail__section-title">Descripción</h2>
+          <p class="exercise-detail__description">
+            {{ exercise()?.descripcion || 'Sin descripción disponible.' }}
+          </p>
+        </section>
+
+        <!-- Parámetros del ejercicio -->
+        <section class="exercise-detail__section">
+          <h2 class="exercise-detail__section-title">Parámetros</h2>
+          <ul class="exercise-detail__stats" role="list">
+            <li class="exercise-detail__stat">
+              <data class="exercise-detail__stat-value" [value]="exercise()?.series">{{ exercise()?.series }}</data>
+              <span class="exercise-detail__stat-label">Series</span>
+            </li>
+            <li class="exercise-detail__stat">
+              <data class="exercise-detail__stat-value" [value]="exercise()?.repeticiones">{{ exercise()?.repeticiones }}</data>
+              <span class="exercise-detail__stat-label">Repeticiones</span>
+            </li>
+            <li class="exercise-detail__stat">
+              <data class="exercise-detail__stat-value" [value]="exercise()?.tiempoDescansoSegundos">{{ exercise()?.tiempoDescansoSegundos }}s</data>
+              <span class="exercise-detail__stat-label">Descanso</span>
+            </li>
+          </ul>
+        </section>
+
+        <!-- Grupo muscular -->
+        <section class="exercise-detail__section">
+          <h2 class="exercise-detail__section-title">Grupo Muscular</h2>
+          <figure class="exercise-detail__muscle-info">
+            <figcaption
+              class="exercise-detail__muscle-icon"
+              [style.background-color]="getMuscleGroupColor(exercise()?.grupoMuscular || '')">
+              {{ exercise()?.grupoMuscular?.charAt(0) }}
+            </figcaption>
+            <span>{{ exercise()?.grupoMuscular }}</span>
+          </figure>
+        </section>
+      </main>
+
+      <!-- Navegación entre ejercicios -->
+      <footer class="exercise-detail__footer">
+        <button
+          class="exercise-detail__btn exercise-detail__btn--secondary"
+          (click)="goToPreviousExercise()"
+          [disabled]="exerciseId() === 1">
+          Anterior
+        </button>
+        <button
+          class="exercise-detail__btn exercise-detail__btn--outline"
+          (click)="goBack()">
+          Volver a Lista
+        </button>
+        <button
+          class="exercise-detail__btn exercise-detail__btn--secondary"
+          (click)="goToNextExercise()">
+          Siguiente
+        </button>
+      </footer>
+    </article>
+  }
+</section>

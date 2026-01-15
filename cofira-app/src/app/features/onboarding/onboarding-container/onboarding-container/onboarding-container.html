@@ -1,0 +1,16 @@
+<section class="onboarding-container">
+  <app-steps-indicator [steps]="stepsForIndicator" [currentStep]="currentStepIndex + 1" />
+
+  <main class="onboarding-container__content">
+    <router-outlet />
+  </main>
+
+  <footer class="onboarding-container__footer">
+    <button type="button" class="c-button c-button--secondary c-button--large" (click)="prevStep()" [disabled]="currentStepIndex === 0">
+      Atrás
+    </button>
+    <button type="button" class="c-button c-button--primary c-button--large" (click)="nextStep()">
+      {{ currentStepIndex === onboardingSteps.length - 1 ? 'Finalizar' : 'Continuar' }}
+    </button>
+  </footer>
+</section>

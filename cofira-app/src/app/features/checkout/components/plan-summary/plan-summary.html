@@ -1,0 +1,63 @@
+@if (planInfo) {
+  <article class="plan-summary">
+    <header class="plan-summary__header">
+      <h2 class="plan-summary__title">Tu plan seleccionado</h2>
+    </header>
+
+    <section class="plan-summary__card">
+      @if (planInfo.destacado) {
+        <mark class="plan-summary__badge">Recomendado</mark>
+      }
+
+      <div class="plan-summary__plan-info">
+        <h3 class="plan-summary__plan-name">{{ planInfo.nombre }}</h3>
+        <p class="plan-summary__plan-subtitle">{{ planInfo.subtitulo }}</p>
+      </div>
+
+      <div class="plan-summary__price">
+        <span class="plan-summary__price-currency">&euro;</span>
+        <span class="plan-summary__price-amount">{{ planInfo.precio }}</span>
+        <span class="plan-summary__price-period">/{{ planInfo.periodo }}</span>
+      </div>
+
+      <ul class="plan-summary__features">
+        @for (feature of planInfo.features; track feature) {
+          <li class="plan-summary__feature">
+            <svg class="plan-summary__feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            {{ feature }}
+          </li>
+        }
+      </ul>
+    </section>
+
+    <section class="plan-summary__total">
+      <div class="plan-summary__total-row">
+        <span>Subtotal</span>
+        <span>&euro;{{ planInfo.precio }}</span>
+      </div>
+      <div class="plan-summary__total-row">
+        <span>Impuestos</span>
+        <span>Incluidos</span>
+      </div>
+      <div class="plan-summary__total-row plan-summary__total-row--final">
+        <span>Total a pagar</span>
+        <span class="plan-summary__total-amount">&euro;{{ planInfo.precio }}</span>
+      </div>
+    </section>
+
+    <footer class="plan-summary__actions">
+      <button
+        type="button"
+        class="boton boton--primario boton--completo"
+        (click)="onContinuar()"
+      >
+        Continuar al pago
+      </button>
+      <a routerLink="/" class="plan-summary__change-link">
+        Cambiar plan
+      </a>
+    </footer>
+  </article>
+}

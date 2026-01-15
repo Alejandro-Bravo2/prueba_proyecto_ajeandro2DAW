@@ -1,0 +1,32 @@
+<section class="formulario__grupo">
+  <label *ngIf="label" [for]="label" class="formulario__etiqueta">{{ label }}</label>
+  <input
+    [id]="label"
+    [type]="type"
+    [placeholder]="placeholder"
+    class="formulario__campo"
+    [formControl]="control"
+    [disabled]="_isDisabled"
+    (blur)="onBlur()"
+    [ngClass]="{'formulario__campo--error': control?.invalid && control?.touched}"
+  >
+  @if (control?.invalid && control?.touched) {
+    <p class="formulario__error">
+      @if (control?.hasError('required')) {
+        {{ label || 'Este campo' }} es obligatorio.
+      }
+      @if (control?.hasError('email')) {
+        El formato de email no es válido.
+      }
+      @if (control?.hasError('minlength')) {
+        Mínimo {{ control?.errors?.['minlength'].requiredLength }} caracteres.
+      }
+      @if (control?.hasError('passwordStrength')) {
+        La contraseña no es lo suficientemente fuerte.
+      }
+      @if (errorMessage) {
+        {{ errorMessage }}
+      }
+    </p>
+  }
+</section>

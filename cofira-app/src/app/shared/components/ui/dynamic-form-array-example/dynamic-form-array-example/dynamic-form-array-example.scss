@@ -1,0 +1,55 @@
+@import '../../../../../../styles/00-settings/css-variables';
+@import '../../../../../../styles/01-tools/mixins';
+@import '../../../../../../styles/05-components/boton';
+@import '../../../../../../styles/05-components/formulario';
+@import '../../../../../../styles/05-components/tarjeta';
+
+.dynamic-form-array-example {
+  @include tarjeta-base;
+  padding: var(--spacing-size-xl);
+  max-width: 600px;
+  margin: var(--spacing-size-xl) auto;
+
+  &__header {
+    margin-bottom: var(--spacing-size-xl);
+    text-align: center;
+
+    h1 {
+      @include tipografia-titulo;
+      font-size: var(--font-size-2xl);
+      margin-bottom: var(--spacing-size-xss);
+      color: var(--text-dark);
+    }
+
+    p {
+      @include tipografia-texto;
+      font-size: var(--font-size-md);
+      color: var(--text-dark);
+    }
+  }
+
+  &__phone-input-group {
+    display: flex;
+    gap: var(--spacing-size-s);
+    align-items: center;
+
+    .formulario__campo {
+      flex-grow: 1;
+    }
+
+    .boton--fantasma {
+      color: var(--button-red);
+    }
+  }
+
+  &__footer {
+    margin-top: var(--spacing-size-xl);
+    text-align: center;
+    border-top: 1px solid var(--gris-dark);
+    padding-top: var(--spacing-size-m);
+
+    .boton {
+      width: 100%;
+    }
+  }
+}

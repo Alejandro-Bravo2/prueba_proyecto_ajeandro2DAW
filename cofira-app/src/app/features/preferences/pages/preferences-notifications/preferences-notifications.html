@@ -1,0 +1,83 @@
+<article class="preferences-notifications">
+  <section class="preferences-notifications__section">
+    <header class="preferences-notifications__section-header">
+      <hgroup>
+        <h2 class="preferences-notifications__section-title">Notificaciones por Email</h2>
+        <p class="preferences-notifications__description">
+          Elige que notificaciones quieres recibir por correo electronico.
+        </p>
+      </hgroup>
+      <menu class="preferences-notifications__quick-actions">
+        <button
+          class="preferences-notifications__quick-btn"
+          (click)="enableAllEmail()">
+          Activar todas
+        </button>
+        <button
+          class="preferences-notifications__quick-btn"
+          (click)="disableAllEmail()">
+          Desactivar todas
+        </button>
+      </menu>
+    </header>
+
+    <ul class="preferences-notifications__list" role="list">
+      @for (setting of emailSettings(); track setting.id) {
+        <li class="preferences-notifications__item">
+          <span class="preferences-notifications__item-content">
+            <span class="preferences-notifications__item-label">{{ setting.label }}</span>
+            <span class="preferences-notifications__item-description">{{ setting.description }}</span>
+          </span>
+          <label class="preferences-notifications__toggle">
+            <input
+              type="checkbox"
+              [checked]="setting.enabled"
+              (change)="toggleEmailSetting(setting.id)">
+            <span class="preferences-notifications__toggle-slider"></span>
+          </label>
+        </li>
+      }
+    </ul>
+  </section>
+
+  <section class="preferences-notifications__section">
+    <header class="preferences-notifications__section-header">
+      <hgroup>
+        <h2 class="preferences-notifications__section-title">Notificaciones Push</h2>
+        <p class="preferences-notifications__description">
+          Configura las notificaciones que recibiras en tu dispositivo.
+        </p>
+      </hgroup>
+      <menu class="preferences-notifications__quick-actions">
+        <button
+          class="preferences-notifications__quick-btn"
+          (click)="enableAllPush()">
+          Activar todas
+        </button>
+        <button
+          class="preferences-notifications__quick-btn"
+          (click)="disableAllPush()">
+          Desactivar todas
+        </button>
+      </menu>
+    </header>
+
+    <ul class="preferences-notifications__list" role="list">
+      @for (setting of pushSettings(); track setting.id) {
+        <li class="preferences-notifications__item">
+          <span class="preferences-notifications__item-content">
+            <span class="preferences-notifications__item-label">{{ setting.label }}</span>
+            <span class="preferences-notifications__item-description">{{ setting.description }}</span>
+          </span>
+          <label class="preferences-notifications__toggle">
+            <input
+              type="checkbox"
+              [checked]="setting.enabled"
+              (change)="togglePushSetting(setting.id)">
+            <span class="preferences-notifications__toggle-slider"></span>
+          </label>
+        </li>
+      }
+    </ul>
+  </section>
+</article>

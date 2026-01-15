@@ -1,0 +1,82 @@
+@if (response?.exitoso) {
+  <article class="payment-success">
+    <!-- Success Animation -->
+    <figure class="payment-success__icon-wrapper">
+      <svg class="payment-success__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"/>
+        <path d="M9 12l2 2 4-4"/>
+      </svg>
+    </figure>
+
+    <header class="payment-success__header">
+      <h2 class="payment-success__title">Pago completado</h2>
+      <p class="payment-success__subtitle">Bienvenido a {{ planInfo?.nombre }}</p>
+    </header>
+
+    <!-- Transaction Details -->
+    <section class="payment-success__details">
+      <h3 class="payment-success__details-title">Detalles de la transaccion</h3>
+
+      <dl class="payment-success__details-list">
+        <div class="payment-success__details-item">
+          <dt>ID de transaccion</dt>
+          <dd>{{ response?.transaccionId }}</dd>
+        </div>
+
+        <div class="payment-success__details-item">
+          <dt>Plan</dt>
+          <dd>{{ planInfo?.nombre }}</dd>
+        </div>
+
+        <div class="payment-success__details-item">
+          <dt>Importe</dt>
+          <dd>&euro;{{ response?.precio }}</dd>
+        </div>
+
+        <div class="payment-success__details-item">
+          <dt>Metodo de pago</dt>
+          <dd>{{ response?.metodoPago }}</dd>
+        </div>
+
+        <div class="payment-success__details-item">
+          <dt>Fecha de inicio</dt>
+          <dd>{{ response?.fechaInicio | date:'longDate' }}</dd>
+        </div>
+
+        <div class="payment-success__details-item">
+          <dt>Fecha de fin</dt>
+          <dd>{{ response?.fechaFin | date:'longDate' }}</dd>
+        </div>
+      </dl>
+    </section>
+
+    <!-- Benefits -->
+    <section class="payment-success__benefits">
+      <h3 class="payment-success__benefits-title">Ahora tienes acceso a:</h3>
+      <ul class="payment-success__benefits-list">
+        @for (feature of planInfo?.features; track feature) {
+          <li class="payment-success__benefit">
+            <svg class="payment-success__benefit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            {{ feature }}
+          </li>
+        }
+      </ul>
+    </section>
+
+    <!-- Actions -->
+    <footer class="payment-success__actions">
+      <button
+        type="button"
+        class="boton boton--primario boton--completo"
+        (click)="onIrAlDashboard()"
+      >
+        Ir al Dashboard
+      </button>
+      <p class="payment-success__note">
+        Hemos enviado un recibo a tu email registrado.
+      </p>
+    </footer>
+  </article>
+}

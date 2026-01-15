@@ -1,0 +1,37 @@
+<article class="preferences-nutrition">
+  <section class="preferences-nutrition__section">
+    <header class="preferences-nutrition__section-header">
+      <span class="preferences-nutrition__section-icon">🚫</span>
+      <h2 class="preferences-nutrition__section-title">Alergias o Intolerancias</h2>
+    </header>
+    <p class="preferences-nutrition__description">
+      Indica tus alergias o intolerancias alimentarias para que podamos personalizar tus recomendaciones.
+    </p>
+    <app-searchable-tags
+      [allTags]="availableAllergies"
+      [selectedTags]="preferencesService.allergies()"
+      (tagAdded)="onAllergyAdded($event)"
+      (tagRemoved)="onAllergyRemoved($event)"
+      tagType="red"
+      placeholder="Busca alergias (ej. Lacteos, Gluten...)">
+    </app-searchable-tags>
+  </section>
+
+  <section class="preferences-nutrition__section">
+    <header class="preferences-nutrition__section-header">
+      <span class="preferences-nutrition__section-icon">⭐</span>
+      <h2 class="preferences-nutrition__section-title">Ingredientes Favoritos</h2>
+    </header>
+    <p class="preferences-nutrition__description">
+      Selecciona tus ingredientes favoritos para recibir recetas personalizadas.
+    </p>
+    <app-searchable-tags
+      [allTags]="availableIngredients"
+      [selectedTags]="preferencesService.favoriteIngredients()"
+      (tagAdded)="onFavoriteIngredientAdded($event)"
+      (tagRemoved)="onFavoriteIngredientRemoved($event)"
+      tagType="yellow"
+      placeholder="Busca ingredientes (ej. Pollo, Arroz...)">
+    </app-searchable-tags>
+  </section>
+</article>

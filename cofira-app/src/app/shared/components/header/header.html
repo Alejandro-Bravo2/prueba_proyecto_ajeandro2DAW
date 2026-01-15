@@ -1,0 +1,149 @@
+<header class="header">
+  <section class="header__inner o-container">
+    <!-- Logo -->
+    <a routerLink="/" class="header__logo">
+      <span class="header__logo-text">COFIRA</span>
+      @if (isLoggedIn && isPremium()) {
+        <span class="header__premium-badge">{{ badgeText() }}</span>
+      }
+    </a>
+
+    <!-- Desktop Navigation -->
+    <nav class="header__nav header__nav--desktop">
+      @if (isLoggedIn) {
+      <a routerLink="/entrenamiento" routerLinkActive="header__nav-link--active" class="header__nav-link">
+        Entrenamiento
+      </a>
+      <a routerLink="/alimentacion" routerLinkActive="header__nav-link--active" class="header__nav-link">
+        Alimentación
+      </a>
+      <a routerLink="/seguimiento" routerLinkActive="header__nav-link--active" class="header__nav-link">
+        Seguimiento
+      </a>
+      }
+    </nav>
+
+    <!-- Actions -->
+    <section class="header__actions">
+      <!-- Theme Toggle -->
+      <button
+        class="header__theme-toggle"
+        (click)="toggleTheme()"
+        [attr.aria-label]="themeService.isDark() ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'"
+        [appTooltip]="themeService.isDark() ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'"
+        tooltipPosition="bottom"
+      >
+        @if (themeService.isDark()) {
+          <!-- Sun icon for dark mode -->
+          <svg class="header__theme-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        } @else {
+          <!-- Moon icon for light mode -->
+          <svg class="header__theme-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        }
+      </button>
+
+      <!-- Auth Buttons - Not Logged In -->
+      @if (!isLoggedIn) {
+      <a routerLink="/register" class="boton boton--primario boton--pequeno">
+        Inscríbete
+      </a>
+      <a routerLink="/login" class="boton boton--secundario boton--pequeno">
+        Iniciar Sesión
+      </a>
+      }
+
+      <!-- Auth Buttons - Logged In -->
+      @if (isLoggedIn) {
+      <a
+        routerLink="/preferencias"
+        class="boton boton--secundario boton--pequeno"
+        appTooltip="Ver y editar tu perfil"
+        tooltipPosition="bottom"
+      >
+        Mi Cuenta
+      </a>
+      <button
+        (click)="logout()"
+        class="boton boton--primario boton--pequeno"
+        appTooltip="Cerrar tu sesión"
+        tooltipPosition="bottom"
+      >
+        Cerrar Sesión
+      </button>
+      }
+
+      <!--
+        Mobile Menu Button (Hamburguesa)
+        - #menuToggle: ViewChild para acceso programático y focus
+        - aria-expanded: Estado del menú para lectores de pantalla
+        - aria-controls: Referencia al elemento que controla
+        - Icono animado hamburguesa ↔ X via CSS [aria-expanded="true"]
+      -->
+      <button
+        #menuToggle
+        class="header__hamburger"
+        (click)="toggleMobileMenu()"
+        [attr.aria-expanded]="isMobileMenuOpen()"
+        aria-controls="mobile-nav"
+        aria-label="Menú de navegación"
+        appTooltip="Abrir menú"
+        tooltipPosition="bottom"
+      >
+        <span class="header__hamburger-line"></span>
+        <span class="header__hamburger-line"></span>
+        <span class="header__hamburger-line"></span>
+      </button>
+    </section>
+  </section>
+
+  <!--
+    Mobile Navigation
+    - #mobileNav: ViewChild para verificar clicks dentro/fuera
+    - Click fuera manejado por @HostListener('document:click') en header.ts
+    - id="mobile-nav": Referenciado por aria-controls del botón
+  -->
+  @if (isMobileMenuOpen()) {
+  <nav
+    #mobileNav
+    id="mobile-nav"
+    class="header__nav header__nav--mobile"
+  >
+    @if (isLoggedIn) {
+    <a routerLink="/entrenamiento" routerLinkActive="header__nav-link--active" class="header__nav-link">
+      Entrenamiento
+    </a>
+    <a routerLink="/alimentacion" routerLinkActive="header__nav-link--active" class="header__nav-link">
+      Alimentación
+    </a>
+    <a routerLink="/seguimiento" routerLinkActive="header__nav-link--active" class="header__nav-link">
+      Seguimiento
+    </a>
+    <a routerLink="/preferencias" routerLinkActive="header__nav-link--active" class="header__nav-link">
+      Preferencias
+    </a>
+    <button (click)="logout()" class="header__nav-link header__nav-link--logout">
+      Cerrar Sesión
+    </button>
+    } @else {
+    <a routerLink="/register" routerLinkActive="header__nav-link--active" class="header__nav-link">
+      Inscríbete
+    </a>
+    <a routerLink="/login" routerLinkActive="header__nav-link--active" class="header__nav-link">
+      Iniciar Sesión
+    </a>
+    }
+  </nav>
+  }
+</header>

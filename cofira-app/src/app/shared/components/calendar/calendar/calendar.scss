@@ -1,0 +1,88 @@
+@import '../../../../../styles/00-settings/css-variables';
+@import '../../../../../styles/01-tools/mixins';
+
+.calendar {
+  background-color: var(--gris-normal);
+  color: var(--text-dark);
+  padding: var(--spacing-size-m);
+  border-radius: var(--radius-xss);
+  box-shadow: var(--shadow-md);
+  max-width: 400px;
+  margin: 0 auto;
+
+  &__header {
+    @include flex-between;
+    margin-bottom: var(--spacing-size-m);
+
+    h2 {
+      font-size: var(--font-size-xl);
+      margin: 0;
+      color: var(--text-dark);
+      font-family: var(--font-secondary);
+    }
+
+    button {
+      @include boton-reset;
+      @include flex-center;
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-circle);
+      color: var(--text-dark);
+      transition: all var(--duration-fast);
+
+      &:hover {
+        background-color: var(--gris-dark);
+      }
+    }
+  }
+
+  &__weekdays,
+  &__days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+  }
+
+  &__weekdays {
+    margin-bottom: var(--spacing-size-xss);
+    span {
+      font-weight: var(--font-weight-semibold);
+      color: var(--text-dark);
+      font-size: var(--font-size-sm);
+      font-family: var(--font-primary);
+    }
+  }
+
+  &__days {
+    button {
+      @include boton-reset;
+      height: 40px;
+      border-radius: var(--radius-xss);
+      @include flex-center;
+      font-size: var(--font-size-md);
+      font-family: var(--font-primary);
+      color: var(--text-dark);
+      transition: background-color var(--duration-fast);
+
+      &:hover {
+        background-color: var(--gris-dark);
+      }
+
+      &--disabled {
+        color: var(--blanco-dark);
+        cursor: not-allowed;
+        background-color: transparent;
+      }
+
+      &--today {
+        border: 2px solid var(--amarillo-normal);
+      }
+
+      &--selected {
+        background-color: var(--amarillo-normal);
+        color: var(--negro-normal);
+        font-weight: var(--font-weight-bold);
+      }
+    }
+  }
+}

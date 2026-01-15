@@ -1,0 +1,121 @@
+@use '../../../../../styles/00-settings/css-variables' as *;
+@use '../../../../../styles/01-tools/mixins' as *;
+
+.checkout {
+  min-height: calc(100vh - var(--header-height, 80px));
+  padding: var(--spacing-size-xl) var(--spacing-size-m);
+  background: var(--bg-primary);
+
+  @include responsive('M') {
+    padding: var(--spacing-size-xxl) var(--spacing-size-l);
+  }
+
+  &__container {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-size-xl);
+  }
+
+  &__header {
+    text-align: center;
+  }
+
+  &__title {
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-size-l);
+
+    @include responsive('M') {
+      font-size: var(--font-size-4xl);
+    }
+  }
+
+  &__steps {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-size-s);
+    flex-wrap: wrap;
+  }
+
+  &__step {
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+    padding: var(--spacing-size-xs) var(--spacing-size-s);
+    border-radius: var(--radius-pill);
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid transparent;
+    transition: all var(--duration-base) var(--ease-premium);
+
+    &--active {
+      color: var(--text-primary);
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    &--completed {
+      color: var(--text-secondary);
+
+      &::before {
+        content: '✓ ';
+        color: #4ade80;
+      }
+    }
+  }
+
+  &__step-divider {
+    width: 24px;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+
+    @include responsive-down('s') {
+      display: none;
+    }
+  }
+
+  &__content {
+    animation: fadeIn var(--duration-base) var(--ease-premium);
+  }
+
+  &__footer {
+    margin-top: var(--spacing-size-l);
+  }
+
+  &__security {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-size-s);
+    padding: var(--spacing-size-m);
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: var(--radius-m);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+  }
+
+  &__security-icon {
+    width: 20px;
+    height: 20px;
+    color: #4ade80;
+    flex-shrink: 0;
+  }
+
+  &__security-text {
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+    text-align: center;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

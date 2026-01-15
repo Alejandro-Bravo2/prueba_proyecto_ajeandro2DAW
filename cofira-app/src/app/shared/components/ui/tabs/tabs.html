@@ -1,0 +1,47 @@
+<nav class="c-tabs" aria-label="Navegación por pestañas">
+  <!-- Tabs Header -->
+  <menu class="c-tabs__header" role="tablist" #tabsHeader>
+    @for (tab of tabs(); track tab.id) {
+      <li role="presentation">
+        <!--
+          #tabButton: Referencia para ViewChildren (elimina necesidad de document.querySelector)
+          tabindex: Solo el tab activo tiene tabindex="0" para navegación accesible con Tab
+          Navegación por teclado: ArrowLeft/Right para cambiar, Home/End para extremos
+        -->
+        <button
+          #tabButton
+          class="c-tabs__tab"
+          [class.c-tabs__tab--active]="activeTabId() === tab.id"
+          [class.c-tabs__tab--disabled]="tab.disabled"
+          [disabled]="tab.disabled"
+          role="tab"
+          [attr.aria-selected]="activeTabId() === tab.id"
+          [attr.aria-controls]="'panel-' + tab.id"
+          [attr.tabindex]="activeTabId() === tab.id ? 0 : -1"
+          [id]="'tab-' + tab.id"
+          (click)="selectTab(tab.id)"
+          type="button"
+        >
+          {{ tab.label }}
+        </button>
+      </li>
+    }
+
+    <!--
+      Active Tab Indicator
+      #tabIndicator: ViewChild para manipulación con Renderer2.setStyle()
+      Los estilos transform/width se aplican programáticamente en tabs.ts
+      usando Renderer2 para manipulación segura del DOM (SSR-safe)
+    -->
+    <span
+      #tabIndicator
+      class="c-tabs__indicator"
+      aria-hidden="true"
+    ></span>
+  </menu>
+
+  <!-- Tabs Content -->
+  <section class="c-tabs__content" role="tabpanel">
+    <ng-content />
+  </section>
+</nav>

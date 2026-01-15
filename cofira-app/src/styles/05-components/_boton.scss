@@ -1,0 +1,230 @@
+/* ============================================
+   05-COMPONENTS: Boton
+   Estilo Minimalista Apple/Ferrari
+   Nomenclatura BEM en espanol
+   ============================================ */
+
+@import '../01-tools/mixins';
+
+/* --------------------------------------------
+   BLOQUE: .boton
+   Estilos base del boton minimalista
+   -------------------------------------------- */
+
+.boton {
+  @include boton-base;
+  font-family: var(--font-primary);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-wide);
+  padding: var(--spacing-size-s) var(--spacing-size-l);
+  border-radius: var(--radius-s);
+}
+
+
+/* --------------------------------------------
+   MODIFICADORES DE TIPO
+   -------------------------------------------- */
+
+// Boton primario (solido)
+.boton--primario {
+  background-color: var(--text-primary);
+  color: var(--bg-body);
+  border: 1px solid var(--text-primary);
+
+  &:hover:not(:disabled) {
+    opacity: 0.85;
+  }
+
+  &:active:not(:disabled) {
+    opacity: 0.75;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--text-primary);
+    outline-offset: 2px;
+  }
+}
+
+// Boton secundario (outline)
+.boton--secundario {
+  background-color: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--text-primary);
+
+  &:hover:not(:disabled) {
+    background-color: var(--text-primary);
+    color: var(--bg-body);
+  }
+
+  &:active:not(:disabled) {
+    opacity: 0.85;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--text-primary);
+    outline-offset: 2px;
+  }
+}
+
+// Boton fantasma (solo texto con underline)
+.boton--fantasma {
+  background-color: transparent;
+  color: var(--text-primary);
+  border: none;
+  padding: var(--spacing-size-xss) 0;
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background-color: var(--text-primary);
+    transition: width var(--duration-base) var(--ease-premium);
+  }
+
+  &:hover:not(:disabled) {
+    &::after {
+      width: 100%;
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--text-primary);
+    outline-offset: 4px;
+  }
+}
+
+// Boton terciario (sutil)
+.boton--terciario {
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+  border: 1px solid transparent;
+
+  &:hover:not(:disabled) {
+    background-color: var(--border-medium);
+  }
+
+  &:active:not(:disabled) {
+    opacity: 0.85;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--text-primary);
+    outline-offset: 2px;
+  }
+}
+
+// Boton peligro (rojo minimalista)
+.boton--peligro {
+  background-color: transparent;
+  color: var(--button-red);
+  border: 1px solid var(--button-red);
+
+  &:hover:not(:disabled) {
+    background-color: var(--button-red);
+    color: var(--bg-body);
+  }
+
+  &:active:not(:disabled) {
+    background-color: var(--button-red-hover);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--button-red);
+    outline-offset: 2px;
+  }
+}
+
+
+/* --------------------------------------------
+   MODIFICADORES DE TAMANO
+   -------------------------------------------- */
+
+.boton--pequeno {
+  padding: var(--spacing-size-xss) var(--spacing-size-s);
+  font-size: var(--font-size-sm);
+}
+
+.boton--mediano {
+  padding: var(--spacing-size-xs) var(--spacing-size-m);
+  font-size: var(--font-size-md);
+}
+
+.boton--grande {
+  padding: var(--spacing-size-s) var(--spacing-size-xl);
+  font-size: var(--font-size-lg);
+}
+
+
+/* --------------------------------------------
+   MODIFICADOR DE ANCHO COMPLETO
+   -------------------------------------------- */
+
+.boton--completo {
+  width: 100%;
+}
+
+
+/* --------------------------------------------
+   MODIFICADOR PILL (Bordes redondeados)
+   -------------------------------------------- */
+
+.boton--pill {
+  border-radius: var(--radius-pill);
+}
+
+
+/* --------------------------------------------
+   ELEMENTOS DEL BOTON
+   -------------------------------------------- */
+
+.boton__icono {
+  display: inline-flex;
+  align-items: center;
+
+  svg {
+    width: 1.125rem;
+    height: 1.125rem;
+  }
+}
+
+.boton__icono--izquierda {
+  margin-right: var(--spacing-size-xss);
+}
+
+.boton__icono--derecha {
+  margin-left: var(--spacing-size-xss);
+}
+
+.boton__texto {
+  // Espacio para texto si se necesita estilizar separadamente
+}
+
+
+/* --------------------------------------------
+   ESTADO DE CARGA
+   -------------------------------------------- */
+
+.boton--cargando {
+  position: relative;
+  color: transparent;
+  pointer-events: none;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 1rem;
+    height: 1rem;
+    margin: -0.5rem 0 0 -0.5rem;
+    border: 2px solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: spin var(--duration-slow) linear infinite;
+  }
+}

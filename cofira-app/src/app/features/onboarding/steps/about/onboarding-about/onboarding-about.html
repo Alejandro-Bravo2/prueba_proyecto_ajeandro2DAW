@@ -1,0 +1,54 @@
+<section class="onboarding-about">
+  <header class="onboarding-about__header">
+    <h1>Cuéntanos sobre ti</h1>
+    <p>Necesitamos algunos datos básicos para personalizar tu plan.</p>
+  </header>
+  <form class="c-form onboarding-about__form" [formGroup]="aboutForm" (ngSubmit)="onSubmit()">
+    <section class="c-form__group">
+      <label class="c-form__label">Género</label>
+      <section class="onboarding-about__gender-options">
+        <button type="button" class="c-button" [ngClass]="{'c-button--primary': aboutForm.get('gender')?.value === 'Masculino', 'c-button--secondary': aboutForm.get('gender')?.value !== 'Masculino'}"
+                (click)="selectGender('Masculino')">Masculino</button>
+        <button type="button" class="c-button" [ngClass]="{'c-button--primary': aboutForm.get('gender')?.value === 'Femenino', 'c-button--secondary': aboutForm.get('gender')?.value !== 'Femenino'}"
+                (click)="selectGender('Femenino')">Femenino</button>
+        <button type="button" class="c-button" [ngClass]="{'c-button--primary': aboutForm.get('gender')?.value === 'Prefiero no decir', 'c-button--secondary': aboutForm.get('gender')?.value !== 'Prefiero no decir'}"
+                (click)="selectGender('Prefiero no decir')">Prefiero no decir</button>
+      </section>
+      @if (aboutForm.get('gender')?.invalid && aboutForm.get('gender')?.touched) {
+        <p class="c-form__error">El género es obligatorio.</p>
+      }
+    </section>
+
+    <section class="c-form__group">
+      <label for="height" class="c-form__label">Altura (cm)</label>
+      <select id="height" class="c-form__input" formControlName="height"
+              [ngClass]="{'c-form__input--error': aboutForm.get('height')?.invalid && aboutForm.get('height')?.touched}">
+        <option value="">Selecciona tu altura</option>
+        @for (h of heightOptions; track h) {
+          <option [value]="h">{{ h }} cm</option>
+        }
+      </select>
+      @if (aboutForm.get('height')?.invalid && aboutForm.get('height')?.touched) {
+        <p class="c-form__error">La altura es obligatoria.</p>
+      }
+    </section>
+
+    <section class="c-form__group">
+      <label for="age" class="c-form__label">Edad</label>
+      <select id="age" class="c-form__input" formControlName="age"
+              [ngClass]="{'c-form__input--error': aboutForm.get('age')?.invalid && aboutForm.get('age')?.touched}">
+        <option value="">Selecciona tu edad</option>
+        @for (a of ageOptions; track a) {
+          <option [value]="a">{{ a }} años</option>
+        }
+      </select>
+      @if (aboutForm.get('age')?.invalid && aboutForm.get('age')?.touched) {
+        <p class="c-form__error">La edad es obligatoria.</p>
+      }
+    </section>
+
+    <footer class="onboarding-about__footer">
+      <button type="submit" class="c-button c-button--primary c-button--large" [disabled]="aboutForm.invalid">Continuar</button>
+    </footer>
+  </form>
+</section>

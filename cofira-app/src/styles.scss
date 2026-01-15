@@ -1,0 +1,162 @@
+// ============================================================================
+// COFIRA APP - Sistema de Estilos Minimalista
+// ============================================================================
+// Arquitectura: ITCSS (Inverted Triangle CSS)
+// Nomenclatura: BEM en español
+// Estilo: Minimalista Apple/Ferrari
+// Colores: Blanco puro + Negro puro
+// ============================================================================
+
+// ============================================================================
+// 00 - SETTINGS: Variables globales, configuración
+// ============================================================================
+@import 'styles/00-settings/css-variables';      // Variables SCSS (fuente única de verdad)
+@import 'styles/00-settings/variables';          // CSS Custom Properties
+
+// ============================================================================
+// 01 - TOOLS: Mixins, funciones, herramientas
+// ============================================================================
+@import 'styles/01-tools/mixins';
+
+// ============================================================================
+// 02 - GENERIC: Resets, normalize
+// ============================================================================
+@import 'styles/02-generic/reset';
+
+// ============================================================================
+// 03 - ELEMENTS: Estilos de elementos HTML base
+// ============================================================================
+@import 'styles/03-elements/elements';
+@import 'styles/03-elements/typography';
+@import 'styles/03-elements/links';
+@import 'styles/03-elements/buttons';
+@import 'styles/03-elements/forms';
+@import 'styles/03-elements/lists';
+
+// ============================================================================
+// 04 - LAYOUT: Estructura de página (grid, container)
+// ============================================================================
+@import 'styles/04-layout/layout';
+@import 'styles/04-layout/grid';
+
+// ============================================================================
+// 05 - COMPONENTS: Componentes reutilizables (BEM en español)
+// ============================================================================
+@import 'styles/05-components/boton';
+@import 'styles/05-components/formulario';
+@import 'styles/05-components/inputs';
+@import 'styles/05-components/tarjeta';
+@import 'styles/05-components/navegacion';
+@import 'styles/05-components/alerta';
+@import 'styles/05-components/tooltip';
+@import 'styles/05-components/modal';
+
+// ============================================================================
+// 06 - UTILITIES: Clases de utilidad (helpers)
+// ============================================================================
+@import 'styles/06-utilities/utilities';
+
+// ============================================================================
+// Configuración global adicional - Minimalista
+// ============================================================================
+
+// Fonts loaded via index.html: Montserrat (body) + Poppins (headings)
+
+// Smooth scrolling
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// Body base styles
+body {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-normal);
+  color: var(--text-primary);
+  background-color: var(--bg-body);
+  min-height: 100vh;
+}
+
+// Selection color - Minimalista (negro/blanco invertido)
+::selection {
+  background-color: var(--negro-puro);
+  color: var(--blanco-puro);
+}
+
+::-moz-selection {
+  background-color: var(--negro-puro);
+  color: var(--blanco-puro);
+}
+
+// Focus styles - Minimalista
+*:focus-visible {
+  outline: 2px solid var(--negro-puro);
+  outline-offset: 2px;
+}
+
+// Remove default focus outline for mouse users
+*:focus:not(:focus-visible) {
+  outline: none;
+}
+
+// Scrollbar minimalista (webkit)
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--gris-ultraligero);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--gris-medio);
+  border-radius: 4px;
+
+  &:hover {
+    background: var(--gris-oscuro);
+  }
+}
+
+// Firefox scrollbar
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--gris-medio) var(--gris-ultraligero);
+}
+
+// Disable text selection on interactive elements
+button,
+[role="button"] {
+  user-select: none;
+}
+
+// Print styles
+@media print {
+  *,
+  *::before,
+  *::after {
+    background: transparent !important;
+    color: #000 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+}
+
+// Reduced motion
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+// Main layout adjustment for fixed header
+.app-main {
+  padding-top: 72px; // Header height
+}

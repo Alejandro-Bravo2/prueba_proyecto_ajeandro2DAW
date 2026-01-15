@@ -1,0 +1,127 @@
+<section class="preferences-page">
+  <header class="preferences-page__header">
+    <h1>Tus Preferencias</h1>
+    <p>Gestiona tu cuenta, alimentación y preferencias de notificación.</p>
+  </header>
+
+  <app-tabs [tabs]="tabs" (tabChanged)="onTabChanged($event)">
+    <!-- Tab: Alimentación -->
+    <app-tab-panel [tabId]="'nutrition'" [isActive]="activeTab() === 'nutrition'">
+      <section class="preferences-page__section">
+        <h2>Alergias o Intolerancias</h2>
+        <p class="preferences-page__description">
+          Indica tus alergias o intolerancias alimentarias para que podamos personalizar tus recomendaciones.
+        </p>
+        <app-searchable-tags
+          [allTags]="availableAllergies"
+          [selectedTags]="preferencesService.allergies()"
+          (tagAdded)="onAllergyAdded($event)"
+          (tagRemoved)="onAllergyRemoved($event)"
+          tagType="red"
+          placeholder="Busca alergias (ej. Lácteos, Gluten...)">
+        </app-searchable-tags>
+      </section>
+
+      <section class="preferences-page__section">
+        <h2>Ingredientes Favoritos</h2>
+        <p class="preferences-page__description">
+          Selecciona tus ingredientes favoritos para recibir recetas personalizadas.
+        </p>
+        <app-searchable-tags
+          [allTags]="availableIngredients"
+          [selectedTags]="preferencesService.favoriteIngredients()"
+          (tagAdded)="onFavoriteIngredientAdded($event)"
+          (tagRemoved)="onFavoriteIngredientRemoved($event)"
+          tagType="yellow"
+          placeholder="Busca ingredientes (ej. Pollo, Arroz...)">
+        </app-searchable-tags>
+      </section>
+    </app-tab-panel>
+
+    <!-- Tab: Cuenta -->
+    <app-tab-panel [tabId]="'account'" [isActive]="activeTab() === 'account'">
+      <section class="preferences-page__section">
+        <h2>Información de Cuenta</h2>
+        <p class="preferences-page__description">
+          Gestiona la información de tu cuenta y configuraciones de seguridad.
+        </p>
+        <div class="preferences-page__placeholder">
+          <p>📧 Email: usuario@cofira.com</p>
+          <p>👤 Nombre: Usuario COFIRA</p>
+          <p>🔒 Contraseña: ••••••••</p>
+          <button class="c-button c-button--primary">Editar información</button>
+        </div>
+      </section>
+
+      <section class="preferences-page__section">
+        <h2>Configuración de Privacidad</h2>
+        <p class="preferences-page__description">
+          Controla quién puede ver tu información y actividad.
+        </p>
+        <div class="preferences-page__placeholder">
+          <label class="preferences-page__checkbox">
+            <input type="checkbox" checked />
+            Perfil público
+          </label>
+          <label class="preferences-page__checkbox">
+            <input type="checkbox" checked />
+            Mostrar progreso a otros usuarios
+          </label>
+          <label class="preferences-page__checkbox">
+            <input type="checkbox" />
+            Compartir estadísticas
+          </label>
+        </div>
+      </section>
+    </app-tab-panel>
+
+    <!-- Tab: Notificaciones -->
+    <app-tab-panel [tabId]="'notifications'" [isActive]="activeTab() === 'notifications'">
+      <section class="preferences-page__section">
+        <h2>Notificaciones por Email</h2>
+        <p class="preferences-page__description">
+          Elige qué notificaciones quieres recibir por correo electrónico.
+        </p>
+        <div class="preferences-page__placeholder">
+          <label class="preferences-page__checkbox">
+            <input type="checkbox" checked />
+            Recordatorios de entrenamiento
+          </label>
+          <label class="preferences-page__checkbox">
+            <input type="checkbox" checked />
+            Actualizaciones de progreso
+          </label>
+          <label class="preferences-page__checkbox">
+            <input type="checkbox" />
+            Novedades y promociones
+          </label>
+          <label class="preferences-page__checkbox">
+            <input type="checkbox" checked />
+            Consejos de nutrición
+          </label>
+        </div>
+      </section>
+
+      <section class="preferences-page__section">
+        <h2>Notificaciones Push</h2>
+        <p class="preferences-page__description">
+          Configura las notificaciones que recibirás en tu dispositivo.
+        </p>
+        <div class="preferences-page__placeholder">
+          <label class="preferences-page__checkbox">
+            <input type="checkbox" checked />
+            Recordatorios diarios
+          </label>
+          <label class="preferences-page__checkbox">
+            <input type="checkbox" />
+            Logros y objetivos cumplidos
+          </label>
+          <label class="preferences-page__checkbox">
+            <input type="checkbox" checked />
+            Mensajes de motivación
+          </label>
+        </div>
+      </section>
+    </app-tab-panel>
+  </app-tabs>
+</section>

@@ -1,0 +1,50 @@
+@import '../../../../../../styles/00-settings/css-variables';
+@import '../../../../../../styles/01-tools/mixins';
+
+.onboarding-pricing {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  padding: var(--spacing-size-xxl);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-light);
+  max-width: 600px;
+  margin: var(--spacing-size-xl) auto;
+
+  &__header {
+    text-align: center;
+    margin-bottom: var(--spacing-size-xxl);
+
+    h1 {
+      @include tipografia-titulo;
+      font-size: var(--font-size-3xl);
+      margin-bottom: var(--spacing-size-s);
+      color: var(--text-primary);
+    }
+
+    p {
+      font-size: var(--font-size-md);
+      color: var(--text-secondary);
+    }
+  }
+
+  &__options {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-size-s);
+
+    .c-button {
+      width: 100%;
+    }
+
+    @include responsive('s') {
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  }
+
+  &__footer {
+    margin-top: var(--spacing-size-xl);
+    text-align: center;
+  }
+}

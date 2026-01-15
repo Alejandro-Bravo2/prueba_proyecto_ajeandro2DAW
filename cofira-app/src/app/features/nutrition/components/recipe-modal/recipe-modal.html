@@ -1,0 +1,120 @@
+<section class="c-modal__overlay">
+  <article class="c-modal__content recipe-modal">
+    <header class="c-modal__header">
+      <h3 class="c-modal__title">{{ mealName() }}</h3>
+      <button class="c-modal__close" aria-label="Cerrar modal">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </header>
+
+    <section class="c-modal__body">
+      <!-- Meta info -->
+      @if (hasRecipe()) {
+        <div class="recipe-modal__meta">
+          @if (tiempoPreparacion() > 0) {
+            <span class="recipe-modal__meta-item">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+              {{ tiempoPreparacion() }} min
+            </span>
+          }
+          @if (porciones() > 0) {
+            <span class="recipe-modal__meta-item">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+              </svg>
+              {{ porciones() }} {{ porciones() === 1 ? 'porcion' : 'porciones' }}
+            </span>
+          }
+          @if (dificultad()) {
+            <span class="recipe-modal__meta-item recipe-modal__difficulty" [ngClass]="difficultyClass()">
+              {{ difficultyLabel() }}
+            </span>
+          }
+        </div>
+      }
+
+      <!-- Description -->
+      @if (descripcion()) {
+        <p class="recipe-modal__description">{{ descripcion() }}</p>
+      }
+
+      <!-- Tabs -->
+      @if (hasRecipe()) {
+        <nav class="recipe-modal__tabs">
+          <button
+            class="recipe-modal__tab"
+            [class.active]="activeTab() === 'ingredientes'"
+            (click)="setActiveTab('ingredientes')">
+            Ingredientes
+          </button>
+          <button
+            class="recipe-modal__tab"
+            [class.active]="activeTab() === 'receta'"
+            (click)="setActiveTab('receta')">
+            Preparacion
+          </button>
+        </nav>
+
+        <!-- Ingredients Tab -->
+        @if (activeTab() === 'ingredientes') {
+          <ul class="ingredients-list">
+            @for (ingrediente of ingredientes(); track ingrediente.nombre) {
+              <li class="ingredient-item" [class.optional]="ingrediente.opcional">
+                <span class="ingredient-item__check">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                  </svg>
+                </span>
+                <span class="ingredient-item__name">
+                  {{ ingrediente.nombre }}
+                  @if (ingrediente.opcional) {
+                    <span class="ingredient-item__optional">(opcional)</span>
+                  }
+                </span>
+                <span class="ingredient-item__quantity">
+                  {{ ingrediente.cantidad }} {{ ingrediente.unidad }}
+                </span>
+              </li>
+            }
+          </ul>
+        }
+
+        <!-- Recipe Steps Tab -->
+        @if (activeTab() === 'receta') {
+          <ol class="recipe-steps">
+            @for (paso of pasosPreparacion(); track $index) {
+              <li class="recipe-step">
+                <span class="recipe-step__number">{{ $index + 1 }}</span>
+                <p class="recipe-step__text">{{ paso }}</p>
+              </li>
+            }
+          </ol>
+        }
+      } @else {
+        <!-- Fallback when no recipe data -->
+        <div class="recipe-modal__no-recipe">
+          <p>Los alimentos de esta comida:</p>
+          <ul class="foods-list">
+            @for (food of foods(); track food) {
+              <li class="food-item">{{ food }}</li>
+            }
+          </ul>
+          <p class="recipe-modal__hint">Regenera tu plan de alimentacion para obtener recetas detalladas.</p>
+        </div>
+      }
+    </section>
+  </article>
+</section>

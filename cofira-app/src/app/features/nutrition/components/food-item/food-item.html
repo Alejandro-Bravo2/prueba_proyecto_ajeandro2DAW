@@ -1,0 +1,6 @@
+@if (hasFood()) {
+  <li class="food-item" role="listitem">
+    <span class="food-item__name">{{ displayName() }}</span>
+    <span class="food-item__quantity" aria-label="Cantidad">{{ displayQuantity() }}</span>
+  </li>
+}

@@ -1,0 +1,26 @@
+<section class="onboarding-nutrition">
+  <header class="onboarding-nutrition__header">
+    <h1>¿Con qué frecuencia quieres variedad en tus comidas?</h1>
+    <p>Ayúdanos a entender tus preferencias para generar un plan de nutrición ideal.</p>
+  </header>
+  <form class="c-form onboarding-nutrition__form" [formGroup]="nutritionForm" (ngSubmit)="onSubmit()">
+    <section class="c-form__group">
+      <section class="onboarding-nutrition__options">
+        @for (option of varietyOptions; track option.value) {
+          <button type="button" class="c-button"
+                  [ngClass]="{'c-button--primary': nutritionForm.get('variety')?.value === option.value, 'c-button--secondary': nutritionForm.get('variety')?.value !== option.value}"
+                  (click)="selectVariety(option.value)">
+            {{ option.label }}
+          </button>
+        }
+      </section>
+      @if (nutritionForm.get('variety')?.invalid && nutritionForm.get('variety')?.touched) {
+        <p class="c-form__error">La selección de variedad es obligatoria.</p>
+      }
+    </section>
+
+    <footer class="onboarding-nutrition__footer">
+      <button type="submit" class="c-button c-button--primary c-button--large" [disabled]="nutritionForm.invalid">Continuar</button>
+    </footer>
+  </form>
+</section>

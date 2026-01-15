@@ -1,0 +1,143 @@
+// ============================================================================
+// TOOLTIP COMPONENT
+// ============================================================================
+// Estilos para tooltips accesibles con animación fade-in/out y flecha indicadora.
+// Implementado con Renderer2 para manipulación segura del DOM (SSR-safe).
+//
+// @example
+// <button appTooltip="Guardar cambios" tooltipPosition="top">Guardar</button>
+// ============================================================================
+
+// Variables del tooltip
+$tooltip-bg: var(--negro-puro);
+$tooltip-text: var(--blanco-puro);
+$tooltip-padding-x: var(--spacing-size-s);
+$tooltip-padding-y: var(--spacing-size-xs);
+$tooltip-radius: var(--radius-s);
+$tooltip-font-size: var(--font-size-xs);
+$tooltip-max-width: 250px;
+$tooltip-z-index: var(--z-tooltip, 9999);
+$tooltip-arrow-size: 6px;
+$tooltip-transition-duration: 200ms;
+
+// Tooltip base
+.c-tooltip {
+  position: fixed;
+  z-index: $tooltip-z-index;
+  max-width: $tooltip-max-width;
+  padding: $tooltip-padding-y $tooltip-padding-x;
+  background-color: $tooltip-bg;
+  color: $tooltip-text;
+  font-size: $tooltip-font-size;
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-tight);
+  text-align: center;
+  border-radius: $tooltip-radius;
+  box-shadow: var(--shadow-md);
+  pointer-events: none;
+  white-space: nowrap;
+
+  // Animación fade-in/out
+  opacity: 0;
+  transform: scale(0.95);
+  transition:
+    opacity $tooltip-transition-duration ease-out,
+    transform $tooltip-transition-duration ease-out;
+
+  // Estado visible (activado con JS)
+  &--visible {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  // Flecha indicadora base
+  &__arrow {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-color: transparent;
+  }
+
+  // === Posición TOP ===
+  &--top {
+    .c-tooltip__arrow {
+      bottom: -$tooltip-arrow-size;
+      left: 50%;
+      transform: translateX(-50%);
+      border-width: $tooltip-arrow-size $tooltip-arrow-size 0 $tooltip-arrow-size;
+      border-top-color: $tooltip-bg;
+    }
+  }
+
+  // === Posición BOTTOM ===
+  &--bottom {
+    .c-tooltip__arrow {
+      top: -$tooltip-arrow-size;
+      left: 50%;
+      transform: translateX(-50%);
+      border-width: 0 $tooltip-arrow-size $tooltip-arrow-size $tooltip-arrow-size;
+      border-bottom-color: $tooltip-bg;
+    }
+  }
+
+  // === Posición LEFT ===
+  &--left {
+    .c-tooltip__arrow {
+      right: -$tooltip-arrow-size;
+      top: 50%;
+      transform: translateY(-50%);
+      border-width: $tooltip-arrow-size 0 $tooltip-arrow-size $tooltip-arrow-size;
+      border-left-color: $tooltip-bg;
+    }
+  }
+
+  // === Posición RIGHT ===
+  &--right {
+    .c-tooltip__arrow {
+      left: -$tooltip-arrow-size;
+      top: 50%;
+      transform: translateY(-50%);
+      border-width: $tooltip-arrow-size $tooltip-arrow-size $tooltip-arrow-size 0;
+      border-right-color: $tooltip-bg;
+    }
+  }
+}
+
+// === TEMA OSCURO ===
+// En modo oscuro, invertimos los colores del tooltip
+[data-theme='dark'] {
+  .c-tooltip {
+    background-color: var(--blanco-puro);
+    color: var(--negro-puro);
+
+    &--top .c-tooltip__arrow {
+      border-top-color: var(--blanco-puro);
+    }
+
+    &--bottom .c-tooltip__arrow {
+      border-bottom-color: var(--blanco-puro);
+    }
+
+    &--left .c-tooltip__arrow {
+      border-left-color: var(--blanco-puro);
+    }
+
+    &--right .c-tooltip__arrow {
+      border-right-color: var(--blanco-puro);
+    }
+  }
+}
+
+// === REDUCED MOTION ===
+// Respetar preferencias de movimiento reducido
+@media (prefers-reduced-motion: reduce) {
+  .c-tooltip {
+    transition: opacity 0.01ms ease-out;
+    transform: none;
+
+    &--visible {
+      transform: none;
+    }
+  }
+}

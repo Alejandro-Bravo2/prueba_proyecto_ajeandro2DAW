@@ -1,0 +1,390 @@
+// ========================================
+// CSS CUSTOM PROPERTIES - MINIMALISTA
+// Estilo Apple/Ferrari - Blanco y Negro Puro
+// ========================================
+
+// Importar variables SCSS para poder usar interpolacion
+@import 'css-variables';
+
+
+// ========================================
+// CSS CUSTOM PROPERTIES - TEMA PRINCIPAL
+// ========================================
+
+:root {
+
+  /* ============================================
+     COLORES - BLANCO (Principal)
+     ============================================ */
+  --blanco-puro: #{$blanco-puro};
+  --blanco-off: #{$blanco-off};
+  --blanco-sutil: #{$blanco-sutil};
+  --blanco-normal: #{$blanco-normal};
+  --blanco-normal-hover: #{$blanco-normal-hover};
+  --blanco-normal-active: #{$blanco-normal-active};
+  --blanco-dark: #{$blanco-dark};
+  --blanco-dark-hover: #{$blanco-dark-hover};
+  --blanco-dark-active: #{$blanco-dark-active};
+
+
+  /* ============================================
+     COLORES - NEGRO (Principal)
+     ============================================ */
+  --negro-puro: #{$negro-puro};
+  --negro-profundo: #{$negro-profundo};
+  --negro-suave: #{$negro-suave};
+  --negro-normal: #{$negro-normal};
+  --negro-normal-hover: #{$negro-normal-hover};
+  --negro-normal-active: #{$negro-normal-active};
+  --negro-dark: #{$negro-dark};
+  --negro-dark-hover: #{$negro-dark-hover};
+  --negro-dark-active: #{$negro-dark-active};
+
+
+  /* ============================================
+     COLORES - GRIS (Escala Neutral)
+     ============================================ */
+  --gris-ultraligero: #{$gris-ultraligero};
+  --gris-ligero: #{$gris-ligero};
+  --gris-medio: #{$gris-medio};
+  --gris-texto: #{$gris-texto};
+  --gris-oscuro: #{$gris-oscuro};
+  --gris-normal: #{$gris-normal};
+  --gris-normal-hover: #{$gris-normal-hover};
+  --gris-normal-active: #{$gris-normal-active};
+  --gris-dark: #{$gris-dark};
+  --gris-dark-hover: #{$gris-dark-hover};
+  --gris-dark-active: #{$gris-dark-active};
+
+
+  /* ============================================
+     COLORES - LEGACY (Compatibilidad)
+     ============================================ */
+  --amarillo-normal: #{$amarillo-normal};
+  --amarillo-normal-hover: #{$amarillo-normal-hover};
+  --amarillo-normal-active: #{$amarillo-normal-active};
+  --amarillo-dark: #{$amarillo-dark};
+  --amarillo-dark-hover: #{$amarillo-dark-hover};
+  --amarillo-dark-active: #{$amarillo-dark-active};
+  --amarillo-darker: #{$amarillo-darker};
+
+
+  /* ============================================
+     TEXTOS
+     ============================================ */
+  --text-light: #{$text-light};
+  --text-dark: #{$text-dark};
+  --text-muted: #{$text-muted};
+  --text-subtle: #{$text-subtle};
+
+
+  /* ============================================
+     BACKGROUNDS
+     ============================================ */
+  --background-primary: #{$background-primary};
+  --background-secondary: #{$background-secondary};
+  --background-tertiary: #{$background-tertiary};
+  --background-light-gray: #{$background-light-gray};
+
+
+  /* ============================================
+     BORDERS
+     ============================================ */
+  --border-light: #{$border-light};
+  --border-medium: #{$border-medium};
+  --border-dark: #{$border-dark};
+  --border-solid: #{$border-solid};
+
+
+  /* ============================================
+     BOTONES
+     ============================================ */
+  --button-primary: #{$button-primary};
+  --button-primary-hover: #{$button-primary-hover};
+  --button-primary-active: #{$button-primary-active};
+  --button-secondary: #{$button-secondary};
+  --button-secondary-hover: #{$button-secondary-hover};
+  --button-secondary-active: #{$button-secondary-active};
+  --button-red: #{$button-red};
+  --button-red-hover: #{$button-red-hover};
+  --button-gray: #{$button-gray};
+  --button-gray-hover: #{$button-gray-hover};
+  --button-yellow: #{$button-yellow};
+  --button-yellow-hover: #{$button-yellow-hover};
+  --button-darker: #{$button-darker};
+  --button-darker-hover: #{$button-darker-hover};
+
+
+  /* ============================================
+     TIPOGRAFIA - Tamanios
+     ============================================ */
+  --font-size-xs: #{$font-size-xs};
+  --font-size-sm: #{$font-size-sm};
+  --font-size-md: #{$font-size-md};
+  --font-size-lg: #{$font-size-lg};
+  --font-size-xl: #{$font-size-xl};
+  --font-size-2xl: #{$font-size-2xl};
+  --font-size-3xl: #{$font-size-3xl};
+  --font-size-4xl: #{$font-size-4xl};
+  --font-size-5xl: #{$font-size-5xl};
+  --font-size-6xl: #{$font-size-6xl};
+  --font-size-7xl: #{$font-size-7xl};
+
+
+  /* ============================================
+     ESPACIADO
+     ============================================ */
+  --spacing-size-xss: #{$spacing-size-xss};
+  --spacing-size-xs: #{$spacing-size-xs};
+  --spacing-size-s: #{$spacing-size-s};
+  --spacing-size-m: #{$spacing-size-m};
+  --spacing-size-l: #{$spacing-size-l};
+  --spacing-size-xl: #{$spacing-size-xl};
+  --spacing-size-xxl: #{$spacing-size-xxl};
+  --spacing-size-xxxl: #{$spacing-size-xxxl};
+  --spacing-size-xxxxl: #{$spacing-size-xxxxl};
+  --spacing-size-xxxxxl: #{$spacing-size-xxxxxl};
+
+
+  /* ============================================
+     BORDER RADIUS
+     ============================================ */
+  --radius-none: #{$radius-none};
+  --radius-xss: #{$radius-xss};
+  --radius-xs: #{$radius-xs};
+  --radius-s: #{$radius-s};
+  --radius-m: #{$radius-m};
+  --radius-l: #{$radius-l};
+  --radius-xl: #{$radius-xl};
+  --radius-pill: #{$radius-pill};
+  --radius-circle: #{$radius-circle};
+
+
+  /* ============================================
+     FUENTES
+     ============================================ */
+  --font-primary: #{$font-primary};
+  --font-secondary: #{$font-secondary};
+  --font-mono: #{$font-mono};
+
+
+  /* ============================================
+     PESOS TIPOGRAFICOS
+     ============================================ */
+  --font-weight-light: #{$font-weight-light};
+  --font-weight-regular: #{$font-weight-regular};
+  --font-weight-medium: #{$font-weight-medium};
+  --font-weight-semibold: #{$font-weight-semibold};
+  --font-weight-bold: #{$font-weight-bold};
+  --font-weight-extrabold: #{$font-weight-extrabold};
+
+
+  /* ============================================
+     LINE HEIGHT
+     ============================================ */
+  --line-height-none: #{$line-height-none};
+  --line-height-tight: #{$line-height-tight};
+  --line-height-snug: #{$line-height-snug};
+  --line-height-normal: #{$line-height-normal};
+  --line-height-relaxed: #{$line-height-relaxed};
+  --line-height-loose: #{$line-height-loose};
+
+
+  /* ============================================
+     LETTER SPACING
+     ============================================ */
+  --letter-spacing-tighter: #{$letter-spacing-tighter};
+  --letter-spacing-tight: #{$letter-spacing-tight};
+  --letter-spacing-normal: #{$letter-spacing-normal};
+  --letter-spacing-wide: #{$letter-spacing-wide};
+  --letter-spacing-wider: #{$letter-spacing-wider};
+  --letter-spacing-widest: #{$letter-spacing-widest};
+
+
+  /* ============================================
+     SOMBRAS (Sutiles y Elegantes)
+     ============================================ */
+  --shadow-none: #{$shadow-none};
+  --shadow-xs: #{$shadow-xs};
+  --shadow-sm: #{$shadow-sm};
+  --shadow-md: #{$shadow-md};
+  --shadow-lg: #{$shadow-lg};
+  --shadow-xl: #{$shadow-xl};
+  --shadow-2xl: #{$shadow-2xl};
+
+
+  /* ============================================
+     DURACIONES (Premium Timing)
+     ============================================ */
+  --duration-instant: #{$duration-instant};
+  --duration-fast: #{$duration-fast};
+  --duration-base: #{$duration-base};
+  --duration-slow: #{$duration-slow};
+  --duration-slower: #{$duration-slower};
+  --duration-slowest: #{$duration-slowest};
+
+
+  /* ============================================
+     EASING (Premium Curves)
+     ============================================ */
+  --ease-linear: #{$ease-linear};
+  --ease-in: #{$ease-in};
+  --ease-out: #{$ease-out};
+  --ease-in-out: #{$ease-in-out};
+  --ease-premium: #{$ease-premium};
+  --ease-dramatic: #{$ease-dramatic};
+  --ease-bounce: #{$ease-bounce};
+
+
+  /* ============================================
+     BORDES
+     ============================================ */
+  --border-width-fino: #{$border-width-fino};
+  --border-width-normal: #{$border-width-normal};
+  --border-width-grueso: #{$border-width-grueso};
+
+
+  /* ============================================
+     FORM INPUTS
+     ============================================ */
+  --input-padding-vertical: #{$input-padding-vertical};
+  --input-padding-horizontal: #{$input-padding-horizontal};
+  --input-margin-bottom: #{$input-margin-bottom};
+
+
+  /* ============================================
+     TAMANIOS BOTONES
+     ============================================ */
+  --width-estandar: #{$width-estandar};
+  --width-grande: #{$width-grande};
+  --width-mediano: #{$width-mediano};
+  --width-pequenio: #{$width-pequenio};
+  --width-muy-pequenio: #{$width-muy-pequenio};
+
+
+  /* ============================================
+     Z-INDEX
+     ============================================ */
+  --z-dropdown: #{$z-dropdown};
+  --z-sticky: #{$z-sticky};
+  --z-fixed: #{$z-fixed};
+  --z-modal-backdrop: #{$z-modal-backdrop};
+  --z-modal: #{$z-modal};
+  --z-popover: #{$z-popover};
+  --z-tooltip: #{$z-tooltip};
+  --z-toast: #{$z-toast};
+
+
+  /* ============================================
+     VARIABLES SEMANTICAS - TEMA CLARO
+     ============================================ */
+  --bg-body: #{$blanco-puro};
+  --bg-primary: #{$blanco-puro};
+  --bg-secondary: #{$blanco-off};
+  --bg-card: #{$blanco-puro};
+  --bg-card-alt: #{$blanco-off};
+  --bg-input: #{$gris-ultraligero};
+  --text-primary: #{$negro-puro};
+  --text-secondary: #{$gris-texto};
+  --border-color: #{$border-light};
+  --border-color-light: #{$border-light};
+
+
+  /* ============================================
+     FORMULARIO (Minimalista)
+     ============================================ */
+  --form-background: #{$blanco-puro};
+  --form-input-background: #{$gris-ultraligero};
+  --form-padding: var(--spacing-size-xl);
+  --form-max-width: 480px;
+
+
+  /* ============================================
+     GLASS EFFECT & EXTRAS (Tema Claro)
+     ============================================ */
+  --glass-bg: rgba(255, 255, 255, 0.9);
+  --glass-border: rgba(0, 0, 0, 0.06);
+  --card-border: rgba(0, 0, 0, 0.06);
+  --bg-tertiary: #{$gris-ultraligero};
+  --focus-ring: rgba(10, 10, 10, 0.08);
+}
+
+
+// ========================================
+// TEMA OSCURO (Elegante estilo Apple)
+// ========================================
+
+[data-theme="dark"] {
+  // Fondos principales - tonos oscuros elegantes
+  --bg-body: #000000;
+  --bg-primary: #000000;
+  --bg-secondary: #0a0a0a;
+  --bg-tertiary: #1a1a1a;
+  --bg-card: #0f0f0f;
+  --bg-card-alt: #1a1a1a;
+  --bg-input: #1a1a1a;
+
+  // Textos - MUY VISIBLES en dark mode
+  --text-primary: #ffffff;
+  --text-secondary: #d1d1d6;
+  --text-muted: #a1a1a6;
+  --text-light: #ffffff;
+  --text-dark: #000000;
+  --text-subtle: #8e8e93;
+
+  // Bordes - más visibles
+  --border-light: rgba(255, 255, 255, 0.12);
+  --border-medium: rgba(255, 255, 255, 0.18);
+  --border-dark: rgba(255, 255, 255, 0.25);
+  --border-color: rgba(255, 255, 255, 0.15);
+  --border-color-light: rgba(255, 255, 255, 0.1);
+  --card-border: rgba(255, 255, 255, 0.15);
+
+  // Colores principales
+  --blanco-puro: #ffffff;
+  --negro-puro: #000000;
+  --blanco-normal: #ffffff;
+  --blanco-normal-hover: #f0f0f0;
+  --negro-normal: #000000;
+  --negro-normal-hover: #0f0f0f;
+  --negro-suave: #0f0f0f;
+
+  // Grises adaptados - MÁS CLAROS para visibilidad
+  --gris-ultraligero: #1a1a1a;
+  --gris-ligero: #2a2a2a;
+  --gris-medio: #d1d1d6;
+  --gris-normal: #3a3a3a;
+  --gris-dark: #2a2a2a;
+  --gris-texto: #e0e0e0;
+  --gris-oscuro: #a1a1a6;
+
+  // Formularios
+  --form-background: #0f0f0f;
+  --form-input-background: #1a1a1a;
+
+  // Botones - elegantes y claros
+  --button-primary: #ffffff;
+  --button-primary-hover: #f0f0f0;
+  --button-primary-active: #e0e0e0;
+  --button-secondary: transparent;
+  --button-secondary-hover: rgba(255, 255, 255, 0.1);
+  --button-secondary-active: rgba(255, 255, 255, 0.15);
+
+  // Backgrounds legacy
+  --background-primary: #000000;
+  --background-secondary: #0f0f0f;
+  --background-tertiary: #1a1a1a;
+  --background-light-gray: #2a2a2a;
+
+  // Sombras para dark mode - sutiles
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.6);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.6);
+  --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.6);
+
+  // Glass effect - header OSCURO con elementos MUY VISIBLES
+  --glass-bg: rgba(0, 0, 0, 0.92);
+  --glass-border: rgba(255, 255, 255, 0.2);
+
+  // Focus ring para dark mode
+  --focus-ring: rgba(255, 255, 255, 0.15);
+}

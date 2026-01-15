@@ -1,0 +1,199 @@
+<article class="preferences-account">
+  <section class="preferences-account__section">
+    <header class="preferences-account__section-header">
+      <h2 class="preferences-account__section-title">Informacion de Cuenta</h2>
+      @if (!isEditing()) {
+        <button class="preferences-account__btn preferences-account__btn--outline" (click)="toggleEdit()">
+          Editar
+        </button>
+      }
+    </header>
+
+    <form [formGroup]="accountForm" class="preferences-account__form">
+      <fieldset class="preferences-account__field">
+        <label class="preferences-account__label">Nombre</label>
+        @if (isEditing()) {
+          <input
+            type="text"
+            formControlName="name"
+            class="preferences-account__input"
+            placeholder="Tu nombre">
+        } @else {
+          <p class="preferences-account__value">{{ accountForm.get('name')?.value }}</p>
+        }
+      </fieldset>
+
+      <fieldset class="preferences-account__field">
+        <label class="preferences-account__label">Email</label>
+        @if (isEditing()) {
+          <input
+            type="email"
+            formControlName="email"
+            class="preferences-account__input"
+            placeholder="tu@email.com">
+        } @else {
+          <p class="preferences-account__value">{{ accountForm.get('email')?.value }}</p>
+        }
+      </fieldset>
+
+      <fieldset class="preferences-account__field">
+        <label class="preferences-account__label">Telefono</label>
+        @if (isEditing()) {
+          <input
+            type="tel"
+            formControlName="phone"
+            class="preferences-account__input"
+            placeholder="+34 600 000 000">
+        } @else {
+          <p class="preferences-account__value">{{ accountForm.get('phone')?.value || 'No especificado' }}</p>
+        }
+      </fieldset>
+
+      @if (isEditing()) {
+        <footer class="preferences-account__actions">
+          <button
+            type="button"
+            class="preferences-account__btn preferences-account__btn--secondary"
+            (click)="cancelEdit()">
+            Cancelar
+          </button>
+          <button
+            type="submit"
+            class="preferences-account__btn preferences-account__btn--primary"
+            [disabled]="!accountForm.valid || isSaving()"
+            (click)="saveChanges()">
+            @if (isSaving()) {
+              Guardando...
+            } @else {
+              Guardar cambios
+            }
+          </button>
+        </footer>
+      }
+    </form>
+  </section>
+
+  <section class="preferences-account__section" id="security">
+    <h2 class="preferences-account__section-title">Seguridad</h2>
+    <article class="preferences-account__security-item">
+      <figure class="preferences-account__security-info">
+        <span class="preferences-account__security-label">Contrasena</span>
+        <figcaption class="preferences-account__security-value">************</figcaption>
+      </figure>
+      <button
+        class="preferences-account__btn preferences-account__btn--outline"
+        (click)="changePassword()">
+        Cambiar
+      </button>
+    </article>
+  </section>
+
+  <section class="preferences-account__section" id="subscription">
+    <h2 class="preferences-account__section-title">Subscripcion</h2>
+
+    @if (subscriptionStore.subscripcionActiva()) {
+      <article class="preferences-account__subscription preferences-account__subscription--active">
+        <header class="preferences-account__subscription-header">
+          <span class="preferences-account__subscription-badge">
+            {{ subscriptionStore.nombrePlan() || subscriptionStore.tipoPlan() }}
+          </span>
+          <span class="preferences-account__subscription-status">Activa</span>
+        </header>
+
+        <dl class="preferences-account__subscription-details">
+          <div class="preferences-account__subscription-item">
+            <dt>Plan</dt>
+            <dd>{{ subscriptionStore.nombrePlan() || subscriptionStore.tipoPlan() }}</dd>
+          </div>
+          <div class="preferences-account__subscription-item">
+            <dt>Precio</dt>
+            <dd>&euro;{{ subscriptionStore.precio() }}/{{ subscriptionStore.tipoPlan() === 'ANUAL' ? 'ano' : 'mes' }}</dd>
+          </div>
+          <div class="preferences-account__subscription-item">
+            <dt>Fecha de fin</dt>
+            <dd>{{ subscriptionStore.fechaFin() | date:'longDate' }}</dd>
+          </div>
+          <div class="preferences-account__subscription-item">
+            <dt>Dias restantes</dt>
+            <dd>{{ subscriptionStore.diasRestantes() }} dias</dd>
+          </div>
+          @if (subscriptionStore.metodoPago()) {
+            <div class="preferences-account__subscription-item">
+              <dt>Metodo de pago</dt>
+              <dd>
+                {{ subscriptionStore.metodoPago() }}
+                @if (subscriptionStore.ultimosDigitosTarjeta()) {
+                  (**** {{ subscriptionStore.ultimosDigitosTarjeta() }})
+                }
+              </dd>
+            </div>
+          }
+        </dl>
+
+        <footer class="preferences-account__subscription-actions">
+          <button
+            class="preferences-account__btn preferences-account__btn--danger"
+            [disabled]="isCancellingSubscription()"
+            (click)="cancelarSubscripcion()">
+            @if (isCancellingSubscription()) {
+              Cancelando...
+            } @else {
+              Cancelar subscripcion
+            }
+          </button>
+        </footer>
+      </article>
+    } @else {
+      <article class="preferences-account__subscription preferences-account__subscription--inactive">
+        <figure class="preferences-account__subscription-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+          </svg>
+        </figure>
+        <h3 class="preferences-account__subscription-title">No tienes una subscripcion activa</h3>
+        <p class="preferences-account__subscription-text">
+          Desbloquea todas las funciones premium y lleva tu entrenamiento al siguiente nivel.
+        </p>
+        <a routerLink="/" fragment="pricing" class="preferences-account__btn preferences-account__btn--primary">
+          Ver planes disponibles
+        </a>
+      </article>
+    }
+  </section>
+
+  <section class="preferences-account__section">
+    <h2 class="preferences-account__section-title">Configuracion de Privacidad</h2>
+    <p class="preferences-account__description">
+      Controla quien puede ver tu informacion y actividad.
+    </p>
+
+    <fieldset class="preferences-account__privacy-list">
+      <label class="preferences-account__checkbox">
+        <input
+          type="checkbox"
+          [checked]="privacySettings().publicProfile"
+          (change)="updatePrivacy('publicProfile')">
+        <span class="preferences-account__checkbox-label">Perfil publico</span>
+        <span class="preferences-account__checkbox-hint">Otros usuarios pueden ver tu perfil</span>
+      </label>
+
+      <label class="preferences-account__checkbox">
+        <input
+          type="checkbox"
+          [checked]="privacySettings().showProgress"
+          (change)="updatePrivacy('showProgress')">
+        <span class="preferences-account__checkbox-label">Mostrar progreso</span>
+        <span class="preferences-account__checkbox-hint">Tu progreso sera visible para otros</span>
+      </label>
+
+      <label class="preferences-account__checkbox">
+        <input
+          type="checkbox"
+          [checked]="privacySettings().shareStats"
+          (change)="updatePrivacy('shareStats')">
+        <span class="preferences-account__checkbox-label">Compartir estadisticas</span>
+        <span class="preferences-account__checkbox-hint">Comparte tus logros en redes sociales</span>
+      </label>
+    </fieldset>
+  </section>
+</article>

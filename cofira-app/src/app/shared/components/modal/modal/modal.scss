@@ -1,0 +1,108 @@
+@import '../../../../../styles/00-settings/css-variables';
+@import '../../../../../styles/01-tools/mixins';
+
+.c-modal__overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(17, 14, 16, 0.8);
+  @include flex-center;
+  z-index: 1000;
+  padding: var(--spacing-size-s);
+  animation: fadeIn var(--duration-base) ease-out;
+
+  @include responsive('xs') {
+    padding: var(--spacing-size-m);
+  }
+
+  @include responsive('s') {
+    padding: var(--spacing-size-l);
+  }
+}
+
+.c-modal__content {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  max-height: 90vh;
+  max-height: 90dvh;
+  overflow-y: auto;
+  background-color: var(--bg-card);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-size-m);
+  box-shadow: var(--shadow-xl);
+  animation: slideInUp var(--duration-base) ease-out;
+
+  @include responsive('xs') {
+    max-width: 500px;
+    padding: var(--spacing-size-l);
+    border-radius: var(--radius-lg);
+  }
+
+  @include responsive('s') {
+    max-width: 550px;
+  }
+
+  @include responsive('M') {
+    max-width: 600px;
+  }
+}
+
+// Variantes de tamaño
+.c-modal__content--small {
+  @include responsive('xs') {
+    max-width: 400px;
+  }
+}
+
+.c-modal__content--large {
+  @include responsive('xs') {
+    max-width: 600px;
+  }
+
+  @include responsive('s') {
+    max-width: 700px;
+  }
+
+  @include responsive('M') {
+    max-width: 800px;
+  }
+}
+
+.c-modal__content--fullscreen {
+  max-width: 100%;
+  max-height: 100vh;
+  max-height: 100dvh;
+  border-radius: 0;
+  height: 100%;
+
+  @include responsive('M') {
+    max-width: 95%;
+    max-height: 95vh;
+    max-height: 95dvh;
+    border-radius: var(--radius-lg);
+    height: auto;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

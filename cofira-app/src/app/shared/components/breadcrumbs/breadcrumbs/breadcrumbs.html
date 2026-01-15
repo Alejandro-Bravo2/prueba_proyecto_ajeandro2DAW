@@ -1,0 +1,15 @@
+@if ((breadcrumbs$ | async)?.length) {
+  <nav class="breadcrumbs" aria-label="Ruta de navegacion">
+    <ol class="breadcrumbs__list">
+      @for (breadcrumb of (breadcrumbs$ | async); track breadcrumb.url; let last = $last) {
+        <li class="breadcrumbs__item">
+          @if (!last) {
+            <a [routerLink]="breadcrumb.url" class="breadcrumbs__link">{{ breadcrumb.label }}</a>
+          } @else {
+            <span class="breadcrumbs__current" aria-current="page">{{ breadcrumb.label }}</span>
+          }
+        </li>
+      }
+    </ol>
+  </nav>
+}

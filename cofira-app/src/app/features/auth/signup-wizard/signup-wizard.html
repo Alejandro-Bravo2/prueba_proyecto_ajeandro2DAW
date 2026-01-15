@@ -1,0 +1,313 @@
+<article class="signup-wizard">
+  <!-- Progress Bar -->
+  <header class="signup-wizard__progress">
+    <figure class="signup-wizard__progress-bar" role="progressbar" [attr.aria-valuenow]="progress()" aria-valuemin="0" aria-valuemax="100">
+      <span
+        class="signup-wizard__progress-fill"
+        [style.width.%]="progress()"
+      ></span>
+    </figure>
+    <output class="signup-wizard__progress-text">
+      {{ currentStepIndex() + 1 }} / {{ totalSteps() }}
+    </output>
+  </header>
+
+  <!-- Step Content -->
+  <main class="signup-wizard__content">
+    <!-- Onboarding Steps -->
+    @if (!isRegistrationStep()) {
+      @if (currentOnboardingStep(); as step) {
+        <section class="signup-wizard__step" [attr.data-step]="step.id">
+          <h1 class="signup-wizard__question">{{ step.question }}</h1>
+
+          <!-- Single/Multiple Selection -->
+          @if (step.type === 'single' || step.type === 'multiple') {
+            <menu class="signup-wizard__options" [class.signup-wizard__options--grid]="step.options && step.options.length > 4">
+              @for (option of step.options; track option.value) {
+                <button
+                  type="button"
+                  class="signup-wizard__option"
+                  [class.signup-wizard__option--selected]="isSelected(step.id, option.value)"
+                  (click)="selectOption(step.id, option.value, step.type === 'multiple')"
+                >
+                  @if (option.icon) {
+                    <span class="signup-wizard__option-icon">{{ option.icon }}</span>
+                  }
+                  <span class="signup-wizard__option-label">{{ option.label }}</span>
+                  @if (option.description) {
+                    <span class="signup-wizard__option-desc">{{ option.description }}</span>
+                  }
+                  @if (step.type === 'multiple') {
+                    <mark class="signup-wizard__option-check">
+                      @if (isSelected(step.id, option.value)) {
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                          <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                      }
+                    </mark>
+                  }
+                </button>
+              }
+            </menu>
+            @if (step.type === 'multiple') {
+              <p class="signup-wizard__hint">Puedes seleccionar varias opciones</p>
+            }
+          }
+
+          <!-- Slider -->
+          @if (step.type === 'slider') {
+            <fieldset class="signup-wizard__slider">
+              <figure class="signup-wizard__slider-value">
+                <data class="signup-wizard__slider-number" [value]="formData()[step.id]">{{ formData()[step.id] }}</data>
+                <figcaption class="signup-wizard__slider-unit">{{ step.unit }}</figcaption>
+              </figure>
+              <input
+                type="range"
+                class="signup-wizard__slider-input"
+                [min]="step.min"
+                [max]="step.max"
+                [step]="step.step || 1"
+                [value]="formData()[step.id]"
+                (input)="updateSliderValue(step.id, $event)"
+              />
+              <legend class="signup-wizard__slider-labels">
+                <span>{{ step.min }} {{ step.unit }}</span>
+                <span>{{ step.max }} {{ step.unit }}</span>
+              </legend>
+            </fieldset>
+          }
+
+          <!-- Date Input -->
+          @if (step.type === 'date') {
+            <fieldset class="signup-wizard__date">
+              <input
+                type="date"
+                class="signup-wizard__date-input"
+                [value]="formData()[step.id] || ''"
+                [max]="maxBirthDate"
+                (change)="updateDateValue(step.id, $event)"
+              />
+            </fieldset>
+          }
+
+          <!-- Textarea -->
+          @if (step.type === 'textarea') {
+            <fieldset class="signup-wizard__textarea">
+              <textarea
+                class="signup-wizard__textarea-input"
+                [placeholder]="step.placeholder || ''"
+                [value]="formData()[step.id] || ''"
+                (input)="updateTextValue(step.id, $event)"
+                rows="4"
+              ></textarea>
+            </fieldset>
+          }
+        </section>
+      }
+    }
+
+    <!-- Registration Step (Last Step) -->
+    @if (isRegistrationStep()) {
+      <section class="signup-wizard__step signup-wizard__step--register">
+        <h1 class="signup-wizard__question">Crea tu cuenta</h1>
+        <p class="signup-wizard__subtitle">Ya casi terminamos. Solo necesitamos tus datos de acceso.</p>
+
+        <form class="signup-wizard__form" [formGroup]="registerForm">
+          <!-- Name -->
+          <div class="signup-wizard__field">
+            <label for="name" class="signup-wizard__label">Nombre</label>
+            <input
+              type="text"
+              id="name"
+              formControlName="name"
+              class="signup-wizard__input"
+              [class.signup-wizard__input--error]="registerForm.get('name')?.invalid && registerForm.get('name')?.touched"
+              placeholder="Tu nombre"
+              autocomplete="name"
+            />
+            @if (registerForm.get('name')?.errors && registerForm.get('name')?.touched) {
+              <span class="signup-wizard__field-error">El nombre es obligatorio.</span>
+            }
+          </div>
+
+          <!-- Username -->
+          <div class="signup-wizard__field">
+            <label for="username" class="signup-wizard__label">Nombre de usuario</label>
+            <input
+              type="text"
+              id="username"
+              formControlName="username"
+              class="signup-wizard__input"
+              [class.signup-wizard__input--error]="registerForm.get('username')?.invalid && registerForm.get('username')?.touched"
+              placeholder="nombre_usuario"
+              autocomplete="username"
+            />
+            @if (registerForm.get('username')?.pending) {
+              <span class="signup-wizard__field-hint">Comprobando disponibilidad...</span>
+            }
+            @if (registerForm.get('username')?.errors && registerForm.get('username')?.touched) {
+              <span class="signup-wizard__field-error">
+                @if (registerForm.get('username')?.hasError('required')) {
+                  El username es obligatorio.
+                } @else if (registerForm.get('username')?.hasError('minlength')) {
+                  Minimo 3 caracteres.
+                } @else if (registerForm.get('username')?.hasError('usernameTaken')) {
+                  Este username ya esta en uso.
+                }
+              </span>
+            }
+          </div>
+
+          <!-- Email -->
+          <div class="signup-wizard__field">
+            <label for="email" class="signup-wizard__label">Email</label>
+            <input
+              type="email"
+              id="email"
+              formControlName="email"
+              class="signup-wizard__input"
+              [class.signup-wizard__input--error]="registerForm.get('email')?.invalid && registerForm.get('email')?.touched"
+              placeholder="tu.email@ejemplo.com"
+              autocomplete="email"
+            />
+            @if (registerForm.get('email')?.pending) {
+              <span class="signup-wizard__field-hint">Comprobando disponibilidad...</span>
+            }
+            @if (registerForm.get('email')?.errors && registerForm.get('email')?.touched) {
+              <span class="signup-wizard__field-error">
+                @if (registerForm.get('email')?.hasError('required')) {
+                  El email es obligatorio.
+                } @else if (registerForm.get('email')?.hasError('email')) {
+                  Email no valido.
+                } @else if (registerForm.get('email')?.hasError('emailTaken')) {
+                  Este email ya esta en uso.
+                }
+              </span>
+            }
+          </div>
+
+          <!-- Password -->
+          <div class="signup-wizard__field">
+            <label for="password" class="signup-wizard__label">Contrasena</label>
+            <input
+              type="password"
+              id="password"
+              formControlName="password"
+              class="signup-wizard__input"
+              [class.signup-wizard__input--error]="registerForm.get('password')?.invalid && registerForm.get('password')?.touched"
+              placeholder="********"
+              autocomplete="new-password"
+            />
+            <app-password-strength [password]="registerForm.get('password')?.value || ''" />
+            @if (registerForm.get('password')?.errors && registerForm.get('password')?.touched) {
+              <span class="signup-wizard__field-error">
+                @if (registerForm.get('password')?.hasError('required')) {
+                  La contrasena es obligatoria.
+                } @else if (registerForm.get('password')?.hasError('passwordStrength')) {
+                  Minimo 12 caracteres, mayusculas, minusculas, numeros y simbolos.
+                }
+              </span>
+            }
+          </div>
+
+          <!-- Confirm Password -->
+          <div class="signup-wizard__field">
+            <label for="confirmPassword" class="signup-wizard__label">Confirmar Contrasena</label>
+            <input
+              type="password"
+              id="confirmPassword"
+              formControlName="confirmPassword"
+              class="signup-wizard__input"
+              [class.signup-wizard__input--error]="registerForm.hasError('passwordMatch') && registerForm.get('confirmPassword')?.touched"
+              placeholder="********"
+              autocomplete="new-password"
+            />
+            @if (registerForm.hasError('passwordMatch') && registerForm.get('confirmPassword')?.touched) {
+              <span class="signup-wizard__field-error">Las contrasenas no coinciden.</span>
+            }
+          </div>
+
+          <!-- Terms Checkbox -->
+          <div class="signup-wizard__field signup-wizard__field--checkbox">
+            <label class="signup-wizard__checkbox-label">
+              <input
+                type="checkbox"
+                formControlName="acceptTerms"
+                class="signup-wizard__checkbox"
+              />
+              <span class="signup-wizard__checkbox-custom">
+                @if (registerForm.get('acceptTerms')?.value) {
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                }
+              </span>
+              <span class="signup-wizard__checkbox-text">
+                Acepto los
+                <a routerLink="/terms" target="_blank">Terminos de Servicio</a> y la
+                <a routerLink="/privacy" target="_blank">Politica de Privacidad</a>
+              </span>
+            </label>
+            @if (registerForm.get('acceptTerms')?.invalid && registerForm.get('acceptTerms')?.touched) {
+              <span class="signup-wizard__field-error">Debes aceptar los terminos para continuar.</span>
+            }
+          </div>
+        </form>
+      </section>
+    }
+
+    <!-- Error Message -->
+    @if (error()) {
+      <aside class="signup-wizard__error" role="alert">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+        <span>{{ error() }}</span>
+      </aside>
+    }
+  </main>
+
+  <!-- Navigation -->
+  <nav class="signup-wizard__nav">
+    <button
+      type="button"
+      class="signup-wizard__btn signup-wizard__btn--secondary"
+      [disabled]="isFirstStep()"
+      (click)="previousStep()"
+    >
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <polyline points="15 18 9 12 15 6"></polyline>
+      </svg>
+      Anterior
+    </button>
+
+    <button
+      type="button"
+      class="signup-wizard__btn signup-wizard__btn--primary"
+      [disabled]="!canProceed() || isSubmitting()"
+      (click)="nextStep()"
+    >
+      @if (isSubmitting()) {
+        <output class="signup-wizard__spinner" aria-hidden="true"></output>
+        Creando cuenta...
+      } @else if (isLastStep()) {
+        Crear cuenta
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+      } @else {
+        Siguiente
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      }
+    </button>
+  </nav>
+
+  <!-- Login link -->
+  <footer class="signup-wizard__footer">
+    <p>Ya tienes cuenta? <a routerLink="/login">Inicia sesion</a></p>
+  </footer>
+</article>

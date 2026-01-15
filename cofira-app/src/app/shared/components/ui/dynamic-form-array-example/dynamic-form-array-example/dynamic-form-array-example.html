@@ -1,0 +1,38 @@
+<section class="dynamic-form-array-example c-card">
+  <header class="dynamic-form-array-example__header">
+    <h1>Lista de Teléfonos</h1>
+    <p>Añade y elimina números de teléfono de forma dinámica.</p>
+  </header>
+  <form class="c-form" [formGroup]="parentForm" (ngSubmit)="onSubmit()">
+    <section formArrayName="phoneNumbers">
+      <section class="c-form__group" *ngFor="let phoneControl of phoneNumbers.controls; let i = index">
+        <label [for]="'phone-' + i" class="c-form__label">Teléfono {{ i + 1 }}</label>
+        <section class="dynamic-form-array-example__phone-input-group">
+          <input [id]="'phone-' + i" type="text" [formControlName]="i" class="c-form__input" placeholder="Ej: 612345678"
+                 [ngClass]="{'c-form__input--error': phoneControl.invalid && phoneControl.touched}">
+          <button type="button" class="c-button c-button--ghost dynamic-form-array-example__remove-button"
+                  (click)="removePhoneNumber(i)" *ngIf="phoneNumbers.controls.length > 1" aria-label="Eliminar teléfono">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+          </button>
+        </section>
+        @if (phoneControl.invalid && phoneControl.touched) {
+          <p class="c-form__error">
+            @if (phoneControl.hasError('required')) {
+              El teléfono es obligatorio.
+            }
+            @if (phoneControl.hasError('phoneInvalid')) {
+              El formato del teléfono no es válido (ej: 612345678).
+            }
+          </p>
+        }
+      </section>
+    </section>
+    <button type="button" class="c-button c-button--secondary" (click)="addPhoneNumber()" aria-label="Añadir teléfono">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+      Añadir Teléfono
+    </button>
+    <footer class="dynamic-form-array-example__footer">
+      <button type="submit" class="c-button c-button--primary c-button--large" [disabled]="parentForm.invalid">Guardar Teléfonos</button>
+    </footer>
+  </form>
+</section>

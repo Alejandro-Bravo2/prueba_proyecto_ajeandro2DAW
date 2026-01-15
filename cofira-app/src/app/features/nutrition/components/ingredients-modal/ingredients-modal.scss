@@ -1,0 +1,45 @@
+@import '../../../../../styles/00-settings/css-variables';
+@import '../../../../../styles/01-tools/mixins';
+
+.ingredients-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  margin-bottom: var(--spacing-size-m);
+}
+
+.ingredient-item {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--spacing-size-xs) 0;
+  border-bottom: 1px dashed var(--border-light);
+  color: var(--text-primary);
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &__name {
+    font-weight: var(--font-weight-medium);
+  }
+
+  &__quantity {
+    color: var(--text-secondary);
+  }
+
+  &__price {
+    font-weight: var(--font-weight-semibold);
+  }
+}
+
+.total-cost {
+  text-align: right;
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  margin-top: var(--spacing-size-m);
+
+  &__value {
+    color: var(--negro-puro);
+  }
+}

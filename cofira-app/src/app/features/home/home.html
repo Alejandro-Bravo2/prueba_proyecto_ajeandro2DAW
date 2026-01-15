@@ -1,0 +1,20 @@
+<app-hero-section />
+<app-pricing-plans />
+
+<!-- FAQ Section with Accordion -->
+<section class="faq-section o-container">
+  <header class="faq-section__header">
+    <h2 class="faq-section__title">Preguntas Frecuentes</h2>
+    <p class="faq-section__subtitle">Encuentra respuestas a las preguntas más comunes sobre COFIRA</p>
+  </header>
+
+  <app-accordion>
+    @for (faq of faqs; track faq.question) {
+      <app-accordion-item [title]="faq.question">
+        <p class="faq-section__answer">{{ faq.answer }}</p>
+      </app-accordion-item>
+    }
+  </app-accordion>
+</section>
+
+<app-newsletter-form />

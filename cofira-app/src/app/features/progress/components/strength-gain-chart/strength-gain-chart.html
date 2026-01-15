@@ -1,0 +1,54 @@
+<section class="strength-gain-chart c-card">
+  <header class="strength-gain-chart__header">
+    <h3>Gráfico de Ganancia de Fuerza</h3>
+    @if (exercises().length > 0) {
+    <select class="strength-gain-chart__dropdown" (change)="onExerciseChange($event)" [value]="selectedExercise()">
+      <option value="">Seleccionar Ejercicio</option>
+      @for (exercise of exercises(); track exercise) {
+      <option [value]="exercise">{{ exercise }}</option>
+      }
+    </select>
+    }
+  </header>
+  <section class="strength-gain-chart__body">
+    @if (exercises().length === 0) {
+    <aside class="strength-gain-chart__empty-state">
+      <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect x="10" y="50" width="12" height="20" rx="2" fill="var(--border-medium)"/>
+        <rect x="28" y="35" width="12" height="35" rx="2" fill="var(--border-medium)"/>
+        <rect x="46" y="25" width="12" height="45" rx="2" fill="var(--border-medium)"/>
+        <rect x="64" y="15" width="12" height="55" rx="2" fill="var(--border-medium)"/>
+        <line x1="5" y1="72" x2="80" y2="72" stroke="var(--border-light)" stroke-width="2"/>
+      </svg>
+      <p>No hay ejercicios registrados</p>
+      <small>Completa entrenamientos para ver tu progreso de fuerza</small>
+    </aside>
+    } @else if (selectedExercise()) {
+      @if (hasProgressData()) {
+      <figure class="strength-gain-chart__chart-container">
+        <canvas baseChart [data]="lineChartData()" [options]="lineChartOptions" type="line">
+        </canvas>
+      </figure>
+      } @else {
+      <aside class="strength-gain-chart__empty-state">
+        <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="10" y="50" width="12" height="20" rx="2" fill="var(--border-light)"/>
+          <rect x="28" y="50" width="12" height="20" rx="2" fill="var(--border-light)"/>
+          <rect x="46" y="50" width="12" height="20" rx="2" fill="var(--border-light)"/>
+          <line x1="5" y1="72" x2="75" y2="72" stroke="var(--border-light)" stroke-width="2"/>
+        </svg>
+        <p>Sin datos para este ejercicio</p>
+        <small>Registra tus series y repeticiones</small>
+      </aside>
+      }
+    } @else {
+    <aside class="strength-gain-chart__placeholder">
+      <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="30" cy="30" r="28" stroke="var(--border-medium)" stroke-width="2" stroke-dasharray="8 4"/>
+        <path d="M20 30 L28 38 L42 22" stroke="var(--brand-primary)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <p>Selecciona un ejercicio para ver tu progreso</p>
+    </aside>
+    }
+  </section>
+</section>

@@ -1,0 +1,155 @@
+<article class="onboarding">
+  <!-- Progress Bar -->
+  <header class="onboarding__progress">
+    <figure class="onboarding__progress-bar" role="progressbar" [attr.aria-valuenow]="progress()" aria-valuemin="0" aria-valuemax="100">
+      <span
+        class="onboarding__progress-fill"
+        [style.width.%]="progress()"
+      ></span>
+    </figure>
+    <output class="onboarding__progress-text">
+      {{ currentStepIndex() + 1 }} / {{ totalSteps() }}
+    </output>
+  </header>
+
+  <!-- Step Content -->
+  <main class="onboarding__content">
+    @if (currentStep(); as step) {
+      <section class="onboarding__step" [attr.data-step]="step.id">
+        <h1 class="onboarding__question">{{ step.question }}</h1>
+
+        <!-- Single/Multiple Selection -->
+        @if (step.type === 'single' || step.type === 'multiple') {
+          <menu class="onboarding__options" [class.onboarding__options--grid]="step.options && step.options.length > 4">
+            @for (option of step.options; track option.value) {
+              <button
+                type="button"
+                class="onboarding__option"
+                [class.onboarding__option--selected]="isSelected(step.id, option.value)"
+                (click)="selectOption(step.id, option.value, step.type === 'multiple')"
+              >
+                @if (option.icon) {
+                  <span class="onboarding__option-icon">{{ option.icon }}</span>
+                }
+                <span class="onboarding__option-label">{{ option.label }}</span>
+                @if (option.description) {
+                  <span class="onboarding__option-desc">{{ option.description }}</span>
+                }
+                @if (step.type === 'multiple') {
+                  <mark class="onboarding__option-check">
+                    @if (isSelected(step.id, option.value)) {
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
+                    }
+                  </mark>
+                }
+              </button>
+            }
+          </menu>
+          @if (step.type === 'multiple') {
+            <p class="onboarding__hint">Puedes seleccionar varias opciones</p>
+          }
+        }
+
+        <!-- Slider -->
+        @if (step.type === 'slider') {
+          <fieldset class="onboarding__slider">
+            <figure class="onboarding__slider-value">
+              <data class="onboarding__slider-number" [value]="formData()[step.id]">{{ formData()[step.id] }}</data>
+              <figcaption class="onboarding__slider-unit">{{ step.unit }}</figcaption>
+            </figure>
+            <input
+              type="range"
+              class="onboarding__slider-input"
+              [min]="step.min"
+              [max]="step.max"
+              [step]="step.step || 1"
+              [value]="formData()[step.id]"
+              (input)="updateSliderValue(step.id, $event)"
+            />
+            <legend class="onboarding__slider-labels">
+              <span>{{ step.min }} {{ step.unit }}</span>
+              <span>{{ step.max }} {{ step.unit }}</span>
+            </legend>
+          </fieldset>
+        }
+
+        <!-- Date Input -->
+        @if (step.type === 'date') {
+          <fieldset class="onboarding__date">
+            <input
+              type="date"
+              class="onboarding__date-input"
+              [value]="formData()[step.id] || ''"
+              [max]="maxBirthDate"
+              (change)="updateDateValue(step.id, $event)"
+            />
+          </fieldset>
+        }
+
+        <!-- Textarea -->
+        @if (step.type === 'textarea') {
+          <fieldset class="onboarding__textarea">
+            <textarea
+              class="onboarding__textarea-input"
+              [placeholder]="step.placeholder || ''"
+              [value]="formData()[step.id] || ''"
+              (input)="updateTextValue(step.id, $event)"
+              rows="4"
+            ></textarea>
+          </fieldset>
+        }
+      </section>
+    }
+
+    <!-- Error Message -->
+    @if (error()) {
+      <aside class="onboarding__error" role="alert">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+        <span>{{ error() }}</span>
+      </aside>
+    }
+  </main>
+
+  <!-- Navigation -->
+  <nav class="onboarding__nav">
+    <button
+      type="button"
+      class="onboarding__btn onboarding__btn--secondary"
+      [disabled]="isFirstStep()"
+      (click)="previousStep()"
+    >
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <polyline points="15 18 9 12 15 6"></polyline>
+      </svg>
+      Anterior
+    </button>
+
+    <button
+      type="button"
+      class="onboarding__btn onboarding__btn--primary"
+      [disabled]="!canProceed() || isSubmitting()"
+      (click)="nextStep()"
+    >
+      @if (isSubmitting()) {
+        <output class="onboarding__spinner" aria-hidden="true"></output>
+        Guardando...
+      } @else if (isLastStep()) {
+        Completar
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+      } @else {
+        Siguiente
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      }
+    </button>
+  </nav>
+</article>

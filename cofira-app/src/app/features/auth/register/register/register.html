@@ -1,0 +1,110 @@
+<section class="register-page">
+  <article class="register-card c-card">
+    <header class="register-card__header">
+      <h1 class="register-card__title">Registrarse</h1>
+    </header>
+    <form class="c-form register-card__form" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <section class="c-form__group">
+        <label for="name" class="c-form__label">Nombre</label>
+        <input type="text" id="name" class="c-form__input" formControlName="name" placeholder="Tu nombre"
+               [ngClass]="{'c-form__input--error': registerForm.get('name')?.invalid && registerForm.get('name')?.touched}">
+        @if (registerForm.get('name')?.errors && registerForm.get('name')?.touched) {
+          <p class="c-form__error">
+            @if (registerForm.get('name')?.hasError('required')) {
+              El nombre es obligatorio.
+            }
+          </p>
+        }
+      </section>
+      <section class="c-form__group">
+        <label for="username" class="c-form__label">Nombre de usuario</label>
+        <input type="text" id="username" class="c-form__input" formControlName="username" placeholder="nombre_usuario"
+               [ngClass]="{'c-form__input--error': registerForm.get('username')?.invalid && registerForm.get('username')?.touched || registerForm.get('username')?.pending}">
+        @if (registerForm.get('username')?.pending) {
+          <p class="c-form__hint">Comprobando disponibilidad del nombre de usuario...</p>
+        }
+        @if (registerForm.get('username')?.errors && registerForm.get('username')?.touched) {
+          <p class="c-form__error">
+            @if (registerForm.get('username')?.hasError('required')) {
+              El nombre de usuario es obligatorio.
+            }
+            @if (registerForm.get('username')?.hasError('minlength')) {
+              El nombre de usuario debe tener al menos 3 caracteres.
+            }
+            @if (registerForm.get('username')?.hasError('usernameTaken')) {
+              Este nombre de usuario ya está en uso.
+            }
+            @if (registerForm.get('username')?.hasError('connectionError')) {
+              No se pudo verificar la disponibilidad del nombre de usuario. Por favor, verifica tu conexión al servidor.
+            }
+          </p>
+        }
+      </section>
+      <section class="c-form__group">
+        <label for="email" class="c-form__label">Email</label>
+        <input type="email" id="email" class="c-form__input" formControlName="email" placeholder="tu.email@ejemplo.com"
+               [ngClass]="{'c-form__input--error': registerForm.get('email')?.invalid && registerForm.get('email')?.touched || registerForm.get('email')?.pending}">
+        @if (registerForm.get('email')?.pending) {
+          <p class="c-form__hint">Comprobando disponibilidad del email...</p>
+        }
+        @if (registerForm.get('email')?.errors && registerForm.get('email')?.touched) {
+          <p class="c-form__error">
+            @if (registerForm.get('email')?.hasError('required')) {
+              El email es obligatorio.
+            }
+            @if (registerForm.get('email')?.hasError('email')) {
+              El email no es válido.
+            }
+            @if (registerForm.get('email')?.hasError('emailTaken')) {
+              Este email ya está en uso.
+            }
+            @if (registerForm.get('email')?.hasError('connectionError')) {
+              No se pudo verificar la disponibilidad del email. Por favor, verifica tu conexión al servidor.
+            }
+          </p>
+        }
+      </section>
+      <section class="c-form__group">
+        <label for="password" class="c-form__label">Contraseña</label>
+        <input type="password" id="password" class="c-form__input" formControlName="password" placeholder="********"
+               [ngClass]="{'c-form__input--error': registerForm.get('password')?.invalid && registerForm.get('password')?.touched}">
+
+        <!-- Password Strength Indicator -->
+        <app-password-strength [password]="registerForm.get('password')?.value || ''" />
+
+        @if (registerForm.get('password')?.errors && registerForm.get('password')?.touched) {
+          <p class="c-form__error">
+            @if (registerForm.get('password')?.hasError('required')) {
+              La contraseña es obligatoria.
+            }
+            @if (registerForm.get('password')?.hasError('passwordStrength')) {
+              La contraseña debe tener al menos 12 caracteres, mayúsculas, minúsculas, números y símbolos.
+            }
+          </p>
+        }
+      </section>
+      <section class="c-form__group">
+        <label for="confirmPassword" class="c-form__label">Confirmar Contraseña</label>
+        <input type="password" id="confirmPassword" class="c-form__input" formControlName="confirmPassword" placeholder="********"
+               [ngClass]="{'c-form__input--error': registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched || registerForm.hasError('passwordMatch') && registerForm.get('confirmPassword')?.touched}">
+        @if (registerForm.get('confirmPassword')?.errors && registerForm.get('confirmPassword')?.touched || registerForm.hasError('passwordMatch') && registerForm.get('confirmPassword')?.touched) {
+          <p class="c-form__error">
+            @if (registerForm.get('confirmPassword')?.hasError('required')) {
+              La confirmación de contraseña es obligatoria.
+            }
+            @if (registerForm.hasError('passwordMatch')) {
+              Las contraseñas no coinciden.
+            }
+          </p>
+        }
+      </section>
+      <button type="submit" class="c-button c-button--primary c-button--large register-card__submit" [disabled]="registerForm.invalid || registerForm.pending">Registrarse</button>
+    </form>
+    <footer class="register-card__footer">
+      <p class="register-card__login-text">
+        ¿Ya tienes cuenta?
+        <a routerLink="/login" class="register-card__link">Iniciar Sesión</a>
+      </p>
+    </footer>
+  </article>
+</section>

@@ -1,0 +1,653 @@
+/* ============================================
+   04-LAYOUT: Estructura de página
+   Sistema de contenedores y layout principal
+   ============================================ */
+
+@import '../01-tools/mixins';
+
+/* --------------------------------------------
+   CONTENEDOR PRINCIPAL
+   Contenedor centrado con ancho máximo
+   -------------------------------------------- */
+
+.o-container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-size-s);
+
+  @include responsive('xs') {
+    padding: 0 var(--spacing-size-m);
+  }
+
+  @include responsive('s') {
+    padding: 0 var(--spacing-size-l);
+  }
+
+  @include responsive('M') {
+    padding: 0 var(--spacing-size-l);
+  }
+
+  @include responsive('L') {
+    padding: 0 var(--spacing-size-xl);
+  }
+
+  @include responsive('xl') {
+    padding: 0 var(--spacing-size-xxl);
+  }
+}
+
+// Variantes de contenedor
+.o-container--pequeno {
+  max-width: 800px;
+}
+
+.o-container--mediano {
+  max-width: 1000px;
+}
+
+.o-container--grande {
+  max-width: 1600px;
+}
+
+.o-container--completo {
+  max-width: 100%;
+  padding: 0;
+}
+
+
+/* --------------------------------------------
+   WRAPPER PRINCIPAL
+   Contenedor para el layout de página completo
+   -------------------------------------------- */
+
+.o-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh; // Viewport dinámico para móviles
+}
+
+.o-wrapper__header {
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  z-index: var(--z-fixed);
+}
+
+.o-wrapper__main {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  padding-top: 60px; // Altura del header móvil
+
+  @include responsive('xs') {
+    padding-top: 64px;
+  }
+
+  @include responsive('M') {
+    padding-top: 72px;
+  }
+}
+
+.o-wrapper__footer {
+  flex-shrink: 0;
+  margin-top: auto;
+}
+
+
+/* --------------------------------------------
+   SECCIÓN DE PÁGINA
+   Secciones con espaciado consistente
+   -------------------------------------------- */
+
+.o-seccion {
+  padding: var(--spacing-size-l) 0;
+
+  @include responsive('xs') {
+    padding: var(--spacing-size-xl) 0;
+  }
+
+  @include responsive('s') {
+    padding: var(--spacing-size-xl) 0;
+  }
+
+  @include responsive('M') {
+    padding: var(--spacing-size-2xl) 0;
+  }
+
+  @include responsive('L') {
+    padding: var(--spacing-size-3xl) 0;
+  }
+
+  @include responsive('xl') {
+    padding: var(--spacing-size-4xl) 0;
+  }
+}
+
+// Modificadores de espaciado
+.o-seccion--sin-padding {
+  padding: 0;
+}
+
+.o-seccion--padding-pequeno {
+  padding: var(--spacing-size-s) 0;
+
+  @include responsive('s') {
+    padding: var(--spacing-size-m) 0;
+  }
+
+  @include responsive('M') {
+    padding: var(--spacing-size-l) 0;
+  }
+}
+
+.o-seccion--padding-grande {
+  padding: var(--spacing-size-xl) 0;
+
+  @include responsive('s') {
+    padding: var(--spacing-size-2xl) 0;
+  }
+
+  @include responsive('M') {
+    padding: var(--spacing-size-3xl) 0;
+  }
+
+  @include responsive('L') {
+    padding: var(--spacing-size-4xl) 0;
+  }
+}
+
+
+/* --------------------------------------------
+   COLUMNAS FLEXIBLES
+   Sistema flexible de columnas
+   -------------------------------------------- */
+
+.o-columnas {
+  display: flex;
+  gap: var(--spacing-size-s);
+  flex-wrap: wrap;
+
+  @include responsive('xs') {
+    gap: var(--spacing-size-m);
+  }
+
+  @include responsive('s') {
+    gap: var(--spacing-size-m);
+  }
+
+  @include responsive('M') {
+    gap: var(--spacing-size-l);
+  }
+
+  @include responsive('L') {
+    gap: var(--spacing-size-xl);
+  }
+}
+
+// Auto: Las columnas se distribuyen automáticamente
+.o-columnas--auto {
+  & > * {
+    flex: 1 1 100%;
+    min-width: 0;
+
+    @include responsive('xs') {
+      flex: 1 1 calc(50% - var(--spacing-size-m));
+      min-width: 200px;
+    }
+
+    @include responsive('M') {
+      flex: 1 1 0;
+      min-width: 250px;
+    }
+  }
+}
+
+// Dos columnas
+.o-columnas--2 {
+  & > * {
+    flex: 1 1 100%;
+    min-width: 0;
+
+    @include responsive('s') {
+      flex: 1 1 calc(50% - var(--spacing-size-m));
+      min-width: 200px;
+    }
+  }
+}
+
+// Tres columnas
+.o-columnas--3 {
+  & > * {
+    flex: 1 1 100%;
+    min-width: 0;
+
+    @include responsive('xs') {
+      flex: 1 1 calc(50% - var(--spacing-size-m));
+    }
+
+    @include responsive('M') {
+      flex: 1 1 calc(33.333% - var(--spacing-size-m));
+      min-width: 180px;
+    }
+  }
+}
+
+// Cuatro columnas
+.o-columnas--4 {
+  & > * {
+    flex: 1 1 100%;
+    min-width: 0;
+
+    @include responsive('xs') {
+      flex: 1 1 calc(50% - var(--spacing-size-m));
+    }
+
+    @include responsive('M') {
+      flex: 1 1 calc(33.333% - var(--spacing-size-m));
+    }
+
+    @include responsive('L') {
+      flex: 1 1 calc(25% - var(--spacing-size-m));
+      min-width: 180px;
+    }
+  }
+}
+
+
+/* --------------------------------------------
+   SIDEBAR LAYOUT
+   Layout con barra lateral
+   -------------------------------------------- */
+
+.o-sidebar-layout {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-size-m);
+
+  @include responsive('s') {
+    gap: var(--spacing-size-l);
+  }
+
+  @include responsive('M') {
+    flex-direction: row;
+    gap: var(--spacing-size-xl);
+  }
+}
+
+.o-sidebar-layout__sidebar {
+  width: 100%;
+
+  @include responsive('M') {
+    flex: 0 0 250px;
+    min-width: 250px;
+  }
+
+  @include responsive('L') {
+    flex: 0 0 280px;
+  }
+
+  @include responsive('xl') {
+    flex: 0 0 300px;
+  }
+}
+
+.o-sidebar-layout__contenido {
+  flex: 1;
+  min-width: 0;
+}
+
+// Sidebar a la derecha
+.o-sidebar-layout--derecha {
+  @include responsive('M') {
+    flex-direction: row-reverse;
+  }
+}
+
+
+/* --------------------------------------------
+   STACK VERTICAL
+   Apila elementos verticalmente con espaciado
+   -------------------------------------------- */
+
+.o-stack {
+  @include flex-columna(var(--spacing-size-s));
+
+  @include responsive('s') {
+    gap: var(--spacing-size-m);
+  }
+}
+
+.o-stack--pequeno {
+  @include flex-columna(var(--spacing-size-xs));
+
+  @include responsive('s') {
+    gap: var(--spacing-size-s);
+  }
+}
+
+.o-stack--grande {
+  @include flex-columna(var(--spacing-size-m));
+
+  @include responsive('s') {
+    gap: var(--spacing-size-l);
+  }
+
+  @include responsive('M') {
+    gap: var(--spacing-size-xl);
+  }
+}
+
+.o-stack--xl {
+  @include flex-columna(var(--spacing-size-l));
+
+  @include responsive('s') {
+    gap: var(--spacing-size-xl);
+  }
+
+  @include responsive('M') {
+    gap: var(--spacing-size-xxl);
+  }
+}
+
+
+/* --------------------------------------------
+   CLUSTER
+   Agrupa elementos horizontalmente
+   -------------------------------------------- */
+
+.o-cluster {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-size-xs);
+  align-items: center;
+
+  @include responsive('s') {
+    gap: var(--spacing-size-s);
+  }
+}
+
+.o-cluster--pequeno {
+  gap: var(--spacing-size-xss);
+
+  @include responsive('s') {
+    gap: var(--spacing-size-xs);
+  }
+}
+
+.o-cluster--mediano {
+  gap: var(--spacing-size-s);
+
+  @include responsive('s') {
+    gap: var(--spacing-size-m);
+  }
+}
+
+.o-cluster--grande {
+  gap: var(--spacing-size-m);
+
+  @include responsive('s') {
+    gap: var(--spacing-size-l);
+  }
+}
+
+// Alineaciones
+.o-cluster--inicio {
+  justify-content: flex-start;
+}
+
+.o-cluster--centro {
+  justify-content: center;
+}
+
+.o-cluster--fin {
+  justify-content: flex-end;
+}
+
+.o-cluster--espacio-entre {
+  justify-content: space-between;
+}
+
+
+/* --------------------------------------------
+   HERO SECTION
+   Sección hero/banner principal
+   -------------------------------------------- */
+
+.o-hero {
+  display: flex;
+  align-items: center;
+  min-height: 300px;
+  padding: var(--spacing-size-xl) 0;
+  background-color: var(--gris-dark);
+  color: var(--text-dark);
+
+  @include responsive('xs') {
+    min-height: 350px;
+    padding: var(--spacing-size-xl) 0;
+  }
+
+  @include responsive('s') {
+    min-height: 400px;
+    padding: var(--spacing-size-2xl) 0;
+  }
+
+  @include responsive('M') {
+    min-height: 500px;
+    padding: var(--spacing-size-2xl) 0;
+  }
+
+  @include responsive('L') {
+    min-height: 600px;
+    padding: var(--spacing-size-3xl) 0;
+  }
+}
+
+.o-hero--completo {
+  min-height: calc(100vh - 60px);
+  min-height: calc(100dvh - 60px);
+
+  @include responsive('xs') {
+    min-height: calc(100vh - 64px);
+    min-height: calc(100dvh - 64px);
+  }
+
+  @include responsive('M') {
+    min-height: calc(100vh - 72px);
+    min-height: calc(100dvh - 72px);
+  }
+}
+
+.o-hero--pequeno {
+  min-height: 200px;
+  padding: var(--spacing-size-l) 0;
+
+  @include responsive('s') {
+    min-height: 250px;
+    padding: var(--spacing-size-xl) 0;
+  }
+
+  @include responsive('M') {
+    min-height: 300px;
+  }
+}
+
+
+/* --------------------------------------------
+   GRID RESPONSIVE
+   Sistema de grid CSS moderno
+   -------------------------------------------- */
+
+.o-grid {
+  display: grid;
+  gap: var(--spacing-size-m);
+
+  @include responsive('s') {
+    gap: var(--spacing-size-l);
+  }
+
+  @include responsive('M') {
+    gap: var(--spacing-size-xl);
+  }
+}
+
+.o-grid--auto {
+  grid-template-columns: repeat(auto-fit, minmax(min(250px, 100%), 1fr));
+
+  @include responsive('xs') {
+    grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+  }
+}
+
+.o-grid--2 {
+  grid-template-columns: 1fr;
+
+  @include responsive('s') {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.o-grid--3 {
+  grid-template-columns: 1fr;
+
+  @include responsive('xs') {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include responsive('M') {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.o-grid--4 {
+  grid-template-columns: 1fr;
+
+  @include responsive('xs') {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include responsive('M') {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @include responsive('L') {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+
+/* --------------------------------------------
+   INFINITE SCROLL
+   Toggle de modo y estados de carga
+   -------------------------------------------- */
+
+// Toggle de modo de visualizacion (paginacion / infinite scroll)
+.view-mode-toggle {
+  display: flex;
+  gap: var(--spacing-size-xs);
+  margin-bottom: var(--spacing-size-m);
+
+  @include responsive('s') {
+    gap: var(--spacing-size-s);
+  }
+
+  button {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-size-xs);
+    padding: var(--spacing-size-xs) var(--spacing-size-s);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-s);
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: var(--font-size-s);
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    @include responsive('s') {
+      padding: var(--spacing-size-s) var(--spacing-size-m);
+      font-size: var(--font-size-base);
+    }
+
+    svg {
+      flex-shrink: 0;
+    }
+
+    &:hover:not(.active) {
+      background: var(--bg-hover);
+      border-color: var(--border-color-hover);
+    }
+
+    &.active {
+      background: var(--primary);
+      color: var(--text-on-primary, #fff);
+      border-color: var(--primary);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
+    }
+  }
+}
+
+// Sentinel oculto para detectar scroll
+.infinite-scroll-sentinel {
+  height: 1px;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+// Estado de carga de mas elementos
+.loading-more {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-size-s);
+  padding: var(--spacing-size-m);
+  color: var(--text-secondary);
+  font-size: var(--font-size-s);
+
+  @include responsive('s') {
+    padding: var(--spacing-size-l);
+    font-size: var(--font-size-base);
+  }
+}
+
+// Spinner de carga
+.loading-more__spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--border-color);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+
+  @include responsive('s') {
+    width: 24px;
+    height: 24px;
+    border-width: 3px;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Mensaje de fin de lista
+.end-of-list {
+  text-align: center;
+  padding: var(--spacing-size-m);
+  color: var(--text-muted);
+  font-size: var(--font-size-s);
+  border-top: 1px solid var(--border-color);
+  margin-top: var(--spacing-size-m);
+
+  @include responsive('s') {
+    padding: var(--spacing-size-l);
+    font-size: var(--font-size-base);
+  }
+}
