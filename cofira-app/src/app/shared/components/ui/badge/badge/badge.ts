@@ -11,9 +11,9 @@ type BadgeColor = 'red' | 'yellow' | 'blue' | 'green' | 'gray';
   styleUrl: './badge.scss',
 })
 export class Badge {
-  @Input() label: string = '';
+  @Input() label = '';
   @Input() color: BadgeColor = 'gray'; // Default color
-  @Input() closable: boolean = false;
+  @Input() closable = false;
 
   @Output() closed = new EventEmitter<void>();
 
