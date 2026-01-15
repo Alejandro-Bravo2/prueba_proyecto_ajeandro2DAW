@@ -42,10 +42,15 @@ export class ThemeService implements OnDestroy {
   private readonly document = inject(DOCUMENT);
 
   /**
+   * Factory para crear instancias de Renderer2.
+   */
+  private readonly rendererFactory = inject(RendererFactory2);
+
+  /**
    * Instancia de Renderer2 para manipulación segura del DOM.
    * @description Creada via RendererFactory2 para uso en servicios
    */
-  private readonly renderer: Renderer2;
+  private readonly renderer: Renderer2 = this.rendererFactory.createRenderer(null, null);
 
   /**
    * Signal para el tema actual.
@@ -63,10 +68,7 @@ export class ThemeService implements OnDestroy {
    */
   private mediaQueryHandler: ((e: MediaQueryListEvent) => void) | null = null;
 
-  constructor(rendererFactory: RendererFactory2) {
-    // En servicios, usamos RendererFactory2 para crear una instancia de Renderer2
-    this.renderer = rendererFactory.createRenderer(null, null);
-
+  constructor() {
     if (isPlatformBrowser(this.platformId)) {
       this.initTheme();
       this.listenToSystemChanges();

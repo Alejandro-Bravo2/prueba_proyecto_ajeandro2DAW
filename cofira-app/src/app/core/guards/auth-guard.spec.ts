@@ -1,7 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import {
   CanActivateFn,
-  Router,
   ActivatedRouteSnapshot,
   RouterStateSnapshot,
   UrlTree,

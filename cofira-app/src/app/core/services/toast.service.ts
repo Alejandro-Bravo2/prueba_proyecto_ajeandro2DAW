@@ -34,9 +34,13 @@ export class ToastService implements OnDestroy {
   // Signal con array de toasts activos (para método tradicional)
   toasts = signal<ToastMessage[]>([]);
 
-  // Renderer2 para creación dinámica de elementos DOM
-  private readonly renderer: Renderer2;
   private readonly document = inject(DOCUMENT);
+
+  // Factory para crear Renderer2 en servicios
+  private readonly rendererFactory = inject(RendererFactory2);
+
+  // Renderer2 para creación dinámica de elementos DOM
+  private readonly renderer: Renderer2 = this.rendererFactory.createRenderer(null, null);
 
   // Contenedor para toasts dinámicos
   private dynamicContainer: HTMLElement | null = null;
@@ -48,12 +52,6 @@ export class ToastService implements OnDestroy {
     info: 3000,
     warning: 6000
   };
-
-  constructor(rendererFactory: RendererFactory2) {
-    // En servicios, Renderer2 no se puede inyectar directamente
-    // Se debe usar RendererFactory2.createRenderer() para obtener una instancia
-    this.renderer = rendererFactory.createRenderer(null, null);
-  }
 
   // ═══════════════════════════════════════════════════════════════════════════
   // MÉTODOS TRADICIONALES (usan signals, renderizado por componente)
