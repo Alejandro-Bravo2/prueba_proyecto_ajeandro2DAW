@@ -20,9 +20,10 @@
   }
 }
 
-// Modo de movimiento reducido
+// Modo de movimiento reducido - desactivar animaciones para accesibilidad
 @media (prefers-reduced-motion: reduce) {
   .three-scene__canvas {
-    animation: none !important;
+    animation: none;
+    transition: none;
   }
 }

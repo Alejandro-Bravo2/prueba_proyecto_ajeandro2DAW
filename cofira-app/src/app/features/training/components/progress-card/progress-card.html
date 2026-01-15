@@ -1,14 +1,14 @@
 <article class="progress-card">
-  <div class="progress-card__image-wrapper">
+  <figure class="progress-card__image-wrapper">
     <svg class="progress-card__illustration" viewBox="0 0 400 225" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" style="stop-color:#f0f4f8;stop-opacity:1" />
-          <stop offset="100%" style="stop-color:#e2e8f0;stop-opacity:1" />
+          <stop offset="0%" class="progress-card__gradient-bg-start" />
+          <stop offset="100%" class="progress-card__gradient-bg-end" />
         </linearGradient>
         <linearGradient id="chartGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
-          <stop offset="100%" style="stop-color:#1d4ed8;stop-opacity:1" />
+          <stop offset="0%" class="progress-card__gradient-chart-start" />
+          <stop offset="100%" class="progress-card__gradient-chart-end" />
         </linearGradient>
       </defs>
       <rect width="400" height="225" fill="url(#bgGrad)"/>
@@ -24,7 +24,7 @@
       </g>
       <text x="200" y="210" text-anchor="middle" fill="#64748b" font-size="14" font-family="system-ui">Tu progreso semanal</text>
     </svg>
-  </div>
+  </figure>
   <section class="progress-card__content">
     <h3>Mira tu progreso</h3>
     @if (workoutProgress(); as progress) {

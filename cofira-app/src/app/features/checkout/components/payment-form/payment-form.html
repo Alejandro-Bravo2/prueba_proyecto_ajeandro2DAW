@@ -38,7 +38,7 @@
   <!-- Card Form -->
   @if (selectedMethod() === 'TARJETA') {
     <form [formGroup]="cardForm" class="payment-form__form">
-      <div class="payment-form__field">
+      <fieldset class="payment-form__field">
         <label class="payment-form__label" for="nombreTitular">Nombre del titular</label>
         <input
           type="text"
@@ -52,9 +52,9 @@
         @if (cardForm.get('nombreTitular')?.invalid && cardForm.get('nombreTitular')?.touched) {
           <span class="payment-form__error">El nombre es obligatorio</span>
         }
-      </div>
+      </fieldset>
 
-      <div class="payment-form__field">
+      <fieldset class="payment-form__field">
         <label class="payment-form__label" for="numeroTarjeta">Numero de tarjeta</label>
         <input
           type="text"
@@ -70,10 +70,10 @@
         @if (cardForm.get('numeroTarjeta')?.invalid && cardForm.get('numeroTarjeta')?.touched) {
           <span class="payment-form__error">Introduce un numero de tarjeta valido</span>
         }
-      </div>
+      </fieldset>
 
-      <div class="payment-form__row">
-        <div class="payment-form__field">
+      <fieldset class="payment-form__row">
+        <fieldset class="payment-form__field">
           <label class="payment-form__label" for="fechaExpiracion">Fecha expiracion</label>
           <input
             type="text"
@@ -89,9 +89,9 @@
           @if (cardForm.get('fechaExpiracion')?.invalid && cardForm.get('fechaExpiracion')?.touched) {
             <span class="payment-form__error">Formato MM/AA</span>
           }
-        </div>
+        </fieldset>
 
-        <div class="payment-form__field">
+        <fieldset class="payment-form__field">
           <label class="payment-form__label" for="cvv">CVV</label>
           <input
             type="text"
@@ -106,15 +106,15 @@
           @if (cardForm.get('cvv')?.invalid && cardForm.get('cvv')?.touched) {
             <span class="payment-form__error">3-4 digitos</span>
           }
-        </div>
-      </div>
+        </fieldset>
+      </fieldset>
     </form>
   }
 
   <!-- PayPal Form -->
   @if (selectedMethod() === 'PAYPAL') {
     <form [formGroup]="paypalForm" class="payment-form__form">
-      <div class="payment-form__field">
+      <fieldset class="payment-form__field">
         <label class="payment-form__label" for="emailPaypal">Email de PayPal</label>
         <input
           type="email"
@@ -128,7 +128,7 @@
         @if (paypalForm.get('emailPaypal')?.invalid && paypalForm.get('emailPaypal')?.touched) {
           <span class="payment-form__error">Introduce un email valido</span>
         }
-      </div>
+      </fieldset>
       <p class="payment-form__info">
         Seras redirigido a PayPal para completar el pago de forma segura.
       </p>
@@ -138,7 +138,7 @@
   <!-- Bizum Form -->
   @if (selectedMethod() === 'BIZUM') {
     <form [formGroup]="bizumForm" class="payment-form__form">
-      <div class="payment-form__field">
+      <fieldset class="payment-form__field">
         <label class="payment-form__label" for="telefonoBizum">Numero de telefono</label>
         <input
           type="tel"
@@ -153,7 +153,7 @@
         @if (bizumForm.get('telefonoBizum')?.invalid && bizumForm.get('telefonoBizum')?.touched) {
           <span class="payment-form__error">Introduce un numero de movil valido</span>
         }
-      </div>
+      </fieldset>
       <p class="payment-form__info">
         Recibiras una notificacion en tu app de Bizum para confirmar el pago.
       </p>
@@ -162,9 +162,9 @@
 
   <!-- Error Message -->
   @if (store.error()) {
-    <div class="payment-form__error-banner">
+    <output class="payment-form__error-banner">
       {{ store.error() }}
-    </div>
+    </output>
   }
 
   <!-- Actions -->

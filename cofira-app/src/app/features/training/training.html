@@ -52,7 +52,7 @@
     </search>
 
     <!-- Toggle de modo de visualizacion -->
-    <div class="view-mode-toggle" role="group" aria-label="Modo de visualizacion">
+    <fieldset class="view-mode-toggle" role="group" aria-label="Modo de visualizacion">
       <button
         type="button"
         [class.active]="store.viewMode() === 'pagination'"
@@ -79,7 +79,7 @@
         </svg>
         Continuo
       </button>
-    </div>
+    </fieldset>
 
     @if (store.viewMode() === 'pagination') {
       <!-- Modo paginacion -->
@@ -136,17 +136,17 @@
       />
 
       <!-- Sentinel para infinite scroll -->
-      <div
+      <span
         class="infinite-scroll-sentinel"
         appInfiniteScroll
         (scrolled)="loadMore()"
-      ></div>
+      ></span>
 
       @if (store.isLoadingMore()) {
-        <div class="loading-more" role="status" aria-live="polite">
+        <aside class="loading-more" role="status" aria-live="polite">
           <span class="loading-more__spinner"></span>
           Cargando mas ejercicios...
-        </div>
+        </aside>
       }
 
       @if (!store.hasMore() && store.infiniteScrollItems().length > 0) {

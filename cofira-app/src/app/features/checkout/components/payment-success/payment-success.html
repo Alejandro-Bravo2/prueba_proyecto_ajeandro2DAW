@@ -18,35 +18,35 @@
       <h3 class="payment-success__details-title">Detalles de la transaccion</h3>
 
       <dl class="payment-success__details-list">
-        <div class="payment-success__details-item">
+        <article class="payment-success__details-item">
           <dt>ID de transaccion</dt>
           <dd>{{ response?.transaccionId }}</dd>
-        </div>
+        </article>
 
-        <div class="payment-success__details-item">
+        <article class="payment-success__details-item">
           <dt>Plan</dt>
           <dd>{{ planInfo?.nombre }}</dd>
-        </div>
+        </article>
 
-        <div class="payment-success__details-item">
+        <article class="payment-success__details-item">
           <dt>Importe</dt>
           <dd>&euro;{{ response?.precio }}</dd>
-        </div>
+        </article>
 
-        <div class="payment-success__details-item">
+        <article class="payment-success__details-item">
           <dt>Metodo de pago</dt>
           <dd>{{ response?.metodoPago }}</dd>
-        </div>
+        </article>
 
-        <div class="payment-success__details-item">
+        <article class="payment-success__details-item">
           <dt>Fecha de inicio</dt>
           <dd>{{ response?.fechaInicio | date:'longDate' }}</dd>
-        </div>
+        </article>
 
-        <div class="payment-success__details-item">
+        <article class="payment-success__details-item">
           <dt>Fecha de fin</dt>
           <dd>{{ response?.fechaFin | date:'longDate' }}</dd>
-        </div>
+        </article>
       </dl>
     </section>
 
