@@ -1,6 +1,5 @@
 import { TestBed } from '@angular/core/testing';
 import {
-  HttpInterceptorFn,
   HttpRequest,
   HttpHandlerFn,
   HttpEvent,
@@ -8,11 +7,11 @@ import {
 } from '@angular/common/http';
 import { authInterceptor } from './auth.interceptor';
 import { AuthService } from '../auth/auth.service';
-import { Observable, of } from 'rxjs';
+import { of } from 'rxjs';
 
 describe('AuthInterceptor', () => {
   let authService: jasmine.SpyObj<AuthService>;
-  let mockRequest: HttpRequest<any>;
+  let mockRequest: HttpRequest<unknown>;
   let mockNext: HttpHandlerFn;
 
   beforeEach(() => {
@@ -28,7 +27,7 @@ describe('AuthInterceptor', () => {
     mockRequest = new HttpRequest('GET', '/api/test');
 
     // Create mock next handler
-    mockNext = jasmine.createSpy('mockNext').and.returnValue(of({} as HttpEvent<any>));
+    mockNext = jasmine.createSpy('mockNext').and.returnValue(of({} as HttpEvent<unknown>));
   });
 
   describe('Token Management', () => {
@@ -39,7 +38,7 @@ describe('AuthInterceptor', () => {
       TestBed.runInInjectionContext(() => {
         authInterceptor(mockRequest, mockNext).subscribe(() => {
           const call = (mockNext as jasmine.Spy).calls.mostRecent();
-          const modifiedRequest = call.args[0] as HttpRequest<any>;
+          const modifiedRequest = call.args[0] as HttpRequest<unknown>;
 
           expect(modifiedRequest.headers.has('Authorization')).toBe(true);
           expect(modifiedRequest.headers.get('Authorization')).toBe(`Bearer ${mockToken}`);
@@ -54,7 +53,7 @@ describe('AuthInterceptor', () => {
       TestBed.runInInjectionContext(() => {
         authInterceptor(mockRequest, mockNext).subscribe(() => {
           const call = (mockNext as jasmine.Spy).calls.mostRecent();
-          const modifiedRequest = call.args[0] as HttpRequest<any>;
+          const modifiedRequest = call.args[0] as HttpRequest<unknown>;
 
           expect(modifiedRequest.headers.has('Authorization')).toBe(false);
           done();
@@ -68,7 +67,7 @@ describe('AuthInterceptor', () => {
       TestBed.runInInjectionContext(() => {
         authInterceptor(mockRequest, mockNext).subscribe(() => {
           const call = (mockNext as jasmine.Spy).calls.mostRecent();
-          const modifiedRequest = call.args[0] as HttpRequest<any>;
+          const modifiedRequest = call.args[0] as HttpRequest<unknown>;
 
           expect(modifiedRequest.headers.has('Authorization')).toBe(false);
           done();
@@ -91,7 +90,7 @@ describe('AuthInterceptor', () => {
       TestBed.runInInjectionContext(() => {
         authInterceptor(requestWithHeaders, mockNext).subscribe(() => {
           const call = (mockNext as jasmine.Spy).calls.mostRecent();
-          const modifiedRequest = call.args[0] as HttpRequest<any>;
+          const modifiedRequest = call.args[0] as HttpRequest<unknown>;
 
           expect(modifiedRequest.headers.get('Content-Type')).toBe('application/json');
           expect(modifiedRequest.headers.get('X-Custom-Header')).toBe('custom-value');
@@ -125,7 +124,7 @@ describe('AuthInterceptor', () => {
       TestBed.runInInjectionContext(() => {
         authInterceptor(mockRequest, mockNext).subscribe(() => {
           const call = (mockNext as jasmine.Spy).calls.mostRecent();
-          const modifiedRequest = call.args[0] as HttpRequest<any>;
+          const modifiedRequest = call.args[0] as HttpRequest<unknown>;
 
           expect(modifiedRequest).not.toBe(mockRequest);
           done();
@@ -139,7 +138,7 @@ describe('AuthInterceptor', () => {
       TestBed.runInInjectionContext(() => {
         authInterceptor(mockRequest, mockNext).subscribe(() => {
           const call = (mockNext as jasmine.Spy).calls.mostRecent();
-          const passedRequest = call.args[0] as HttpRequest<any>;
+          const passedRequest = call.args[0] as HttpRequest<unknown>;
 
           expect(passedRequest).toBe(mockRequest);
           done();
@@ -157,7 +156,7 @@ describe('AuthInterceptor', () => {
       TestBed.runInInjectionContext(() => {
         authInterceptor(request, mockNext).subscribe(() => {
           const call = (mockNext as jasmine.Spy).calls.mostRecent();
-          const modifiedRequest = call.args[0] as HttpRequest<any>;
+          const modifiedRequest = call.args[0] as HttpRequest<unknown>;
 
           expect(modifiedRequest.headers.get('Authorization')).toBe(`Bearer ${mockToken}`);
           done();
@@ -173,7 +172,7 @@ describe('AuthInterceptor', () => {
       TestBed.runInInjectionContext(() => {
         authInterceptor(request, mockNext).subscribe(() => {
           const call = (mockNext as jasmine.Spy).calls.mostRecent();
-          const modifiedRequest = call.args[0] as HttpRequest<any>;
+          const modifiedRequest = call.args[0] as HttpRequest<unknown>;
 
           expect(modifiedRequest.headers.get('Authorization')).toBe(`Bearer ${mockToken}`);
           done();
@@ -189,7 +188,7 @@ describe('AuthInterceptor', () => {
       TestBed.runInInjectionContext(() => {
         authInterceptor(request, mockNext).subscribe(() => {
           const call = (mockNext as jasmine.Spy).calls.mostRecent();
-          const modifiedRequest = call.args[0] as HttpRequest<any>;
+          const modifiedRequest = call.args[0] as HttpRequest<unknown>;
 
           expect(modifiedRequest.headers.get('Authorization')).toBe(`Bearer ${mockToken}`);
           done();
@@ -205,7 +204,7 @@ describe('AuthInterceptor', () => {
       TestBed.runInInjectionContext(() => {
         authInterceptor(request, mockNext).subscribe(() => {
           const call = (mockNext as jasmine.Spy).calls.mostRecent();
-          const modifiedRequest = call.args[0] as HttpRequest<any>;
+          const modifiedRequest = call.args[0] as HttpRequest<unknown>;
 
           expect(modifiedRequest.headers.get('Authorization')).toBe(`Bearer ${mockToken}`);
           done();
@@ -221,7 +220,7 @@ describe('AuthInterceptor', () => {
       TestBed.runInInjectionContext(() => {
         authInterceptor(request, mockNext).subscribe(() => {
           const call = (mockNext as jasmine.Spy).calls.mostRecent();
-          const modifiedRequest = call.args[0] as HttpRequest<any>;
+          const modifiedRequest = call.args[0] as HttpRequest<unknown>;
 
           expect(modifiedRequest.headers.get('Authorization')).toBe(`Bearer ${mockToken}`);
           done();
@@ -276,7 +275,7 @@ describe('AuthInterceptor', () => {
       TestBed.runInInjectionContext(() => {
         authInterceptor(mockRequest, mockNext).subscribe(() => {
           const call = (mockNext as jasmine.Spy).calls.mostRecent();
-          const modifiedRequest = call.args[0] as HttpRequest<any>;
+          const modifiedRequest = call.args[0] as HttpRequest<unknown>;
 
           expect(modifiedRequest.headers.get('Authorization')).toBe(`Bearer ${mockToken}`);
           done();
@@ -291,7 +290,7 @@ describe('AuthInterceptor', () => {
       TestBed.runInInjectionContext(() => {
         authInterceptor(mockRequest, mockNext).subscribe(() => {
           const call = (mockNext as jasmine.Spy).calls.mostRecent();
-          const modifiedRequest = call.args[0] as HttpRequest<any>;
+          const modifiedRequest = call.args[0] as HttpRequest<unknown>;
 
           expect(modifiedRequest.headers.get('Authorization')).toBe(`Bearer ${mockToken}`);
           done();
@@ -313,12 +312,12 @@ describe('AuthInterceptor', () => {
     });
 
     it('should handle AuthService.getToken() returning undefined', (done) => {
-      authService.getToken.and.returnValue(undefined as any);
+      authService.getToken.and.returnValue(undefined as unknown as string | null);
 
       TestBed.runInInjectionContext(() => {
         authInterceptor(mockRequest, mockNext).subscribe(() => {
           const call = (mockNext as jasmine.Spy).calls.mostRecent();
-          const passedRequest = call.args[0] as HttpRequest<any>;
+          const passedRequest = call.args[0] as HttpRequest<unknown>;
 
           expect(passedRequest.headers.has('Authorization')).toBe(false);
           done();
@@ -336,7 +335,7 @@ describe('AuthInterceptor', () => {
       TestBed.runInInjectionContext(() => {
         authInterceptor(request, mockNext).subscribe(() => {
           const call = (mockNext as jasmine.Spy).calls.mostRecent();
-          const modifiedRequest = call.args[0] as HttpRequest<any>;
+          const modifiedRequest = call.args[0] as HttpRequest<unknown>;
 
           expect(modifiedRequest.headers.get('Authorization')).toBe(`Bearer ${mockToken}`);
           done();
@@ -352,7 +351,7 @@ describe('AuthInterceptor', () => {
       TestBed.runInInjectionContext(() => {
         authInterceptor(request, mockNext).subscribe(() => {
           const call = (mockNext as jasmine.Spy).calls.mostRecent();
-          const modifiedRequest = call.args[0] as HttpRequest<any>;
+          const modifiedRequest = call.args[0] as HttpRequest<unknown>;
 
           expect(modifiedRequest.headers.get('Authorization')).toBe(`Bearer ${mockToken}`);
           done();

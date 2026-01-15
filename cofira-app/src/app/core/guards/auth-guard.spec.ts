@@ -14,7 +14,6 @@ import { AuthService } from '../auth/auth.service';
 
 describe('authGuard', () => {
   let authService: jasmine.SpyObj<AuthService>;
-  let _router: Router;
   let mockRoute: ActivatedRouteSnapshot;
   let mockState: RouterStateSnapshot;
 
@@ -32,7 +31,6 @@ describe('authGuard', () => {
       ],
     });
 
-    _router = TestBed.inject(Router);
     mockRoute = {} as ActivatedRouteSnapshot;
     mockState = { url: '/entrenamiento' } as RouterStateSnapshot;
   });
