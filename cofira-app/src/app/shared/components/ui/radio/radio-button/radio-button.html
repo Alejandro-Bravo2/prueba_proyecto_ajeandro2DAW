@@ -11,5 +11,7 @@
     (blur)="onBlur()"
     class="formulario__checkbox-input"
   >
-  <label *ngIf="label" [for]="id" class="formulario__checkbox-texto">{{ label }}</label>
+  @if (label) {
+    <label [for]="id" class="formulario__checkbox-texto">{{ label }}</label>
+  }
 </section>

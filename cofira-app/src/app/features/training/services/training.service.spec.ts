@@ -38,7 +38,7 @@ describe('TrainingService', () => {
     isAiGenerated: true,
   };
 
-  const mockWeeklySchedule: WeeklySchedule = {
+  const _mockWeeklySchedule: WeeklySchedule = {
     weekStart: '2026-01-06',
     weekEnd: '2026-01-12',
     schedule: {

@@ -135,7 +135,7 @@ export class TrainingService extends BaseHttpService {
       `${this.aiApiUrl}/generate`,
       request
     ).pipe(
-      tap(response => {
+      tap(() => {
         this.isGenerating.set(false);
         this.loadWeeklySchedule();
       }),
@@ -356,7 +356,7 @@ export class TrainingService extends BaseHttpService {
     );
   }
 
-  updateExercise(exerciseId: string, data: Partial<Exercise>): Observable<Exercise> {
+  updateExercise(_exerciseId: string, _data: Partial<Exercise>): Observable<Exercise> {
     return of({} as Exercise);
   }
 

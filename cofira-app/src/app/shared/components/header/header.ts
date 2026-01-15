@@ -6,8 +6,7 @@ import {
   HostListener,
   ViewChild,
   ElementRef,
-  Renderer2,
-  AfterViewInit
+  Renderer2
 } from '@angular/core';
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { RouterLink, RouterLinkActive, Router } from '@angular/router';
@@ -51,7 +50,7 @@ import { TooltipDirective } from '../../directives/tooltip.directive';
   templateUrl: './header.html',
   styleUrls: ['./header.scss'],
 })
-export class Header implements AfterViewInit {
+export class Header {
   /**
    * ViewChild para el botón hamburguesa.
    * @description Permite acceder al elemento para manipulación y gestión del foco.
@@ -84,16 +83,7 @@ export class Header implements AfterViewInit {
    */
   isMobileMenuOpen = signal(false);
 
-  constructor(public themeService: ThemeService) {}
-
-  /**
-   * Hook AfterViewInit - ViewChild disponible para manipulación.
-   * @description Verifica que los ViewChild estén inicializados correctamente.
-   */
-  ngAfterViewInit(): void {
-    // ViewChild disponible para manipulacion
-    // La inicializacion de menuToggle se verifica implicitamente cuando se usa
-  }
+  readonly themeService = inject(ThemeService);
 
   get isLoggedIn(): boolean {
     return this.authService.isLoggedIn();

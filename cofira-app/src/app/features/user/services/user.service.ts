@@ -76,7 +76,7 @@ export class UserService extends BaseHttpService {
   /**
    * Listar usuarios con paginación
    */
-  listarUsuarios(nombre?: string, page: number = 0, size: number = 10): Observable<PageResponse<UsuarioListadoDTO>> {
+  listarUsuarios(nombre?: string, page = 0, size = 10): Observable<PageResponse<UsuarioListadoDTO>> {
     let params = new HttpParams()
       .set('page', page.toString())
       .set('size', size.toString());

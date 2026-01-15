@@ -7,11 +7,9 @@ import {
   Type,
   OnDestroy,
   inject,
-  OnInit,
   effect,
   ElementRef,
-  Renderer2,
-  AfterViewInit
+  Renderer2
 } from '@angular/core';
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { ModalService } from '../../../../core/services/modal.service';
@@ -47,7 +45,7 @@ import { ModalService } from '../../../../core/services/modal.service';
   templateUrl: './modal.html',
   styleUrl: './modal.scss',
 })
-export class Modal implements OnInit, OnDestroy, AfterViewInit {
+export class Modal implements OnDestroy {
   /**
    * ViewChild para el contenedor donde se cargan componentes dinámicos.
    * Permite crear componentes programáticamente dentro del modal.
@@ -59,11 +57,12 @@ export class Modal implements OnInit, OnDestroy, AfterViewInit {
    */
   @ViewChild('modalContainer') modalContainer!: ElementRef<HTMLElement>;
 
-  componentRef: ComponentRef<any> | null = null;
+  componentRef: ComponentRef<unknown> | null = null;
 
   // Inyección de Renderer2 para manipulación segura del DOM
   private readonly renderer = inject(Renderer2);
   private readonly document = inject(DOCUMENT);
+  readonly modalService = inject(ModalService);
 
   // Elemento que tenía el foco antes de abrir el modal (para restaurar al cerrar)
   private previouslyFocusedElement: HTMLElement | null = null;
@@ -79,7 +78,7 @@ export class Modal implements OnInit, OnDestroy, AfterViewInit {
    */
   private backdropClickUnlisten: (() => void) | null = null;
 
-  constructor(public modalService: ModalService) {
+  constructor() {
     // Effect reactivo que responde a cambios en el estado del modal
     effect(() => {
       const modalState = this.modalService.activeModal$();
@@ -91,14 +90,6 @@ export class Modal implements OnInit, OnDestroy, AfterViewInit {
         this.clearComponent();
       }
     });
-  }
-
-  ngOnInit(): void {
-    // Effect is already running in constructor
-  }
-
-  ngAfterViewInit(): void {
-    // ViewChild está disponible después de la vista inicializada
   }
 
   ngOnDestroy(): void {
@@ -241,13 +232,14 @@ export class Modal implements OnInit, OnDestroy, AfterViewInit {
    * Carga un componente dinámicamente dentro del modal.
    * Usa ViewContainerRef para crear componentes programáticamente.
    */
-  private loadComponent(component: Type<any>, inputs: Record<string, any>): void {
+  private loadComponent(component: Type<unknown>, inputs: Record<string, unknown>): void {
     this.clearComponent();
     this.componentRef = this.modalContentHost.createComponent(component);
     // Set inputs usando el componentRef
     Object.keys(inputs).forEach(key => {
       if (this.componentRef) {
-        this.componentRef.instance[key] = inputs[key];
+        const instance = this.componentRef.instance as Record<string, unknown>;
+        instance[key] = inputs[key];
       }
     });
   }

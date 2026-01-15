@@ -1,4 +1,5 @@
-<tr class="exercise-row" *ngIf="exercise()">
+@if (exercise()) {
+<tr class="exercise-row">
   <td class="c-table__cell" data-label="Ejercicio">
     <span>{{ exercise()!.name }}</span>
   </td>
@@ -12,3 +13,4 @@
     <input type="checkbox" [checked]="exercise()!.completed" aria-label="Marcar ejercicio como completado">
   </td>
 </tr>
+}

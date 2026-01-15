@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SearchableTags } from '../../shared/components/ui/searchable-tags/searchable-tags/searchable-tags';
 import { PreferencesService } from './services/preferences.service';
@@ -16,7 +16,9 @@ interface TagOption {
   templateUrl: './preferences.html',
   styleUrl: './preferences.scss',
 })
-export class Preferences implements OnInit {
+export class Preferences {
+  readonly preferencesService = inject(PreferencesService);
+
   // Tabs configuration
   tabs: Tab[] = [
     { id: 'nutrition', label: 'Alimentación' },
@@ -41,12 +43,6 @@ export class Preferences implements OnInit {
     { label: 'Espinacas', value: 'espinacas' },
     { label: 'Salmón', value: 'salmon' },
   ];
-
-  constructor(public preferencesService: PreferencesService) {}
-
-  ngOnInit(): void {
-    // Optionally load initial preferences from a backend or user profile
-  }
 
   onTabChanged(tabId: string): void {
     this.activeTab.set(tabId);

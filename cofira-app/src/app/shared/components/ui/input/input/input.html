@@ -1,5 +1,7 @@
 <section class="formulario__grupo">
-  <label *ngIf="label" [for]="label" class="formulario__etiqueta">{{ label }}</label>
+  @if (label) {
+    <label [for]="label" class="formulario__etiqueta">{{ label }}</label>
+  }
   <input
     [id]="label"
     [type]="type"

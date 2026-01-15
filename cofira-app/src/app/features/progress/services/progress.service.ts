@@ -112,7 +112,7 @@ export class ProgressService extends BaseHttpService {
    * Obtiene entradas de progreso (formato legacy)
    * @deprecated Implementar endpoint específico en backend si se necesita
    */
-  getProgressEntries(userId: string): Observable<ProgressEntry[]> {
+  getProgressEntries(_userId: string): Observable<ProgressEntry[]> {
     // Por ahora retornar array vacío
     return of([]);
   }
@@ -121,7 +121,7 @@ export class ProgressService extends BaseHttpService {
    * Obtiene progreso por ejercicio (formato legacy)
    * @deprecated Implementar endpoint específico en backend
    */
-  getProgressByExercise(userId: string, exerciseName: string): Observable<ProgressEntry[]> {
+  getProgressByExercise(_userId: string, _exerciseName: string): Observable<ProgressEntry[]> {
     return of([]);
   }
 
@@ -140,7 +140,7 @@ export class ProgressService extends BaseHttpService {
    * Actualiza entrada de progreso (formato legacy)
    * @deprecated Implementar endpoint específico en backend
    */
-  updateProgressEntry(entryId: string, entry: Partial<ProgressEntry>): Observable<ProgressEntry> {
+  updateProgressEntry(_entryId: string, _entry: Partial<ProgressEntry>): Observable<ProgressEntry> {
     return of({} as ProgressEntry);
   }
 
@@ -148,7 +148,7 @@ export class ProgressService extends BaseHttpService {
    * Elimina entrada de progreso (formato legacy)
    * @deprecated Implementar endpoint específico en backend
    */
-  deleteProgressEntry(entryId: string): Observable<void> {
+  deleteProgressEntry(_entryId: string): Observable<void> {
     return of(void 0);
   }
 
@@ -197,7 +197,7 @@ export class ProgressService extends BaseHttpService {
    * Obtiene ejercicios del usuario (formato legacy)
    * @deprecated Usar TrainingService.listarRutinas() y extraer ejercicios
    */
-  getUserExercises(userId: string): Observable<string[]> {
+  getUserExercises(_userId: string): Observable<string[]> {
     return of([]);
   }
 }

@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { InputComponent } from '../../../../../shared/components/ui/input/input/input';
 import { Button } from '../../../../../shared/components/ui/button/button/button';
 import { UserService } from '../../../../user/services/user.service';
@@ -24,6 +23,10 @@ interface User {
   styleUrl: './account-settings.scss',
 })
 export class AccountSettings implements OnInit {
+  private readonly userService = inject(UserService);
+  private readonly loadingService = inject(LoadingService);
+  private readonly toastService = inject(ToastService);
+
   accountSettingsForm = new FormGroup({
     name: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -33,13 +36,6 @@ export class AccountSettings implements OnInit {
   }, { validators: passwordMatchValidator('newPassword', 'confirmNewPassword') });
 
   currentUser: User | null = null; // Placeholder for current user data
-
-  constructor(
-    private userService: UserService,
-    private router: Router,
-    private loadingService: LoadingService,
-    private toastService: ToastService
-  ) {}
 
   ngOnInit(): void {
     // Simulate fetching current user data

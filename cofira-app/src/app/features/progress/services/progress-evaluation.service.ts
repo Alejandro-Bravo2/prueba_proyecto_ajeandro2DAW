@@ -204,7 +204,7 @@ export class ProgressEvaluationService extends BaseHttpService {
   /**
    * Get evaluation history
    */
-  getEvaluationHistory(limit: number = 10): Observable<EvaluacionProgresoDTO[]> {
+  getEvaluationHistory(limit = 10): Observable<EvaluacionProgresoDTO[]> {
     return this.get(`progress-evaluation/evaluate/history?limit=${limit}`);
   }
 }

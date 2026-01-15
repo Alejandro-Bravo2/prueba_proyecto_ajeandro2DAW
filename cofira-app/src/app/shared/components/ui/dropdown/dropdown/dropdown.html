@@ -1,5 +1,7 @@
 <section class="c-form__group">
-  <label *ngIf="label" [for]="label" class="c-form__label">{{ label }}</label>
+  @if (label) {
+    <label [for]="label" class="c-form__label">{{ label }}</label>
+  }
   <select
     [id]="label"
     class="c-form__input"
