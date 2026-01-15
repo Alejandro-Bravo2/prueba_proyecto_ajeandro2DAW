@@ -8,145 +8,147 @@
   padding: var(--spacing-size-xl);
   text-align: center;
   @include transition-base;
+}
 
-  &:hover {
-    border-color: var(--border-medium);
-  }
+.nutrient-counter:hover {
+  border-color: var(--border-medium);
+}
 
-  &__header {
-    margin-bottom: var(--spacing-size-l);
+.nutrient-counter__header {
+  margin-bottom: var(--spacing-size-l);
+}
 
-    h3 {
-      @include tipografia-titulo;
-      font-size: var(--font-size-2xl);
-      color: var(--text-primary);
-      margin: 0;
-    }
-  }
+.nutrient-counter__header h3 {
+  @include tipografia-titulo;
+  font-size: var(--font-size-2xl);
+  color: var(--text-primary);
+  margin: 0;
+}
 
-  &__body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--spacing-size-xl);
+.nutrient-counter__body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-size-xl);
+}
 
-    @include responsive('M') {
-      flex-direction: row;
-      justify-content: center;
-      text-align: left;
-    }
-  }
-
-  &__chart {
-    flex-shrink: 0;
-  }
-
-  &__chart-container {
-    width: 150px;
-    height: 150px;
-    margin: 0 auto;
-  }
-
-  &__empty-chart {
-    display: flex;
-    align-items: center;
+@include responsive('M') {
+  .nutrient-counter__body {
+    flex-direction: row;
     justify-content: center;
-    width: 150px;
-    height: 150px;
-
-    svg {
-      opacity: 0.7;
-    }
+    text-align: left;
   }
+}
 
-  &__details {
-    flex-grow: 1;
-    min-width: 200px;
+.nutrient-counter__chart {
+  flex-shrink: 0;
+}
 
-    h4 {
-      @include tipografia-texto;
-      font-size: var(--font-size-xl);
-      margin-bottom: var(--spacing-size-m);
-      color: var(--text-primary);
-    }
+.nutrient-counter__chart-container {
+  width: 150px;
+  height: 150px;
+  margin: 0 auto;
+}
 
-    ul {
-      list-style: none;
-      padding: 0;
-      margin: 0 0 var(--spacing-size-l) 0;
+.nutrient-counter__empty-chart {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 150px;
+  height: 150px;
+}
 
-      li {
-        font-size: var(--font-size-md);
-        padding: var(--spacing-size-s) 0;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-bottom: 1px solid var(--border-light);
+.nutrient-counter__empty-chart svg {
+  opacity: 0.7;
+}
 
-        &:last-child {
-          border-bottom: none;
-        }
-      }
-    }
-  }
+.nutrient-counter__details {
+  flex-grow: 1;
+  min-width: 200px;
+}
 
-  &__empty-state {
-    padding: var(--spacing-size-l);
-    text-align: center;
-    color: var(--text-secondary);
+.nutrient-counter__details h4 {
+  @include tipografia-texto;
+  font-size: var(--font-size-xl);
+  margin-bottom: var(--spacing-size-m);
+  color: var(--text-primary);
+}
 
-    p {
-      margin: 0 0 var(--spacing-size-xs) 0;
-      font-size: var(--font-size-md);
-    }
+.nutrient-counter__details ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--spacing-size-l) 0;
+}
 
-    small {
-      color: var(--text-tertiary);
-      font-size: var(--font-size-sm);
-    }
-  }
+.nutrient-counter__details ul li {
+  font-size: var(--font-size-md);
+  padding: var(--spacing-size-s) 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-light);
+}
 
-  &__calories {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-size-xs);
-    padding-top: var(--spacing-size-m);
-    border-top: 1px solid var(--border-light);
+.nutrient-counter__details ul li:last-child {
+  border-bottom: none;
+}
 
-    .calories-label {
-      font-size: var(--font-size-sm);
-      color: var(--text-secondary);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
+.nutrient-counter__empty-state {
+  padding: var(--spacing-size-l);
+  text-align: center;
+  color: var(--text-secondary);
+}
 
-    .calories-value {
-      font-size: var(--font-size-2xl);
-      font-weight: var(--font-weight-bold);
-      color: var(--text-primary);
+.nutrient-counter__empty-state p {
+  margin: 0 0 var(--spacing-size-xs) 0;
+  font-size: var(--font-size-md);
+}
 
-      small {
-        font-size: var(--font-size-md);
-        font-weight: var(--font-weight-normal);
-        color: var(--text-secondary);
-      }
-    }
+.nutrient-counter__empty-state small {
+  color: var(--text-tertiary);
+  font-size: var(--font-size-sm);
+}
 
-    .calories-progress {
-      width: 100%;
-      height: 8px;
-      background-color: var(--bg-secondary);
-      border-radius: var(--radius-full);
-      overflow: hidden;
+.nutrient-counter__calories {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-size-xs);
+  padding-top: var(--spacing-size-m);
+  border-top: 1px solid var(--border-light);
+}
 
-      &__bar {
-        height: 100%;
-        background: linear-gradient(90deg, var(--brand-primary), var(--brand-secondary, var(--brand-primary)));
-        border-radius: var(--radius-full);
-        transition: width 0.3s ease;
-      }
-    }
-  }
+.nutrient-counter__calories .calories-label {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.nutrient-counter__calories .calories-value {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+}
+
+.nutrient-counter__calories .calories-value small {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-normal);
+  color: var(--text-secondary);
+}
+
+.nutrient-counter__calories .calories-progress {
+  width: 100%;
+  height: 8px;
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.nutrient-counter__calories .calories-progress__bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--brand-primary), var(--brand-secondary, var(--brand-primary)));
+  border-radius: var(--radius-full);
+  transition: width 0.3s ease;
 }
 
 .nutrient-label {
@@ -156,24 +158,24 @@
 .nutrient-value {
   font-weight: var(--font-weight-semibold);
   color: var(--text-primary);
+}
 
-  &.protein {
-    color: var(--color-protein, #FDB913);
-  }
+.nutrient-value.protein {
+  color: var(--color-protein, #FDB913);
+}
 
-  &.carbs {
-    color: var(--color-carbs, #3498db);
-  }
+.nutrient-value.carbs {
+  color: var(--color-carbs, #3498db);
+}
 
-  &.fat {
-    color: var(--color-fat, #e74c3c);
-  }
+.nutrient-value.fat {
+  color: var(--color-fat, #e74c3c);
+}
 
-  &.fiber {
-    color: var(--color-fiber, #27ae60);
-  }
+.nutrient-value.fiber {
+  color: var(--color-fiber, #27ae60);
+}
 
-  &.water {
-    color: var(--color-water, #00bcd4);
-  }
+.nutrient-value.water {
+  color: var(--color-water, #00bcd4);
 }

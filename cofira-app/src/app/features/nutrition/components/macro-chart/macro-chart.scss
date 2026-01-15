@@ -16,223 +16,231 @@
   width: 100%;
   overflow: hidden;
 
-  @include responsive('M') {
-    padding: var(--spacing-size-m);
-  }
-
   // Subtle background - no border
   background: rgba(255, 255, 255, 0.02);
   border: none;
   @include transition-premium;
+}
 
-  // Hover glow aura
-  &::before {
-    content: '';
-    position: absolute;
-    inset: -1px;
-    border-radius: inherit;
-    background: radial-gradient(
-      ellipse at center,
-      rgba(255, 255, 255, 0.08) 0%,
-      transparent 70%
-    );
-    opacity: 0;
-    @include transition-premium;
-    z-index: -1;
+@media (min-width: 768px) {
+  .macro-chart {
+    padding: var(--spacing-size-m);
   }
+}
 
-  &:hover {
-    background: rgba(255, 255, 255, 0.06);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+// Hover glow aura
+.macro-chart::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 255, 255, 0.08) 0%,
+    transparent 70%
+  );
+  opacity: 0;
+  @include transition-premium;
+  z-index: -1;
+}
 
-    &::before {
-      opacity: 1;
-    }
+.macro-chart:hover {
+  background: rgba(255, 255, 255, 0.06);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.macro-chart:hover::before {
+  opacity: 1;
+}
+
+.macro-chart:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.5);
+  outline-offset: 4px;
+}
+
+.macro-chart__ring {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  @include transition-premium;
+}
+
+@media (min-width: 768px) {
+  .macro-chart__ring {
+    width: 56px;
+    height: 56px;
   }
+}
 
-  &:focus-visible {
-    outline: 2px solid rgba(255, 255, 255, 0.5);
-    outline-offset: 4px;
+// Glow behind the ring
+.macro-chart__ring::before {
+  content: '';
+  position: absolute;
+  inset: 15%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at center,
+    var(--macro-glow-color, rgba(255, 255, 255, 0.1)) 0%,
+    transparent 70%
+  );
+  filter: blur(12px);
+  opacity: 0.6;
+  @include transition-premium;
+}
+
+.macro-chart__ring canvas {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.2));
+  @include transition-premium;
+  position: relative;
+  z-index: 1;
+}
+
+.macro-chart:hover .macro-chart__ring::before {
+  opacity: 1;
+  filter: blur(16px);
+  transform: scale(1.2);
+}
+
+.macro-chart:hover .macro-chart__ring canvas {
+  filter:
+    drop-shadow(0 6px 16px rgba(0, 0, 0, 0.25))
+    drop-shadow(0 0 20px var(--macro-glow-color, rgba(255, 255, 255, 0.2)));
+  transform: scale(1.08);
+}
+
+.macro-chart__center {
+  position: absolute;
+  inset: 0;
+  @include flex-columna(0);
+  @include flex-center;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.macro-chart__value {
+  font-family: var(--font-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  line-height: 1;
+  @include transition-premium;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+@media (min-width: 480px) {
+  .macro-chart__value {
+    font-size: var(--font-size-base);
   }
+}
 
-  &__ring {
-    position: relative;
-    width: 48px;
-    height: 48px;
-    @include transition-premium;
-
-    @include responsive('M') {
-      width: 56px;
-      height: 56px;
-    }
-
-    // Glow behind the ring
-    &::before {
-      content: '';
-      position: absolute;
-      inset: 15%;
-      border-radius: 50%;
-      background: radial-gradient(
-        circle at center,
-        var(--macro-glow-color, rgba(255, 255, 255, 0.1)) 0%,
-        transparent 70%
-      );
-      filter: blur(12px);
-      opacity: 0.6;
-      @include transition-premium;
-    }
-
-    canvas {
-      width: 100% !important;
-      height: 100% !important;
-      filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.2));
-      @include transition-premium;
-      position: relative;
-      z-index: 1;
-    }
-
-    .macro-chart:hover & {
-      &::before {
-        opacity: 1;
-        filter: blur(16px);
-        transform: scale(1.2);
-      }
-
-      canvas {
-        filter:
-          drop-shadow(0 6px 16px rgba(0, 0, 0, 0.25))
-          drop-shadow(0 0 20px var(--macro-glow-color, rgba(255, 255, 255, 0.2)));
-        transform: scale(1.08);
-      }
-    }
+@media (min-width: 768px) {
+  .macro-chart__value {
+    font-size: var(--font-size-lg);
   }
+}
 
-  &__center {
-    position: absolute;
-    inset: 0;
-    @include flex-columna(0);
-    @include flex-center;
-    pointer-events: none;
-    z-index: 2;
-  }
+.macro-chart:hover .macro-chart__value {
+  transform: scale(1.15);
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
 
-  &__value {
-    font-family: var(--font-secondary);
+.macro-chart__unit {
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-wider);
+  font-weight: var(--font-weight-medium);
+}
+
+.macro-chart__info {
+  width: 100%;
+}
+
+.macro-chart__label {
+  font-family: var(--font-secondary);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-wide);
+}
+
+@media (min-width: 768px) {
+  .macro-chart__label {
     font-size: var(--font-size-sm);
-    font-weight: var(--font-weight-bold);
-    color: var(--text-primary);
-    line-height: 1;
-    @include transition-premium;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-
-    @include responsive('S') {
-      font-size: var(--font-size-base);
-    }
-
-    @include responsive('M') {
-      font-size: var(--font-size-lg);
-    }
-
-    .macro-chart:hover & {
-      transform: scale(1.15);
-      text-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-    }
-  }
-
-  &__unit {
-    font-size: var(--font-size-xs);
-    color: var(--text-muted);
-    text-transform: uppercase;
     letter-spacing: var(--letter-spacing-wider);
-    font-weight: var(--font-weight-medium);
   }
+}
 
-  &__info {
-    width: 100%;
-  }
+.macro-chart__progress {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  margin: 0 0 var(--spacing-size-xs);
+}
 
-  &__label {
-    font-family: var(--font-secondary);
-    font-size: var(--font-size-xs);
-    font-weight: var(--font-weight-semibold);
-    color: var(--text-primary);
-    margin: 0;
-    text-transform: uppercase;
-    letter-spacing: var(--letter-spacing-wide);
+.macro-chart__current {
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  font-family: var(--font-secondary);
+}
 
-    @include responsive('M') {
-      font-size: var(--font-size-sm);
-      letter-spacing: var(--letter-spacing-wider);
-    }
-  }
+.macro-chart__separator {
+  margin: 0 var(--spacing-size-xss);
+  opacity: 0.4;
+}
 
-  &__progress {
-    font-size: var(--font-size-sm);
-    color: var(--text-secondary);
-    margin: 0 0 var(--spacing-size-xs);
-  }
+.macro-chart__goal {
+  opacity: 0.6;
+}
 
-  &__current {
-    font-weight: var(--font-weight-bold);
-    color: var(--text-primary);
-    font-family: var(--font-secondary);
-  }
+.macro-chart__bar {
+  height: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
 
-  &__separator {
-    margin: 0 var(--spacing-size-xss);
-    opacity: 0.4;
-  }
+.macro-chart__bar-fill {
+  height: 100%;
+  border-radius: var(--radius-pill);
+  @include transition-premium;
+  position: relative;
+  animation: barFillGrow 1.2s cubic-bezier(0.16, 1, 0.3, 1);
 
-  &__goal {
-    opacity: 0.6;
-  }
+  // Glow effect
+  box-shadow: 0 0 10px var(--macro-glow-color, rgba(255, 255, 255, 0.3));
+}
 
-  &__bar {
-    height: 6px;
-    background: rgba(255, 255, 255, 0.08);
-    border-radius: var(--radius-pill);
-    overflow: hidden;
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
-    position: relative;
-  }
+// Shine effect
+.macro-chart__bar-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.5),
+    transparent
+  );
+  border-radius: var(--radius-pill);
+}
 
-  &__bar-fill {
-    height: 100%;
-    border-radius: var(--radius-pill);
-    @include transition-premium;
-    position: relative;
-    animation: barFillGrow 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-
-    // Glow effect
-    box-shadow: 0 0 10px var(--macro-glow-color, rgba(255, 255, 255, 0.3));
-
-    // Shine effect
-    &::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 50%;
-      background: linear-gradient(
-        to bottom,
-        rgba(255, 255, 255, 0.5),
-        transparent
-      );
-      border-radius: var(--radius-pill);
-    }
-
-    .macro-chart:hover & {
-      filter: brightness(1.2);
-      box-shadow: 0 0 16px var(--macro-glow-color, rgba(255, 255, 255, 0.4));
-    }
-  }
+.macro-chart:hover .macro-chart__bar-fill {
+  filter: brightness(1.2);
+  box-shadow: 0 0 16px var(--macro-glow-color, rgba(255, 255, 255, 0.4));
 }
 
 @keyframes barFillGrow {
   from {
-    width: 0 !important;
+    width: 0;
     opacity: 0;
   }
   to {
@@ -241,36 +249,31 @@
 }
 
 // Color-specific glow effects
-.macro-chart {
-  // These would be applied via component
-  &--protein { --macro-glow-color: rgba(37, 99, 235, 0.4); }
-  &--carbs { --macro-glow-color: rgba(245, 158, 11, 0.4); }
-  &--fat { --macro-glow-color: rgba(16, 185, 129, 0.4); }
-  &--fiber { --macro-glow-color: rgba(139, 92, 246, 0.4); }
-}
+.macro-chart--protein { --macro-glow-color: rgba(37, 99, 235, 0.4); }
+.macro-chart--carbs { --macro-glow-color: rgba(245, 158, 11, 0.4); }
+.macro-chart--fat { --macro-glow-color: rgba(16, 185, 129, 0.4); }
+.macro-chart--fiber { --macro-glow-color: rgba(139, 92, 246, 0.4); }
 
 // Reduced motion
 @media (prefers-reduced-motion: reduce) {
-  .macro-chart {
-    &:hover {
-      transform: none;
-    }
+  .macro-chart:hover {
+    transform: none;
+  }
 
-    &::before,
-    &__ring::before {
-      display: none;
-    }
+  .macro-chart::before,
+  .macro-chart__ring::before {
+    display: none;
+  }
 
-    &__ring canvas,
-    &__value,
-    &__bar-fill {
-      animation: none !important;
-      transition: none !important;
-    }
+  .macro-chart__ring canvas,
+  .macro-chart__value,
+  .macro-chart__bar-fill {
+    animation: none;
+    transition: none;
+  }
 
-    &:hover &__ring canvas,
-    &:hover &__value {
-      transform: none !important;
-    }
+  .macro-chart:hover .macro-chart__ring canvas,
+  .macro-chart:hover .macro-chart__value {
+    transform: none;
   }
 }

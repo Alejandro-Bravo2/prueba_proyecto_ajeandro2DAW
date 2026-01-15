@@ -14,22 +14,22 @@
   padding: var(--spacing-size-xs) 0;
   border-bottom: 1px dashed var(--border-light);
   color: var(--text-primary);
+}
 
-  &:last-child {
-    border-bottom: none;
-  }
+.ingredient-item:last-child {
+  border-bottom: none;
+}
 
-  &__name {
-    font-weight: var(--font-weight-medium);
-  }
+.ingredient-item__name {
+  font-weight: var(--font-weight-medium);
+}
 
-  &__quantity {
-    color: var(--text-secondary);
-  }
+.ingredient-item__quantity {
+  color: var(--text-secondary);
+}
 
-  &__price {
-    font-weight: var(--font-weight-semibold);
-  }
+.ingredient-item__price {
+  font-weight: var(--font-weight-semibold);
 }
 
 .total-cost {
@@ -38,8 +38,8 @@
   font-weight: var(--font-weight-bold);
   color: var(--text-primary);
   margin-top: var(--spacing-size-m);
+}
 
-  &__value {
-    color: var(--negro-puro);
-  }
+.total-cost__value {
+  color: var(--negro-puro);
 }

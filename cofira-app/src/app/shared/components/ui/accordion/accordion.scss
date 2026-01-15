@@ -19,15 +19,15 @@
   border-radius: 0.5rem;
   overflow: hidden;
   transition: all 0.2s ease;
+}
 
-  &:hover {
-    border-color: var(--border-medium);
-  }
+.c-accordion-item:hover {
+  border-color: var(--border-medium);
+}
 
-  &--open {
-    border-color: var(--text-primary);
-    box-shadow: var(--shadow-md);
-  }
+.c-accordion-item--open {
+  border-color: var(--text-primary);
+  box-shadow: var(--shadow-md);
 }
 
 // ============================================================================
@@ -48,20 +48,19 @@
   color: var(--text-primary);
   text-align: left;
   transition: background-color 0.2s ease;
-
-  &:hover {
-    background-color: var(--bg-secondary);
-  }
-
-  &:focus-visible {
-    outline: 2px solid var(--color-brand-primary, #4CAF50);
-    outline-offset: -2px;
-  }
-
   // Disable default button styles
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
+}
+
+.c-accordion-item__header:hover {
+  background-color: var(--bg-secondary);
+}
+
+.c-accordion-item__header:focus-visible {
+  outline: 2px solid var(--color-brand-primary, #4CAF50);
+  outline-offset: -2px;
 }
 
 .c-accordion-item__title {
@@ -79,11 +78,11 @@
   font-weight: 400;
   color: var(--text-secondary);
   transition: transform 0.3s ease, color 0.2s ease;
+}
 
-  .c-accordion-item--open & {
-    transform: rotate(180deg);
-    color: var(--text-primary);
-  }
+.c-accordion-item--open .c-accordion-item__icon {
+  transform: rotate(180deg);
+  color: var(--text-primary);
 }
 
 // ============================================================================
@@ -99,54 +98,55 @@
   color: var(--text-secondary);
   font-size: 0.9375rem;
   line-height: 1.6;
+}
 
-  // Estilos para contenido común
-  p {
-    margin-bottom: 0.75rem;
+// Estilos para contenido comun
+.c-accordion-item__content p {
+  margin-bottom: 0.75rem;
+}
 
-    &:last-child {
-      margin-bottom: 0;
-    }
-  }
+.c-accordion-item__content p:last-child {
+  margin-bottom: 0;
+}
 
-  ul, ol {
-    margin-left: 1.25rem;
-    margin-bottom: 0.75rem;
-  }
+.c-accordion-item__content ul,
+.c-accordion-item__content ol {
+  margin-left: 1.25rem;
+  margin-bottom: 0.75rem;
+}
 
-  li {
-    margin-bottom: 0.25rem;
-  }
+.c-accordion-item__content li {
+  margin-bottom: 0.25rem;
+}
 
-  a {
-    color: var(--color-brand-primary, #4CAF50);
-    text-decoration: underline;
+.c-accordion-item__content a {
+  color: var(--color-brand-primary, #4CAF50);
+  text-decoration: underline;
+}
 
-    &:hover {
-      text-decoration: none;
-    }
-  }
+.c-accordion-item__content a:hover {
+  text-decoration: none;
+}
 
-  code {
-    padding: 0.125rem 0.375rem;
-    background-color: var(--bg-tertiary);
-    border-radius: 0.25rem;
-    font-size: 0.875em;
-    font-family: monospace;
-  }
+.c-accordion-item__content code {
+  padding: 0.125rem 0.375rem;
+  background-color: var(--bg-tertiary);
+  border-radius: 0.25rem;
+  font-size: 0.875em;
+  font-family: monospace;
+}
 
-  pre {
-    padding: 1rem;
-    background-color: var(--bg-tertiary);
-    border-radius: 0.375rem;
-    overflow-x: auto;
-    margin-bottom: 0.75rem;
+.c-accordion-item__content pre {
+  padding: 1rem;
+  background-color: var(--bg-tertiary);
+  border-radius: 0.375rem;
+  overflow-x: auto;
+  margin-bottom: 0.75rem;
+}
 
-    code {
-      padding: 0;
-      background: transparent;
-    }
-  }
+.c-accordion-item__content pre code {
+  padding: 0;
+  background: transparent;
 }
 
 // ============================================================================

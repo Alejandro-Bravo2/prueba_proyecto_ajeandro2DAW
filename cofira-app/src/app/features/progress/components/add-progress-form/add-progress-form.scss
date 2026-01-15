@@ -1,48 +1,48 @@
 .add-progress-form {
   margin: 2rem 0;
+}
 
-  &__toggle {
-    margin-bottom: 1rem;
-  }
+.add-progress-form__toggle {
+  margin-bottom: 1rem;
+}
 
-  &__form {
-    padding: 2rem;
-    margin-top: 1rem;
-  }
+.add-progress-form__form {
+  padding: 2rem;
+  margin-top: 1rem;
 }
 
 .form-group {
   margin-bottom: 1rem;
+}
 
-  label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 500;
-  }
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
 
-  .form-control {
-    width: 100%;
-    padding: 0.5rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+.form-group .form-control {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
 
-    &:focus {
-      outline: none;
-      border-color: #fdb913;
-    }
-  }
+.form-group .form-control:focus {
+  outline: none;
+  border-color: #fdb913;
+}
 
-  textarea.form-control {
-    resize: vertical;
-    font-family: inherit;
-  }
+.form-group textarea.form-control {
+  resize: vertical;
+  font-family: inherit;
+}
 
-  .error-text {
-    color: #dc3545;
-    font-size: 0.875rem;
-    margin-top: 0.25rem;
-    display: block;
-  }
+.form-group .error-text {
+  color: #dc3545;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  display: block;
 }
 
 .form-row {

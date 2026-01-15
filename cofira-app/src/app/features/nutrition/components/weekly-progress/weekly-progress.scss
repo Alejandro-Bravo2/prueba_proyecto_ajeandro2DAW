@@ -20,227 +20,227 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.08);
   @include transition-premium;
   animation: weeklySlideIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.4s backwards;
+}
 
-  &:hover {
-    border-color: rgba(255, 255, 255, 0.12);
-    box-shadow:
-      0 8px 32px rgba(0, 0, 0, 0.15),
-      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+.weekly-progress:hover {
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.weekly-progress__header {
+  @include flex-fila(var(--spacing-size-m));
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--spacing-size-m);
+}
+
+.weekly-progress__title {
+  font-family: var(--font-secondary);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  margin: 0;
+  letter-spacing: var(--letter-spacing-tight);
+}
+
+.weekly-progress__tabs {
+  @include flex-fila(var(--spacing-size-xss));
+  padding: 4px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-m);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.weekly-progress__tab {
+  padding: var(--spacing-size-xs) var(--spacing-size-m);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-muted);
+  background-color: transparent;
+  border: none;
+  border-radius: var(--radius-s);
+  cursor: pointer;
+  @include transition-premium;
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-wider);
+  position: relative;
+}
+
+.weekly-progress__tab:hover:not(.weekly-progress__tab--active) {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.weekly-progress__tab:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.5);
+  outline-offset: 2px;
+}
+
+.weekly-progress__tab--active {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.12) 0%,
+    rgba(255, 255, 255, 0.06) 100%
+  );
+  color: var(--text-primary);
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+@keyframes weeklySlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
   }
-
-  &__header {
-    @include flex-fila(var(--spacing-size-m));
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: var(--spacing-size-m);
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
+}
 
-  &__title {
-    font-family: var(--font-secondary);
-    font-size: var(--font-size-xl);
-    font-weight: var(--font-weight-bold);
-    color: var(--text-primary);
-    margin: 0;
-    letter-spacing: var(--letter-spacing-tight);
+.weekly-progress__chart {
+  height: 200px;
+  position: relative;
+  padding: var(--spacing-size-m) 0;
+}
+
+@media (min-width: 768px) {
+  .weekly-progress__chart {
+    height: 240px;
   }
+}
 
-  &__tabs {
-    @include flex-fila(var(--spacing-size-xss));
-    padding: 4px;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: var(--radius-m);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-  }
+.weekly-progress__chart canvas {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.1));
+}
 
-  &__tab {
-    padding: var(--spacing-size-xs) var(--spacing-size-m);
-    font-size: var(--font-size-xs);
-    font-weight: var(--font-weight-semibold);
-    color: var(--text-muted);
-    background-color: transparent;
-    border: none;
-    border-radius: var(--radius-s);
-    cursor: pointer;
-    @include transition-premium;
-    text-transform: uppercase;
-    letter-spacing: var(--letter-spacing-wider);
-    position: relative;
+.weekly-progress__summary {
+  @include flex-fila(var(--spacing-size-xl));
+  align-items: center;
+  justify-content: space-between;
+  padding-top: var(--spacing-size-m);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
 
-    &:hover:not(&--active) {
-      color: var(--text-primary);
-      background: rgba(255, 255, 255, 0.05);
-    }
+.weekly-progress__avg {
+  @include flex-columna(var(--spacing-size-xss));
+}
 
-    &:focus-visible {
-      outline: 2px solid rgba(255, 255, 255, 0.5);
-      outline-offset: 2px;
-    }
+.weekly-progress__avg-label {
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-wider);
+  font-weight: var(--font-weight-medium);
+}
 
-    &--active {
-      background: linear-gradient(
-        135deg,
-        rgba(255, 255, 255, 0.12) 0%,
-        rgba(255, 255, 255, 0.06) 100%
-      );
-      color: var(--text-primary);
-      box-shadow:
-        0 2px 8px rgba(0, 0, 0, 0.15),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    }
-  }
+.weekly-progress__avg-value {
+  font-family: var(--font-secondary);
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
 
-  @keyframes weeklySlideIn {
-    from {
-      opacity: 0;
-      transform: translateY(24px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
+.weekly-progress__trend {
+  @include flex-fila(var(--spacing-size-xs));
+  align-items: center;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-muted);
+  padding: var(--spacing-size-xs) var(--spacing-size-m);
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  @include transition-premium;
+}
 
-  &__chart {
-    height: 200px;
-    position: relative;
-    padding: var(--spacing-size-m) 0;
+.weekly-progress__trend svg {
+  @include transition-premium;
+}
 
-    @include responsive('M') {
-      height: 240px;
-    }
+.weekly-progress__trend:hover {
+  transform: translateY(-2px);
+}
 
-    canvas {
-      width: 100% !important;
-      height: 100% !important;
-      filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.1));
-    }
-  }
+.weekly-progress__trend--positive {
+  color: #34d399;
+  background: linear-gradient(
+    135deg,
+    rgba(16, 185, 129, 0.15) 0%,
+    rgba(16, 185, 129, 0.08) 100%
+  );
+  border-color: rgba(16, 185, 129, 0.2);
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.1);
+}
 
-  &__summary {
-    @include flex-fila(var(--spacing-size-xl));
-    align-items: center;
-    justify-content: space-between;
-    padding-top: var(--spacing-size-m);
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
-  }
+.weekly-progress__trend--positive svg {
+  color: #34d399;
+  filter: drop-shadow(0 0 4px rgba(52, 211, 153, 0.5));
+  animation: trendBounce 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
 
-  &__avg {
-    @include flex-columna(var(--spacing-size-xss));
-  }
+.weekly-progress__trend--positive:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(16, 185, 129, 0.2) 0%,
+    rgba(16, 185, 129, 0.12) 100%
+  );
+  box-shadow: 0 0 30px rgba(16, 185, 129, 0.15);
+}
 
-  &__avg-label {
-    font-size: var(--font-size-xs);
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: var(--letter-spacing-wider);
-    font-weight: var(--font-weight-medium);
-  }
+.weekly-progress__trend--negative {
+  color: #f87171;
+  background: linear-gradient(
+    135deg,
+    rgba(239, 68, 68, 0.15) 0%,
+    rgba(239, 68, 68, 0.08) 100%
+  );
+  border-color: rgba(239, 68, 68, 0.2);
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.1);
+}
 
-  &__avg-value {
-    font-family: var(--font-secondary);
-    font-size: var(--font-size-2xl);
-    font-weight: var(--font-weight-bold);
-    color: var(--text-primary);
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-  }
+.weekly-progress__trend--negative svg {
+  color: #f87171;
+  filter: drop-shadow(0 0 4px rgba(248, 113, 113, 0.5));
+}
 
-  &__trend {
-    @include flex-fila(var(--spacing-size-xs));
-    align-items: center;
-    font-size: var(--font-size-sm);
-    font-weight: var(--font-weight-semibold);
-    color: var(--text-muted);
-    padding: var(--spacing-size-xs) var(--spacing-size-m);
-    border-radius: var(--radius-pill);
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    @include transition-premium;
+.weekly-progress__trend--negative:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(239, 68, 68, 0.2) 0%,
+    rgba(239, 68, 68, 0.12) 100%
+  );
+  box-shadow: 0 0 30px rgba(239, 68, 68, 0.15);
+}
 
-    svg {
-      @include transition-premium;
-    }
-
-    &:hover {
-      transform: translateY(-2px);
-    }
-
-    &--positive {
-      color: #34d399;
-      background: linear-gradient(
-        135deg,
-        rgba(16, 185, 129, 0.15) 0%,
-        rgba(16, 185, 129, 0.08) 100%
-      );
-      border-color: rgba(16, 185, 129, 0.2);
-      box-shadow: 0 0 20px rgba(16, 185, 129, 0.1);
-
-      svg {
-        color: #34d399;
-        filter: drop-shadow(0 0 4px rgba(52, 211, 153, 0.5));
-        animation: trendBounce 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-      }
-
-      &:hover {
-        background: linear-gradient(
-          135deg,
-          rgba(16, 185, 129, 0.2) 0%,
-          rgba(16, 185, 129, 0.12) 100%
-        );
-        box-shadow: 0 0 30px rgba(16, 185, 129, 0.15);
-      }
-    }
-
-    &--negative {
-      color: #f87171;
-      background: linear-gradient(
-        135deg,
-        rgba(239, 68, 68, 0.15) 0%,
-        rgba(239, 68, 68, 0.08) 100%
-      );
-      border-color: rgba(239, 68, 68, 0.2);
-      box-shadow: 0 0 20px rgba(239, 68, 68, 0.1);
-
-      svg {
-        color: #f87171;
-        filter: drop-shadow(0 0 4px rgba(248, 113, 113, 0.5));
-      }
-
-      &:hover {
-        background: linear-gradient(
-          135deg,
-          rgba(239, 68, 68, 0.2) 0%,
-          rgba(239, 68, 68, 0.12) 100%
-        );
-        box-shadow: 0 0 30px rgba(239, 68, 68, 0.15);
-      }
-    }
-  }
-
-  @keyframes trendBounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-4px); }
-  }
+@keyframes trendBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
 }
 
 // Reduced motion support
 @media (prefers-reduced-motion: reduce) {
   .weekly-progress {
     animation: none;
+  }
 
-    &__tab--active {
-      transform: none;
-    }
+  .weekly-progress__tab--active {
+    transform: none;
+  }
 
-    &__trend {
-      &:hover {
-        transform: none;
-      }
+  .weekly-progress__trend:hover {
+    transform: none;
+  }
 
-      svg {
-        animation: none;
-        filter: none;
-      }
-    }
+  .weekly-progress__trend svg {
+    animation: none;
+    filter: none;
   }
 }

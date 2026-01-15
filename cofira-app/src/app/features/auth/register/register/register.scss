@@ -23,148 +23,148 @@
   @include responsive('L') {
     padding: var(--spacing-size-xxl) var(--spacing-size-xl);
   }
+}
 
-  .register-card {
-    background-color: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-md);
-    max-width: 100%;
-    width: 100%;
-    padding: var(--spacing-size-m);
-    text-align: center;
-    @include transition-base;
+.register-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  max-width: 100%;
+  width: 100%;
+  padding: var(--spacing-size-m);
+  text-align: center;
+  @include transition-base;
 
-    @include responsive('xs') {
-      max-width: 400px;
-      padding: var(--spacing-size-l);
-      border-radius: var(--radius-lg);
-    }
+  @include responsive('xs') {
+    max-width: 400px;
+    padding: var(--spacing-size-l);
+    border-radius: var(--radius-lg);
+  }
 
-    @include responsive('s') {
-      max-width: 420px;
-    }
+  @include responsive('s') {
+    max-width: 420px;
+  }
 
-    @include responsive('M') {
-      max-width: 450px;
-      padding: var(--spacing-size-xl);
-    }
+  @include responsive('M') {
+    max-width: 450px;
+    padding: var(--spacing-size-xl);
+  }
 
-    @include responsive('L') {
-      padding: var(--spacing-size-xxl);
-    }
+  @include responsive('L') {
+    padding: var(--spacing-size-xxl);
+  }
+}
 
-    &:hover {
-      border-color: var(--border-medium);
-    }
+.register-card:hover {
+  border-color: var(--border-medium);
+}
 
-    &__header {
-      margin-bottom: var(--spacing-size-l);
+.register-card__header {
+  margin-bottom: var(--spacing-size-l);
 
-      @include responsive('s') {
-        margin-bottom: var(--spacing-size-xl);
-      }
+  @include responsive('s') {
+    margin-bottom: var(--spacing-size-xl);
+  }
 
-      @include responsive('M') {
-        margin-bottom: var(--spacing-size-xxl);
-      }
+  @include responsive('M') {
+    margin-bottom: var(--spacing-size-xxl);
+  }
+}
 
-      h1 {
-        @include tipografia-titulo;
-        font-size: var(--font-size-2xl);
-        color: var(--text-primary);
-        margin: 0;
+.register-card__header h1 {
+  @include tipografia-titulo;
+  font-size: var(--font-size-2xl);
+  color: var(--text-primary);
+  margin: 0;
 
-        @include responsive('xs') {
-          font-size: var(--font-size-3xl);
-        }
+  @include responsive('xs') {
+    font-size: var(--font-size-3xl);
+  }
 
-        @include responsive('M') {
-          font-size: var(--font-size-4xl);
-        }
-      }
-    }
+  @include responsive('M') {
+    font-size: var(--font-size-4xl);
+  }
+}
 
-    &__form {
-      margin-bottom: var(--spacing-size-m);
+.register-card__form {
+  margin-bottom: var(--spacing-size-m);
 
-      @include responsive('s') {
-        margin-bottom: var(--spacing-size-l);
-      }
+  @include responsive('s') {
+    margin-bottom: var(--spacing-size-l);
+  }
+}
 
-      .c-form__group {
-        text-align: left;
-        margin-bottom: var(--spacing-size-m);
+.register-card__form .c-form__group {
+  text-align: left;
+  margin-bottom: var(--spacing-size-m);
 
-        @include responsive('s') {
-          margin-bottom: var(--spacing-size-l);
-        }
-      }
+  @include responsive('s') {
+    margin-bottom: var(--spacing-size-l);
+  }
+}
 
-      .c-form__label {
-        font-weight: var(--font-weight-medium);
-        font-size: var(--font-size-sm);
+.register-card__form .c-form__label {
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-sm);
 
-        @include responsive('s') {
-          font-size: var(--font-size-md);
-        }
-      }
+  @include responsive('s') {
+    font-size: var(--font-size-md);
+  }
+}
 
-      .c-form__input {
-        font-size: var(--font-size-md);
+.register-card__form .c-form__input {
+  font-size: var(--font-size-md);
 
-        @include touch-device {
-          font-size: 16px; // Previene zoom en iOS
-        }
-      }
-    }
+  @include touch-device {
+    font-size: 16px; // Previene zoom en iOS
+  }
+}
 
-    &__submit {
-      margin-top: var(--spacing-size-s);
-      width: 100%;
-      min-height: 44px; // Mínimo táctil
+.register-card__submit {
+  margin-top: var(--spacing-size-s);
+  width: 100%;
+  min-height: 44px; // Mínimo táctil
 
-      @include responsive('s') {
-        margin-top: var(--spacing-size-m);
-        min-height: 48px;
-      }
-    }
+  @include responsive('s') {
+    margin-top: var(--spacing-size-m);
+    min-height: 48px;
+  }
+}
 
-    &__footer {
-      border-top: 1px solid var(--border-light);
-      padding-top: var(--spacing-size-m);
-      margin-top: var(--spacing-size-m);
+.register-card__footer {
+  border-top: 1px solid var(--border-light);
+  padding-top: var(--spacing-size-m);
+  margin-top: var(--spacing-size-m);
 
-      @include responsive('s') {
-        padding-top: var(--spacing-size-l);
-        margin-top: var(--spacing-size-l);
-      }
+  @include responsive('s') {
+    padding-top: var(--spacing-size-l);
+    margin-top: var(--spacing-size-l);
+  }
+}
 
-      .register-card__link {
-        display: inline;
-        margin-left: var(--spacing-size-xs);
-        color: var(--text-primary);
-        text-decoration: none;
-        font-weight: var(--font-weight-medium);
-        font-size: var(--font-size-sm);
-        @include transition-base;
+.register-card__footer .register-card__link {
+  display: inline;
+  margin-left: var(--spacing-size-xs);
+  color: var(--text-primary);
+  text-decoration: none;
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-sm);
+  @include transition-base;
 
-        @include responsive('s') {
-          font-size: var(--font-size-md);
-        }
+  @include responsive('s') {
+    font-size: var(--font-size-md);
+  }
+}
 
-        &:hover {
-          text-decoration: underline;
-        }
-      }
+.register-card__footer .register-card__link:hover {
+  text-decoration: underline;
+}
 
-      .register-card__login-text {
-        font-size: var(--font-size-sm);
-        color: var(--text-secondary);
+.register-card__login-text {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
 
-        @include responsive('s') {
-          font-size: var(--font-size-md);
-        }
-      }
-    }
+  @include responsive('s') {
+    font-size: var(--font-size-md);
   }
 }

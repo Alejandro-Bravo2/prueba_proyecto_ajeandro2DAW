@@ -2,6 +2,7 @@
    05-COMPONENTS: Boton
    Estilo Minimalista Apple/Ferrari
    Nomenclatura BEM en espanol
+   SIN SELECTORES ANIDADOS
    ============================================ */
 
 @import '../01-tools/mixins';
@@ -26,117 +27,115 @@
    MODIFICADORES DE TIPO
    -------------------------------------------- */
 
-// Boton primario (solido)
+/* Boton primario (solido) */
 .boton--primario {
   background-color: var(--text-primary);
   color: var(--bg-body);
   border: 1px solid var(--text-primary);
-
-  &:hover:not(:disabled) {
-    opacity: 0.85;
-  }
-
-  &:active:not(:disabled) {
-    opacity: 0.75;
-  }
-
-  &:focus-visible {
-    outline: 2px solid var(--text-primary);
-    outline-offset: 2px;
-  }
 }
 
-// Boton secundario (outline)
+.boton--primario:hover:not(:disabled) {
+  opacity: 0.85;
+}
+
+.boton--primario:active:not(:disabled) {
+  opacity: 0.75;
+}
+
+.boton--primario:focus-visible {
+  outline: 2px solid var(--text-primary);
+  outline-offset: 2px;
+}
+
+/* Boton secundario (outline) */
 .boton--secundario {
   background-color: transparent;
   color: var(--text-primary);
   border: 1px solid var(--text-primary);
-
-  &:hover:not(:disabled) {
-    background-color: var(--text-primary);
-    color: var(--bg-body);
-  }
-
-  &:active:not(:disabled) {
-    opacity: 0.85;
-  }
-
-  &:focus-visible {
-    outline: 2px solid var(--text-primary);
-    outline-offset: 2px;
-  }
 }
 
-// Boton fantasma (solo texto con underline)
+.boton--secundario:hover:not(:disabled) {
+  background-color: var(--text-primary);
+  color: var(--bg-body);
+}
+
+.boton--secundario:active:not(:disabled) {
+  opacity: 0.85;
+}
+
+.boton--secundario:focus-visible {
+  outline: 2px solid var(--text-primary);
+  outline-offset: 2px;
+}
+
+/* Boton fantasma (solo texto con underline) */
 .boton--fantasma {
   background-color: transparent;
   color: var(--text-primary);
   border: none;
   padding: var(--spacing-size-xss) 0;
   position: relative;
-
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 1px;
-    background-color: var(--text-primary);
-    transition: width var(--duration-base) var(--ease-premium);
-  }
-
-  &:hover:not(:disabled) {
-    &::after {
-      width: 100%;
-    }
-  }
-
-  &:focus-visible {
-    outline: 2px solid var(--text-primary);
-    outline-offset: 4px;
-  }
 }
 
-// Boton terciario (sutil)
+.boton--fantasma::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: var(--text-primary);
+  transition: width var(--duration-base) var(--ease-premium);
+}
+
+.boton--fantasma:hover:not(:disabled)::after {
+  width: 100%;
+}
+
+.boton--fantasma:focus-visible {
+  outline: 2px solid var(--text-primary);
+  outline-offset: 4px;
+}
+
+/* Boton terciario (sutil) */
 .boton--terciario {
   background-color: var(--bg-tertiary);
   color: var(--text-primary);
   border: 1px solid transparent;
-
-  &:hover:not(:disabled) {
-    background-color: var(--border-medium);
-  }
-
-  &:active:not(:disabled) {
-    opacity: 0.85;
-  }
-
-  &:focus-visible {
-    outline: 2px solid var(--text-primary);
-    outline-offset: 2px;
-  }
 }
 
-// Boton peligro (rojo minimalista)
+.boton--terciario:hover:not(:disabled) {
+  background-color: var(--border-medium);
+}
+
+.boton--terciario:active:not(:disabled) {
+  opacity: 0.85;
+}
+
+.boton--terciario:focus-visible {
+  outline: 2px solid var(--text-primary);
+  outline-offset: 2px;
+}
+
+/* Boton peligro (rojo minimalista) */
 .boton--peligro {
   background-color: transparent;
   color: var(--button-red);
   border: 1px solid var(--button-red);
+}
 
-  &:hover:not(:disabled) {
-    background-color: var(--button-red);
-    color: var(--bg-body);
-  }
+.boton--peligro:hover:not(:disabled) {
+  background-color: var(--button-red);
+  color: var(--bg-body);
+}
 
-  &:active:not(:disabled) {
-    background-color: var(--button-red-hover);
-  }
+.boton--peligro:active:not(:disabled) {
+  background-color: var(--button-red-hover);
+}
 
-  &:focus-visible {
-    outline: 2px solid var(--button-red);
-    outline-offset: 2px;
-  }
+.boton--peligro:focus-visible {
+  outline: 2px solid var(--button-red);
+  outline-offset: 2px;
 }
 
 
@@ -185,11 +184,11 @@
 .boton__icono {
   display: inline-flex;
   align-items: center;
+}
 
-  svg {
-    width: 1.125rem;
-    height: 1.125rem;
-  }
+.boton__icono svg {
+  width: 1.125rem;
+  height: 1.125rem;
 }
 
 .boton__icono--izquierda {
@@ -201,7 +200,7 @@
 }
 
 .boton__texto {
-  // Espacio para texto si se necesita estilizar separadamente
+  /* Espacio para texto si se necesita estilizar separadamente */
 }
 
 
@@ -213,18 +212,18 @@
   position: relative;
   color: transparent;
   pointer-events: none;
+}
 
-  &::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 1rem;
-    height: 1rem;
-    margin: -0.5rem 0 0 -0.5rem;
-    border: 2px solid currentColor;
-    border-right-color: transparent;
-    border-radius: 50%;
-    animation: spin var(--duration-slow) linear infinite;
-  }
+.boton--cargando::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1rem;
+  height: 1rem;
+  margin: -0.5rem 0 0 -0.5rem;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spin var(--duration-slow) linear infinite;
 }

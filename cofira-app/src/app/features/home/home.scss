@@ -1,28 +1,28 @@
 .faq-section {
   padding: 4rem 0;
   background: var(--bg-secondary);
+}
 
-  &__header {
-    text-align: center;
-    margin-bottom: 3rem;
-  }
+.faq-section__header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
 
-  &__title {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: var(--text-primary);
-    margin-bottom: 0.5rem;
-  }
+.faq-section__title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
 
-  &__subtitle {
-    font-size: 1.125rem;
-    color: var(--text-secondary);
-  }
+.faq-section__subtitle {
+  font-size: 1.125rem;
+  color: var(--text-secondary);
+}
 
-  &__answer {
-    font-size: 1rem;
-    line-height: 1.6;
-    color: var(--text-secondary);
-    margin: 0;
-  }
+.faq-section__answer {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin: 0;
 }

@@ -9,44 +9,44 @@
   border: 1px solid var(--border-light);
   max-width: 600px;
   margin: var(--spacing-size-xl) auto;
+}
 
-  &__header {
-    text-align: center;
-    margin-bottom: var(--spacing-size-xxl);
+.onboarding-about__header {
+  text-align: center;
+  margin-bottom: var(--spacing-size-xxl);
+}
 
-    h1 {
-      @include tipografia-titulo;
-      font-size: var(--font-size-3xl);
-      margin-bottom: var(--spacing-size-s);
-      color: var(--text-primary);
-    }
+.onboarding-about__header h1 {
+  @include tipografia-titulo;
+  font-size: var(--font-size-3xl);
+  margin-bottom: var(--spacing-size-s);
+  color: var(--text-primary);
+}
 
-    p {
-      font-size: var(--font-size-md);
-      color: var(--text-secondary);
-    }
-  }
+.onboarding-about__header p {
+  font-size: var(--font-size-md);
+  color: var(--text-secondary);
+}
 
-  &__form {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-size-m);
-  }
+.onboarding-about__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-size-m);
+}
 
-  &__gender-options {
-    display: flex;
-    gap: var(--spacing-size-s);
-    flex-wrap: wrap;
-    justify-content: center;
+.onboarding-about__gender-options {
+  display: flex;
+  gap: var(--spacing-size-s);
+  flex-wrap: wrap;
+  justify-content: center;
+}
 
-    .c-button {
-      flex: 1 1 auto;
-      max-width: 180px;
-    }
-  }
+.onboarding-about__gender-options .c-button {
+  flex: 1 1 auto;
+  max-width: 180px;
+}
 
-  &__footer {
-    margin-top: var(--spacing-size-xl);
-    text-align: center;
-  }
+.onboarding-about__footer {
+  margin-top: var(--spacing-size-xl);
+  text-align: center;
 }

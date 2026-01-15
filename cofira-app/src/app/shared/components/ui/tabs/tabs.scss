@@ -20,16 +20,16 @@
   overflow-x: auto;
   overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
+}
 
-  // Ocultar scrollbar
-  &::-webkit-scrollbar {
-    height: 2px;
-  }
+// Ocultar scrollbar
+.c-tabs__header::-webkit-scrollbar {
+  height: 2px;
+}
 
-  &::-webkit-scrollbar-thumb {
-    background-color: var(--text-tertiary);
-    border-radius: 1px;
-  }
+.c-tabs__header::-webkit-scrollbar-thumb {
+  background-color: var(--text-tertiary);
+  border-radius: 1px;
 }
 
 // ============================================================================
@@ -52,34 +52,34 @@
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
+}
 
-  &:hover:not(&--disabled) {
-    color: var(--text-primary);
-    background-color: var(--bg-secondary);
-  }
+.c-tabs__tab:hover:not(.c-tabs__tab--disabled) {
+  color: var(--text-primary);
+  background-color: var(--bg-secondary);
+}
 
-  &:focus-visible {
-    outline: 2px solid var(--color-brand-primary, #4CAF50);
-    outline-offset: -2px;
-    z-index: 1;
-  }
+.c-tabs__tab:focus-visible {
+  outline: 2px solid var(--color-brand-primary, #4CAF50);
+  outline-offset: -2px;
+  z-index: 1;
+}
 
-  // Estado activo
-  &--active {
-    color: var(--text-primary);
-    font-weight: 600;
-  }
+// Estado activo
+.c-tabs__tab--active {
+  color: var(--text-primary);
+  font-weight: 600;
+}
 
-  // Estado deshabilitado
-  &--disabled {
-    color: var(--text-tertiary);
-    cursor: not-allowed;
-    opacity: 0.5;
+// Estado deshabilitado
+.c-tabs__tab--disabled {
+  color: var(--text-tertiary);
+  cursor: not-allowed;
+  opacity: 0.5;
+}
 
-    &:hover {
-      background: transparent;
-    }
-  }
+.c-tabs__tab--disabled:hover {
+  background: transparent;
 }
 
 // ============================================================================
@@ -112,59 +112,66 @@
 .c-tab-panel {
   width: 100%;
   animation-fill-mode: both;
+}
 
-  // Estilos para contenido común
-  p {
-    margin-bottom: 1rem;
+// Estilos para contenido comun
+.c-tab-panel p {
+  margin-bottom: 1rem;
+}
 
-    &:last-child {
-      margin-bottom: 0;
-    }
-  }
+.c-tab-panel p:last-child {
+  margin-bottom: 0;
+}
 
-  h1, h2, h3, h4, h5, h6 {
-    margin-bottom: 0.75rem;
-    color: var(--text-primary);
-  }
+.c-tab-panel h1,
+.c-tab-panel h2,
+.c-tab-panel h3,
+.c-tab-panel h4,
+.c-tab-panel h5,
+.c-tab-panel h6 {
+  margin-bottom: 0.75rem;
+  color: var(--text-primary);
+}
 
-  ul, ol {
-    margin-left: 1.25rem;
-    margin-bottom: 1rem;
+.c-tab-panel ul,
+.c-tab-panel ol {
+  margin-left: 1.25rem;
+  margin-bottom: 1rem;
+}
 
-    li {
-      margin-bottom: 0.5rem;
-    }
-  }
+.c-tab-panel ul li,
+.c-tab-panel ol li {
+  margin-bottom: 0.5rem;
+}
 
-  a {
-    color: var(--color-brand-primary, #4CAF50);
-    text-decoration: underline;
+.c-tab-panel a {
+  color: var(--color-brand-primary, #4CAF50);
+  text-decoration: underline;
+}
 
-    &:hover {
-      text-decoration: none;
-    }
-  }
+.c-tab-panel a:hover {
+  text-decoration: none;
+}
 
-  code {
-    padding: 0.125rem 0.375rem;
-    background-color: var(--bg-tertiary);
-    border-radius: 0.25rem;
-    font-size: 0.875em;
-    font-family: monospace;
-  }
+.c-tab-panel code {
+  padding: 0.125rem 0.375rem;
+  background-color: var(--bg-tertiary);
+  border-radius: 0.25rem;
+  font-size: 0.875em;
+  font-family: monospace;
+}
 
-  pre {
-    padding: 1rem;
-    background-color: var(--bg-tertiary);
-    border-radius: 0.375rem;
-    overflow-x: auto;
-    margin-bottom: 1rem;
+.c-tab-panel pre {
+  padding: 1rem;
+  background-color: var(--bg-tertiary);
+  border-radius: 0.375rem;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
 
-    code {
-      padding: 0;
-      background: transparent;
-    }
-  }
+.c-tab-panel pre code {
+  padding: 0;
+  background: transparent;
 }
 
 // ============================================================================
@@ -172,44 +179,38 @@
 // ============================================================================
 
 // Tabs con pills (opcional)
-.c-tabs--pills {
-  .c-tabs__header {
-    border-bottom: none;
-    gap: 0.5rem;
-  }
+.c-tabs--pills .c-tabs__header {
+  border-bottom: none;
+  gap: 0.5rem;
+}
 
-  .c-tabs__tab {
-    border-radius: 0.5rem;
-    border-bottom: none;
+.c-tabs--pills .c-tabs__tab {
+  border-radius: 0.5rem;
+  border-bottom: none;
+}
 
-    &--active {
-      background-color: var(--color-brand-primary, #4CAF50);
-      color: #ffffff;
+.c-tabs--pills .c-tabs__tab--active {
+  background-color: var(--color-brand-primary, #4CAF50);
+  color: #ffffff;
+}
 
-      &:hover {
-        background-color: var(--color-brand-primary, #4CAF50);
-      }
-    }
-  }
+.c-tabs--pills .c-tabs__tab--active:hover {
+  background-color: var(--color-brand-primary, #4CAF50);
+}
 
-  .c-tabs__indicator {
-    display: none;
-  }
+.c-tabs--pills .c-tabs__indicator {
+  display: none;
 }
 
 // Tabs centrados
-.c-tabs--centered {
-  .c-tabs__header {
-    justify-content: center;
-  }
+.c-tabs--centered .c-tabs__header {
+  justify-content: center;
 }
 
 // Tabs de ancho completo
-.c-tabs--full-width {
-  .c-tabs__tab {
-    flex: 1;
-    text-align: center;
-  }
+.c-tabs--full-width .c-tabs__tab {
+  flex: 1;
+  text-align: center;
 }
 
 // ============================================================================
@@ -226,11 +227,9 @@
     padding: 1rem 0;
   }
 
-  // Hacer scroll horizontal más visible en móvil
-  .c-tabs__header {
-    &::-webkit-scrollbar {
-      height: 3px;
-    }
+  // Hacer scroll horizontal mas visible en movil
+  .c-tabs__header::-webkit-scrollbar {
+    height: 3px;
   }
 }
 

@@ -4,19 +4,19 @@
 .food-item {
   @include flex-between;
   padding: var(--spacing-size-xs) 0;
+}
 
-  &:not(:last-child) {
-    border-bottom: 1px solid var(--border-light);
-  }
+.food-item:not(:last-child) {
+  border-bottom: 1px solid var(--border-light);
+}
 
-  &__name {
-    color: var(--text-primary);
-    font-size: var(--font-size-sm);
-  }
+.food-item__name {
+  color: var(--text-primary);
+  font-size: var(--font-size-sm);
+}
 
-  &__quantity {
-    color: var(--text-muted);
-    font-size: var(--font-size-sm);
-    font-weight: var(--font-weight-medium);
-  }
+.food-item__quantity {
+  color: var(--text-muted);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
 }

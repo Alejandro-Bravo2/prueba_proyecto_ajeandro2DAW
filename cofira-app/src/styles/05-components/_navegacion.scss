@@ -2,6 +2,7 @@
    05-COMPONENTS: Navegacion
    Componentes de navegacion reutilizables
    Nomenclatura BEM en espanol
+   SIN SELECTORES ANIDADOS
    ============================================ */
 
 @import '../01-tools/mixins';
@@ -29,10 +30,10 @@
   font-size: var(--font-size-xl);
   color: var(--amarillo-normal);
   text-decoration: none;
+}
 
-  &:hover {
-    color: var(--amarillo-normal-hover);
-  }
+.navegacion__logo:hover {
+  color: var(--amarillo-normal-hover);
 }
 
 .navegacion__contenido {
@@ -50,7 +51,7 @@
 }
 
 .navegacion__item {
-  // Para estilos especificos de items si es necesario
+  /* Para estilos especificos de items si es necesario */
 }
 
 .navegacion__enlace {
@@ -60,11 +61,11 @@
   padding: var(--spacing-size-xss) var(--spacing-size-s);
   border-radius: var(--radius-xss);
   transition: all var(--duration-fast);
+}
 
-  &:hover {
-    color: var(--amarillo-normal);
-    background-color: var(--gris-dark);
-  }
+.navegacion__enlace:hover {
+  color: var(--amarillo-normal);
+  background-color: var(--gris-dark);
 }
 
 .navegacion__enlace--activo {
@@ -88,8 +89,10 @@
   padding-left: var(--spacing-size-l);
   border-radius: var(--radius-l);
   border: none;
+}
 
-  @include responsive('M') {
+@media (min-width: 768px) {
+  .navegacion__buscador-input {
     width: 300px;
   }
 }
@@ -117,8 +120,10 @@
   background: transparent;
   border: none;
   cursor: pointer;
+}
 
-  @include responsive('M') {
+@media (min-width: 768px) {
+  .navegacion__hamburguesa {
     display: none;
   }
 }
@@ -131,7 +136,7 @@
   transition: all var(--duration-base);
 }
 
-// Menu movil
+/* Menu movil */
 .navegacion-movil {
   position: fixed;
   top: 0;
@@ -142,10 +147,10 @@
   background-color: var(--gris-dark);
   z-index: 1000;
   transition: right var(--duration-base);
+}
 
-  &--abierto {
-    right: 0;
-  }
+.navegacion-movil--abierto {
+  right: 0;
 }
 
 .navegacion-movil__overlay {
@@ -159,11 +164,11 @@
   opacity: 0;
   visibility: hidden;
   transition: all var(--duration-base);
+}
 
-  &--visible {
-    opacity: 1;
-    visibility: visible;
-  }
+.navegacion-movil__overlay--visible {
+  opacity: 1;
+  visibility: visible;
 }
 
 .navegacion-movil__cabecera {
@@ -195,11 +200,11 @@
   text-decoration: none;
   padding: var(--spacing-size-s);
   border-radius: var(--radius-xss);
+}
 
-  &:hover {
-    background-color: var(--gris-normal);
-    color: var(--amarillo-normal);
-  }
+.navegacion-movil__enlace:hover {
+  background-color: var(--gris-normal);
+  color: var(--amarillo-normal);
 }
 
 
@@ -242,10 +247,10 @@
   font-size: var(--font-size-sm);
   color: var(--blanco-dark);
   text-decoration: none;
+}
 
-  &:hover {
-    color: var(--amarillo-normal);
-  }
+.pie__enlace:hover {
+  color: var(--amarillo-normal);
 }
 
 .pie__copyright {
@@ -270,14 +275,14 @@
   color: var(--text-dark);
   text-decoration: none;
   transition: all var(--duration-fast);
+}
 
-  &:hover {
-    background-color: var(--amarillo-normal);
-    color: var(--negro-normal);
-  }
+.pie__red-social:hover {
+  background-color: var(--amarillo-normal);
+  color: var(--negro-normal);
+}
 
-  svg {
-    width: 1.25rem;
-    height: 1.25rem;
-  }
+.pie__red-social svg {
+  width: 1.25rem;
+  height: 1.25rem;
 }

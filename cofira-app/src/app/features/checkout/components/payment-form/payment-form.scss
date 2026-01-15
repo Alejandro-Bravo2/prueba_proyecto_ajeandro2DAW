@@ -5,190 +5,194 @@
   display: flex;
   flex-direction: column;
   gap: var(--spacing-size-l);
+}
 
-  &__header {
-    text-align: center;
+.payment-form__header {
+  text-align: center;
+}
+
+.payment-form__title {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-size-xss);
+}
+
+.payment-form__subtitle {
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+}
+
+.payment-form__methods {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-size-m);
+}
+
+@include responsive-down('s') {
+  .payment-form__methods {
+    grid-template-columns: 1fr;
   }
+}
 
-  &__title {
-    font-size: var(--font-size-xl);
-    font-weight: var(--font-weight-medium);
-    color: var(--text-primary);
-    margin-bottom: var(--spacing-size-xss);
+.payment-form__method {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-size-s);
+  padding: var(--spacing-size-l);
+  background: rgba(255, 255, 255, 0.02);
+  border: 2px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-m);
+  cursor: pointer;
+  transition: all var(--duration-base) var(--ease-premium);
+}
+
+.payment-form__method:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.payment-form__method--selected {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--text-primary);
+}
+
+.payment-form__method--selected .payment-form__method-icon {
+  color: var(--text-primary);
+}
+
+.payment-form__method-icon {
+  width: 40px;
+  height: 40px;
+  color: var(--text-muted);
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.payment-form__method-name {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+}
+
+.payment-form__method-desc {
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+}
+
+.payment-form__form {
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.04) 0%,
+    rgba(255, 255, 255, 0.01) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-l);
+  padding: var(--spacing-size-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-size-l);
+  animation: slideUp var(--duration-base) var(--ease-premium);
+}
+
+.payment-form__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-size-m);
+}
+
+@include responsive-down('xs') {
+  .payment-form__row {
+    grid-template-columns: 1fr;
   }
+}
 
-  &__subtitle {
-    font-size: var(--font-size-sm);
-    color: var(--text-muted);
-  }
+.payment-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-size-xss);
+}
 
-  &__methods {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--spacing-size-m);
+.payment-form__label {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-secondary);
+}
 
-    @include responsive-down('s') {
-      grid-template-columns: 1fr;
-    }
-  }
+.payment-form__input {
+  width: 100%;
+  padding: var(--spacing-size-s) var(--spacing-size-m);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-s);
+  color: var(--text-primary);
+  font-size: var(--font-size-md);
+  font-family: inherit;
+  transition: all var(--duration-fast) var(--ease-out);
+}
 
-  &__method {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--spacing-size-s);
-    padding: var(--spacing-size-l);
-    background: rgba(255, 255, 255, 0.02);
-    border: 2px solid rgba(255, 255, 255, 0.06);
-    border-radius: var(--radius-m);
-    cursor: pointer;
-    transition: all var(--duration-base) var(--ease-premium);
+.payment-form__input::placeholder {
+  color: var(--text-muted);
+}
 
-    &:hover {
-      background: rgba(255, 255, 255, 0.04);
-      border-color: rgba(255, 255, 255, 0.1);
-    }
+.payment-form__input:focus {
+  outline: none;
+  border-color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.06);
+}
 
-    &--selected {
-      background: rgba(255, 255, 255, 0.08);
-      border-color: var(--text-primary);
+.payment-form__input--error {
+  border-color: #ef4444;
+}
 
-      .payment-form__method-icon {
-        color: var(--text-primary);
-      }
-    }
-  }
+.payment-form__error {
+  font-size: var(--font-size-xs);
+  color: #ef4444;
+}
 
-  &__method-icon {
-    width: 40px;
-    height: 40px;
-    color: var(--text-muted);
-    transition: color var(--duration-fast) var(--ease-out);
-  }
+.payment-form__info {
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+  text-align: center;
+  padding: var(--spacing-size-m);
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: var(--radius-s);
+}
 
-  &__method-name {
-    font-size: var(--font-size-md);
-    font-weight: var(--font-weight-medium);
-    color: var(--text-primary);
-  }
+.payment-form__error-banner {
+  padding: var(--spacing-size-m);
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: var(--radius-s);
+  color: #ef4444;
+  font-size: var(--font-size-sm);
+  text-align: center;
+}
 
-  &__method-desc {
-    font-size: var(--font-size-xs);
-    color: var(--text-muted);
-  }
+.payment-form__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-size-m);
+}
 
-  &__form {
-    background: linear-gradient(
-      145deg,
-      rgba(255, 255, 255, 0.04) 0%,
-      rgba(255, 255, 255, 0.01) 100%
-    );
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: var(--radius-l);
-    padding: var(--spacing-size-xl);
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-size-l);
-    animation: slideUp var(--duration-base) var(--ease-premium);
-  }
+.payment-form__back-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  padding: var(--spacing-size-xs);
+  transition: color var(--duration-fast) var(--ease-out);
+}
 
-  &__row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--spacing-size-m);
+.payment-form__back-btn:hover:not(:disabled) {
+  color: var(--text-primary);
+}
 
-    @include responsive-down('xs') {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  &__field {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-size-xss);
-  }
-
-  &__label {
-    font-size: var(--font-size-sm);
-    font-weight: var(--font-weight-medium);
-    color: var(--text-secondary);
-  }
-
-  &__input {
-    width: 100%;
-    padding: var(--spacing-size-s) var(--spacing-size-m);
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: var(--radius-s);
-    color: var(--text-primary);
-    font-size: var(--font-size-md);
-    font-family: inherit;
-    transition: all var(--duration-fast) var(--ease-out);
-
-    &::placeholder {
-      color: var(--text-muted);
-    }
-
-    &:focus {
-      outline: none;
-      border-color: var(--text-primary);
-      background: rgba(255, 255, 255, 0.06);
-    }
-
-    &--error {
-      border-color: #ef4444;
-    }
-  }
-
-  &__error {
-    font-size: var(--font-size-xs);
-    color: #ef4444;
-  }
-
-  &__info {
-    font-size: var(--font-size-sm);
-    color: var(--text-muted);
-    text-align: center;
-    padding: var(--spacing-size-m);
-    background: rgba(255, 255, 255, 0.02);
-    border-radius: var(--radius-s);
-  }
-
-  &__error-banner {
-    padding: var(--spacing-size-m);
-    background: rgba(239, 68, 68, 0.1);
-    border: 1px solid rgba(239, 68, 68, 0.3);
-    border-radius: var(--radius-s);
-    color: #ef4444;
-    font-size: var(--font-size-sm);
-    text-align: center;
-  }
-
-  &__actions {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--spacing-size-m);
-  }
-
-  &__back-btn {
-    background: none;
-    border: none;
-    color: var(--text-muted);
-    font-size: var(--font-size-sm);
-    cursor: pointer;
-    padding: var(--spacing-size-xs);
-    transition: color var(--duration-fast) var(--ease-out);
-
-    &:hover:not(:disabled) {
-      color: var(--text-primary);
-    }
-
-    &:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-  }
+.payment-form__back-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 @keyframes slideUp {

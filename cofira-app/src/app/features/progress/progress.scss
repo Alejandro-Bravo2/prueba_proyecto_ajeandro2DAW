@@ -7,74 +7,96 @@
   margin: 0 auto;
   padding-left: var(--spacing-size-s);
   padding-right: var(--spacing-size-s);
+}
 
-  @include responsive('xs') {
+@include responsive('xs') {
+  .progress-page {
     padding-left: var(--spacing-size-m);
     padding-right: var(--spacing-size-m);
   }
+}
 
-  @include responsive('s') {
+@include responsive('s') {
+  .progress-page {
     padding-left: var(--spacing-size-l);
     padding-right: var(--spacing-size-l);
   }
+}
 
-  @include responsive('L') {
+@include responsive('L') {
+  .progress-page {
     padding-left: var(--spacing-size-xl);
     padding-right: var(--spacing-size-xl);
   }
+}
 
-  &__header {
+.progress-page__header {
+  margin-bottom: var(--spacing-size-l);
+  text-align: center;
+}
+
+@include responsive('s') {
+  .progress-page__header {
+    margin-bottom: var(--spacing-size-xl);
+  }
+}
+
+@include responsive('M') {
+  .progress-page__header {
+    margin-bottom: var(--spacing-size-xxl);
+  }
+}
+
+.progress-page__header h1 {
+  @include heading-responsive;
+  margin: 0;
+  color: var(--text-primary);
+}
+
+.progress-page__search {
+  margin-bottom: var(--spacing-size-m);
+}
+
+@include responsive('s') {
+  .progress-page__search {
     margin-bottom: var(--spacing-size-l);
-    text-align: center;
-
-    @include responsive('s') {
-      margin-bottom: var(--spacing-size-xl);
-    }
-
-    @include responsive('M') {
-      margin-bottom: var(--spacing-size-xxl);
-    }
-
-    h1 {
-      @include heading-responsive;
-      margin: 0;
-      color: var(--text-primary);
-    }
   }
+}
 
-  &__search {
-    margin-bottom: var(--spacing-size-m);
-
-    @include responsive('s') {
-      margin-bottom: var(--spacing-size-l);
-    }
-
-    @include responsive('M') {
-      display: flex;
-      justify-content: center;
-    }
+@include responsive('M') {
+  .progress-page__search {
+    display: flex;
+    justify-content: center;
   }
+}
 
-  &__content {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--spacing-size-m);
+.progress-page__content {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-size-m);
+}
 
-    @include responsive('xs') {
-      gap: var(--spacing-size-l);
-    }
+@include responsive('xs') {
+  .progress-page__content {
+    gap: var(--spacing-size-l);
+  }
+}
 
-    @include responsive('s') {
-      gap: var(--spacing-size-xl);
-    }
+@include responsive('s') {
+  .progress-page__content {
+    gap: var(--spacing-size-xl);
+  }
+}
 
-    @include responsive('M') {
-      grid-template-columns: repeat(2, 1fr);
-    }
+@include responsive('M') {
+  .progress-page__content {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
 
-    @include responsive('xl') {
-      gap: var(--spacing-size-xxl);
-    }
+@include responsive('xl') {
+  .progress-page__content {
+    gap: var(--spacing-size-xxl);
   }
 }
 
@@ -87,8 +109,10 @@
   margin-bottom: var(--spacing-size-m);
   text-align: center;
   font-size: var(--font-size-sm);
+}
 
-  @include responsive('s') {
+@include responsive('s') {
+  .error-message {
     padding: var(--spacing-size-m);
     margin-bottom: var(--spacing-size-l);
     font-size: var(--font-size-md);
@@ -99,28 +123,36 @@
 app-progress-evaluation {
   display: block;
   margin-bottom: var(--spacing-size-l);
+}
 
-  @include responsive('s') {
+@include responsive('s') {
+  app-progress-evaluation {
     margin-bottom: var(--spacing-size-xl);
   }
+}
 
-  @include responsive('M') {
+@include responsive('M') {
+  app-progress-evaluation {
     margin-bottom: var(--spacing-size-xxl);
   }
 }
 
-// Estilos de búsqueda responsive
+// Estilos de busqueda responsive
 .search-input-wrapper {
   position: relative;
   display: flex;
   align-items: center;
   width: 100%;
+}
 
-  @include responsive('M') {
+@include responsive('M') {
+  .search-input-wrapper {
     max-width: 400px;
   }
+}
 
-  @include responsive('L') {
+@include responsive('L') {
+  .search-input-wrapper {
     max-width: 500px;
   }
 }
@@ -132,8 +164,10 @@ app-progress-evaluation {
   pointer-events: none;
   width: 16px;
   height: 16px;
+}
 
-  @include responsive('s') {
+@include responsive('s') {
+  .search-icon {
     width: 20px;
     height: 20px;
   }
@@ -148,23 +182,27 @@ app-progress-evaluation {
   color: var(--text-primary);
   font-size: var(--font-size-sm);
   transition: border-color 0.2s, box-shadow 0.2s;
+}
 
-  @include responsive('s') {
+@include responsive('s') {
+  .search-input {
     padding: var(--spacing-size-s) var(--spacing-size-s) var(--spacing-size-s) var(--spacing-size-xxl);
     font-size: var(--font-size-md);
   }
+}
 
-  &:focus {
-    outline: none;
-    border-color: var(--negro-normal);
-    box-shadow: 0 0 0 3px var(--negro-alpha);
-  }
+.search-input:focus {
+  outline: none;
+  border-color: var(--negro-normal);
+  box-shadow: 0 0 0 3px var(--negro-alpha);
+}
 
-  &::placeholder {
-    color: var(--text-muted);
-  }
+.search-input::placeholder {
+  color: var(--text-muted);
+}
 
-  @include touch-device {
+@include touch-device {
+  .search-input {
     font-size: 16px; // Previene zoom en iOS
   }
 }
@@ -184,17 +222,21 @@ app-progress-evaluation {
   transition: color 0.2s, background-color 0.2s;
   min-width: 32px;
   min-height: 32px;
+}
 
-  @include responsive('s') {
+@include responsive('s') {
+  .search-clear {
     right: var(--spacing-size-s);
   }
+}
 
-  &:hover {
-    color: var(--text-primary);
-    background: var(--bg-secondary);
-  }
+.search-clear:hover {
+  color: var(--text-primary);
+  background: var(--bg-secondary);
+}
 
-  @include touch-device {
+@include touch-device {
+  .search-clear {
     min-width: 44px;
     min-height: 44px;
   }
@@ -205,17 +247,21 @@ app-progress-evaluation {
   font-size: var(--font-size-xs);
   color: var(--text-secondary);
   text-align: center;
+}
 
-  @include responsive('s') {
+@include responsive('s') {
+  .search-results-count {
     font-size: var(--font-size-sm);
   }
+}
 
-  @include responsive('M') {
+@include responsive('M') {
+  .search-results-count {
     text-align: left;
   }
 }
 
-// Estilos de paginación responsive
+// Estilos de paginacion responsive
 .pagination {
   display: flex;
   flex-wrap: wrap;
@@ -224,62 +270,70 @@ app-progress-evaluation {
   gap: var(--spacing-size-s);
   margin-top: var(--spacing-size-m);
   padding: var(--spacing-size-s) 0;
+}
 
-  @include responsive('s') {
+@include responsive('s') {
+  .pagination {
     gap: var(--spacing-size-m);
     margin-top: var(--spacing-size-l);
     padding: var(--spacing-size-m) 0;
   }
+}
 
-  &__btn {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--spacing-size-xs);
-    padding: var(--spacing-size-xs) var(--spacing-size-s);
-    border: 1px solid var(--border-light);
-    border-radius: var(--radius-m);
-    background: var(--bg-card);
-    color: var(--text-primary);
-    font-size: var(--font-size-sm);
-    cursor: pointer;
-    transition: background-color 0.2s, border-color 0.2s;
-    min-height: 36px;
+.pagination__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-size-xs);
+  padding: var(--spacing-size-xs) var(--spacing-size-s);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-m);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s;
+  min-height: 36px;
+}
 
-    @include responsive('s') {
-      padding: var(--spacing-size-s) var(--spacing-size-m);
-      font-size: var(--font-size-md);
-      min-height: 40px;
-    }
-
-    @include touch-device {
-      min-height: 44px;
-      min-width: 44px;
-    }
-
-    &:hover:not(:disabled) {
-      background: var(--bg-secondary);
-      border-color: var(--negro-normal);
-    }
-
-    &:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
+@include responsive('s') {
+  .pagination__btn {
+    padding: var(--spacing-size-s) var(--spacing-size-m);
+    font-size: var(--font-size-md);
+    min-height: 40px;
   }
+}
 
-  &__info {
-    font-size: var(--font-size-sm);
-    color: var(--text-secondary);
-    order: -1;
-    width: 100%;
-    text-align: center;
-    margin-bottom: var(--spacing-size-xs);
+@include touch-device {
+  .pagination__btn {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
 
-    @include responsive('s') {
-      font-size: var(--font-size-md);
-      order: 0;
-      width: auto;
-      margin-bottom: 0;
-    }
+.pagination__btn:hover:not(:disabled) {
+  background: var(--bg-secondary);
+  border-color: var(--negro-normal);
+}
+
+.pagination__btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination__info {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  order: -1;
+  width: 100%;
+  text-align: center;
+  margin-bottom: var(--spacing-size-xs);
+}
+
+@include responsive('s') {
+  .pagination__info {
+    font-size: var(--font-size-md);
+    order: 0;
+    width: auto;
+    margin-bottom: 0;
   }
 }

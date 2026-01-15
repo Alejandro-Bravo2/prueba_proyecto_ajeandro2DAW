@@ -1,258 +1,263 @@
 @import '../../../../../styles/00-settings/css-variables';
 @import '../../../../../styles/01-tools/mixins';
 
-.preferences-notifications {
-  &__section {
-    margin-bottom: var(--spacing-size-l);
-    padding: var(--spacing-size-l);
-    border-radius: var(--radius-l);
-    animation: notificationsFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+.preferences-notifications__section {
+  margin-bottom: var(--spacing-size-l);
+  padding: var(--spacing-size-l);
+  border-radius: var(--radius-l);
+  animation: notificationsFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.04) 0%,
+    rgba(255, 255, 255, 0.01) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  @include transition-premium;
+}
 
-    // Premium glass background
-    background: linear-gradient(
-      145deg,
-      rgba(255, 255, 255, 0.04) 0%,
-      rgba(255, 255, 255, 0.01) 100%
-    );
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    @include transition-premium;
+.preferences-notifications__section:nth-child(1) {
+  animation-delay: 0s;
+}
 
-    &:nth-child(1) { animation-delay: 0s; }
-    &:nth-child(2) { animation-delay: 0.1s; }
-    &:nth-child(3) { animation-delay: 0.2s; }
+.preferences-notifications__section:nth-child(2) {
+  animation-delay: 0.1s;
+}
 
-    @include responsive('s') {
-      margin-bottom: var(--spacing-size-xl);
-      padding: var(--spacing-size-xl);
-    }
+.preferences-notifications__section:nth-child(3) {
+  animation-delay: 0.2s;
+}
 
-    &:last-child {
-      margin-bottom: 0;
-    }
+@include responsive('s') {
+  .preferences-notifications__section {
+    margin-bottom: var(--spacing-size-xl);
+    padding: var(--spacing-size-xl);
+  }
+}
 
-    &:hover {
-      border-color: rgba(255, 255, 255, 0.1);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    }
+.preferences-notifications__section:last-child {
+  margin-bottom: 0;
+}
+
+.preferences-notifications__section:hover {
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.preferences-notifications__section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--spacing-size-m);
+  margin-bottom: var(--spacing-size-l);
+  flex-wrap: wrap;
+}
+
+.preferences-notifications__section-info {
+  flex: 1;
+  min-width: 200px;
+}
+
+.preferences-notifications__section-title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin: 0 0 var(--spacing-size-xs);
+  letter-spacing: var(--letter-spacing-tight);
+}
+
+.preferences-notifications__description {
+  color: var(--text-muted);
+  margin: 0;
+  font-size: var(--font-size-sm);
+  line-height: 1.5;
+}
+
+.preferences-notifications__quick-actions {
+  display: flex;
+  gap: var(--spacing-size-xs);
+  flex-wrap: wrap;
+}
+
+.preferences-notifications__quick-btn {
+  padding: var(--spacing-size-s) var(--spacing-size-m);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-secondary);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  @include transition-premium;
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-wide);
+}
+
+.preferences-notifications__quick-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: var(--text-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.preferences-notifications__quick-btn:active {
+  transform: translateY(0);
+}
+
+.preferences-notifications__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-size-s);
+}
+
+.preferences-notifications__item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-size-m) var(--spacing-size-l);
+  border-radius: var(--radius-l);
+  gap: var(--spacing-size-m);
+  @include transition-premium;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.03) 0%,
+    rgba(255, 255, 255, 0.01) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.preferences-notifications__item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.08);
+  transform: translateX(4px);
+}
+
+.preferences-notifications__item-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-size-xss);
+  flex: 1;
+  min-width: 0;
+}
+
+.preferences-notifications__item-label {
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+  font-size: var(--font-size-sm);
+}
+
+@include responsive('s') {
+  .preferences-notifications__item-label {
+    font-size: var(--font-size-md);
+  }
+}
+
+.preferences-notifications__item-description {
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+@include responsive('s') {
+  .preferences-notifications__item-description {
+    font-size: var(--font-size-sm);
+  }
+}
+
+.preferences-notifications__toggle {
+  position: relative;
+  display: inline-block;
+  width: 52px;
+  height: 28px;
+  flex-shrink: 0;
+}
+
+.preferences-notifications__toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+
+.preferences-notifications__toggle input:checked + .preferences-notifications__toggle-slider {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.25) 0%,
+    rgba(255, 255, 255, 0.15) 100%
+  );
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.preferences-notifications__toggle input:checked + .preferences-notifications__toggle-slider::before {
+  transform: translateX(24px);
+  background: var(--text-primary);
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.3),
+    0 0 12px rgba(255, 255, 255, 0.2);
+}
+
+.preferences-notifications__toggle input:focus + .preferences-notifications__toggle-slider {
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+}
+
+.preferences-notifications__toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-pill);
+  @include transition-premium;
+}
+
+.preferences-notifications__toggle-slider::before {
+  position: absolute;
+  content: '';
+  height: 22px;
+  width: 22px;
+  left: 2px;
+  bottom: 2px;
+  background: var(--text-secondary);
+  border-radius: 50%;
+  @include transition-premium;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.preferences-notifications__toggle-slider:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+// Responsive adjustments
+@include responsive('xs') {
+  .preferences-notifications__section-header {
+    flex-direction: row;
+    align-items: center;
   }
 
-  &__section-header {
-    display: flex;
-    justify-content: space-between;
+  .preferences-notifications__quick-actions {
+    width: auto;
+  }
+}
+
+@media (max-width: 479px) {
+  .preferences-notifications__section-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .preferences-notifications__quick-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .preferences-notifications__item {
+    flex-direction: column;
     align-items: flex-start;
     gap: var(--spacing-size-m);
-    margin-bottom: var(--spacing-size-l);
-    flex-wrap: wrap;
   }
 
-  &__section-info {
-    flex: 1;
-    min-width: 200px;
-  }
-
-  &__section-title {
-    font-size: var(--font-size-lg);
-    font-weight: var(--font-weight-semibold);
-    color: var(--text-primary);
-    margin: 0 0 var(--spacing-size-xs);
-    letter-spacing: var(--letter-spacing-tight);
-  }
-
-  &__description {
-    color: var(--text-muted);
-    margin: 0;
-    font-size: var(--font-size-sm);
-    line-height: 1.5;
-  }
-
-  // Quick action buttons - pill style
-  &__quick-actions {
-    display: flex;
-    gap: var(--spacing-size-xs);
-    flex-wrap: wrap;
-  }
-
-  &__quick-btn {
-    padding: var(--spacing-size-s) var(--spacing-size-m);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: var(--radius-pill);
-    background: rgba(255, 255, 255, 0.04);
-    color: var(--text-secondary);
-    font-size: var(--font-size-xs);
-    font-weight: var(--font-weight-medium);
-    cursor: pointer;
-    @include transition-premium;
-    text-transform: uppercase;
-    letter-spacing: var(--letter-spacing-wide);
-
-    &:hover {
-      background: rgba(255, 255, 255, 0.1);
-      border-color: rgba(255, 255, 255, 0.15);
-      color: var(--text-primary);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-    }
-
-    &:active {
-      transform: translateY(0);
-    }
-  }
-
-  // Notification items list
-  &__list {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-size-s);
-  }
-
-  &__item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: var(--spacing-size-m) var(--spacing-size-l);
-    border-radius: var(--radius-l);
-    gap: var(--spacing-size-m);
-    @include transition-premium;
-
-    // Glass effect
-    background: linear-gradient(
-      135deg,
-      rgba(255, 255, 255, 0.03) 0%,
-      rgba(255, 255, 255, 0.01) 100%
-    );
-    border: 1px solid rgba(255, 255, 255, 0.04);
-
-    &:hover {
-      background: rgba(255, 255, 255, 0.05);
-      border-color: rgba(255, 255, 255, 0.08);
-      transform: translateX(4px);
-    }
-  }
-
-  &__item-content {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-size-xss);
-    flex: 1;
-    min-width: 0;
-  }
-
-  &__item-label {
-    font-weight: var(--font-weight-medium);
-    color: var(--text-primary);
-    font-size: var(--font-size-sm);
-
-    @include responsive('s') {
-      font-size: var(--font-size-md);
-    }
-  }
-
-  &__item-description {
-    font-size: var(--font-size-xs);
-    color: var(--text-muted);
-    line-height: 1.4;
-
-    @include responsive('s') {
-      font-size: var(--font-size-sm);
-    }
-  }
-
-  // Premium iOS-style toggle switch
-  &__toggle {
-    position: relative;
-    display: inline-block;
-    width: 52px;
-    height: 28px;
-    flex-shrink: 0;
-
-    input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-      position: absolute;
-
-      &:checked + .preferences-notifications__toggle-slider {
-        background: linear-gradient(
-          135deg,
-          rgba(255, 255, 255, 0.25) 0%,
-          rgba(255, 255, 255, 0.15) 100%
-        );
-        border-color: rgba(255, 255, 255, 0.25);
-
-        &::before {
-          transform: translateX(24px);
-          background: var(--text-primary);
-          box-shadow:
-            0 2px 8px rgba(0, 0, 0, 0.3),
-            0 0 12px rgba(255, 255, 255, 0.2);
-        }
-      }
-
-      &:focus + .preferences-notifications__toggle-slider {
-        box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
-      }
-    }
-  }
-
-  &__toggle-slider {
-    position: absolute;
-    cursor: pointer;
-    inset: 0;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: var(--radius-pill);
-    @include transition-premium;
-
-    &::before {
-      position: absolute;
-      content: '';
-      height: 22px;
-      width: 22px;
-      left: 2px;
-      bottom: 2px;
-      background: var(--text-secondary);
-      border-radius: 50%;
-      @include transition-premium;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-    }
-
-    &:hover {
-      background: rgba(255, 255, 255, 0.12);
-    }
-  }
-
-  // Responsive adjustments
-  @include responsive('xs') {
-    &__section-header {
-      flex-direction: row;
-      align-items: center;
-    }
-
-    &__quick-actions {
-      width: auto;
-    }
-  }
-
-  @media (max-width: 479px) {
-    &__section-header {
-      flex-direction: column;
-      align-items: stretch;
-    }
-
-    &__quick-actions {
-      width: 100%;
-      justify-content: flex-start;
-    }
-
-    &__item {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: var(--spacing-size-m);
-    }
-
-    &__toggle {
-      align-self: flex-end;
-    }
+  .preferences-notifications__toggle {
+    align-self: flex-end;
   }
 }
 
@@ -270,24 +275,22 @@
 
 // Reduced motion support
 @media (prefers-reduced-motion: reduce) {
-  .preferences-notifications {
-    &__section {
-      animation: none;
-    }
+  .preferences-notifications__section {
+    animation: none;
+  }
 
-    &__quick-btn,
-    &__item,
-    &__toggle-slider {
-      transition: none;
+  .preferences-notifications__quick-btn,
+  .preferences-notifications__item,
+  .preferences-notifications__toggle-slider {
+    transition: none;
+  }
 
-      &::before {
-        transition: none;
-      }
-    }
+  .preferences-notifications__toggle-slider::before {
+    transition: none;
+  }
 
-    &__quick-btn:hover,
-    &__item:hover {
-      transform: none;
-    }
+  .preferences-notifications__quick-btn:hover,
+  .preferences-notifications__item:hover {
+    transform: none;
   }
 }

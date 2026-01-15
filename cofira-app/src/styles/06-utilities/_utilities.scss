@@ -1,6 +1,7 @@
 /* ============================================
    06-UTILITIES: Clases utilitarias
    Clases de una sola propiedad para ajustes rapidos
+   SIN SELECTORES ANIDADOS
    ============================================ */
 
 /* --------------------------------------------
@@ -8,11 +9,11 @@
    -------------------------------------------- */
 
 .oculto {
-  display: none !important;
+  display: none;
 }
 
 .visible {
-  display: block !important;
+  display: block;
 }
 
 .invisible {
@@ -236,7 +237,7 @@
    ACCESIBILIDAD
    -------------------------------------------- */
 
-// Ocultar visualmente pero mantener accesible
+/* Ocultar visualmente pero mantener accesible */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -249,7 +250,7 @@
   border: 0;
 }
 
-// Skip link para navegacion por teclado
+/* Skip link para navegacion por teclado */
 .skip-link {
   position: absolute;
   top: -40px;
@@ -258,10 +259,10 @@
   color: var(--text-dark);
   padding: var(--spacing-size-s);
   z-index: 9999;
+}
 
-  &:focus {
-    top: 0;
-  }
+.skip-link:focus {
+  top: 0;
 }
 
 
@@ -377,25 +378,25 @@
   outline: none;
   transition: all var(--duration-base) var(--ease-premium);
   box-sizing: border-box;
+}
 
-  &::placeholder {
-    color: var(--text-muted);
-  }
+.c-form__input::placeholder {
+  color: var(--text-muted);
+}
 
-  &:hover:not(:focus) {
-    border-color: var(--border-medium);
-  }
+.c-form__input:hover:not(:focus) {
+  border-color: var(--border-medium);
+}
 
-  &:focus {
-    border-color: var(--text-primary);
-    background-color: var(--bg-card);
-    box-shadow: 0 0 0 3px var(--focus-ring, rgba(10, 10, 10, 0.05));
-  }
+.c-form__input:focus {
+  border-color: var(--text-primary);
+  background-color: var(--bg-card);
+  box-shadow: 0 0 0 3px var(--focus-ring, rgba(10, 10, 10, 0.05));
+}
 
-  &--error {
-    border-color: var(--button-red) !important;
-    background-color: rgba(220, 38, 38, 0.02);
-  }
+.c-form__input--error {
+  border-color: var(--button-red);
+  background-color: rgba(220, 38, 38, 0.02);
 }
 
 .c-form__error {
@@ -429,47 +430,47 @@
   user-select: none;
   padding: var(--spacing-size-s) var(--spacing-size-l);
   transition: all var(--duration-base) var(--ease-premium);
+}
 
-  &:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    pointer-events: none;
-  }
+.c-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
 }
 
 .c-button--primary {
   background-color: var(--text-primary);
   color: var(--bg-body);
   border: 1px solid var(--text-primary);
+}
 
-  &:hover:not(:disabled) {
-    opacity: 0.85;
-  }
+.c-button--primary:hover:not(:disabled) {
+  opacity: 0.85;
+}
 
-  &:active:not(:disabled) {
-    transform: scale(0.98);
-  }
+.c-button--primary:active:not(:disabled) {
+  transform: scale(0.98);
+}
 
-  &:focus-visible {
-    outline: 2px solid var(--text-primary);
-    outline-offset: 2px;
-  }
+.c-button--primary:focus-visible {
+  outline: 2px solid var(--text-primary);
+  outline-offset: 2px;
 }
 
 .c-button--secondary {
   background-color: transparent;
   color: var(--text-primary);
   border: 1px solid var(--text-primary);
+}
 
-  &:hover:not(:disabled) {
-    background-color: var(--text-primary);
-    color: var(--bg-body);
-  }
+.c-button--secondary:hover:not(:disabled) {
+  background-color: var(--text-primary);
+  color: var(--bg-body);
+}
 
-  &:focus-visible {
-    outline: 2px solid var(--text-primary);
-    outline-offset: 2px;
-  }
+.c-button--secondary:focus-visible {
+  outline: 2px solid var(--text-primary);
+  outline-offset: 2px;
 }
 
 .c-button--large {

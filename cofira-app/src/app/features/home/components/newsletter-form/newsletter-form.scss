@@ -6,55 +6,55 @@
   background-color: var(--bg-secondary);
   text-align: center;
   color: var(--text-primary);
+}
 
-  &__content {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 0 var(--spacing-size-m);
+.newsletter-form__content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-size-m);
+}
 
-    h2 {
-      @include tipografia-titulo;
-      font-size: var(--font-size-3xl);
-      font-weight: var(--font-weight-bold);
-      margin-bottom: var(--spacing-size-m);
-      color: var(--text-primary);
-    }
+.newsletter-form__content h2 {
+  @include tipografia-titulo;
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--spacing-size-m);
+  color: var(--text-primary);
+}
 
-    p {
-      font-size: var(--font-size-md);
-      color: var(--text-secondary);
-      margin-bottom: var(--spacing-size-xl);
-    }
+.newsletter-form__content p {
+  font-size: var(--font-size-md);
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-size-xl);
+}
+
+.newsletter-form__form {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-size-m);
+
+  @include responsive('M') {
+    grid-template-columns: repeat(3, 1fr);
   }
+}
 
-  &__form {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--spacing-size-m);
+.newsletter-form__form .c-form__group {
+  margin-bottom: 0;
+}
 
-    @include responsive('M') {
-      grid-template-columns: repeat(3, 1fr);
-    }
+.newsletter-form__form .c-form__label {
+  @include visually-hidden;
+}
 
-    .c-form__group {
-      margin-bottom: 0;
-    }
+.newsletter-form__submit-button {
+  width: 100%;
+  margin-top: var(--spacing-size-s);
 
-    .c-form__label {
-      @include visually-hidden;
-    }
-  }
-
-  &__submit-button {
-    width: 100%;
-    margin-top: var(--spacing-size-s);
-
-    @include responsive('M') {
-      grid-column: 1 / -1;
-      margin-top: var(--spacing-size-m);
-      width: auto;
-      max-width: 200px;
-      justify-self: center;
-    }
+  @include responsive('M') {
+    grid-column: 1 / -1;
+    margin-top: var(--spacing-size-m);
+    width: auto;
+    max-width: 200px;
+    justify-self: center;
   }
 }

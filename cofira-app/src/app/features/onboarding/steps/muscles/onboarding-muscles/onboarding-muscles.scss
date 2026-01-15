@@ -9,38 +9,38 @@
   border: 1px solid var(--border-light);
   max-width: 600px;
   margin: var(--spacing-size-xl) auto;
+}
 
-  &__header {
-    text-align: center;
-    margin-bottom: var(--spacing-size-xxl);
+.onboarding-muscles__header {
+  text-align: center;
+  margin-bottom: var(--spacing-size-xxl);
+}
 
-    h1 {
-      @include tipografia-titulo;
-      font-size: var(--font-size-3xl);
-      margin-bottom: var(--spacing-size-s);
-      color: var(--text-primary);
-    }
+.onboarding-muscles__header h1 {
+  @include tipografia-titulo;
+  font-size: var(--font-size-3xl);
+  margin-bottom: var(--spacing-size-s);
+  color: var(--text-primary);
+}
 
-    p {
-      font-size: var(--font-size-md);
-      color: var(--text-secondary);
-    }
-  }
+.onboarding-muscles__header p {
+  font-size: var(--font-size-md);
+  color: var(--text-secondary);
+}
 
-  &__options {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--spacing-size-s);
-    justify-content: center;
+.onboarding-muscles__options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-size-s);
+  justify-content: center;
+}
 
-    .c-button {
-      flex: 1 1 auto;
-      max-width: 180px;
-    }
-  }
+.onboarding-muscles__options .c-button {
+  flex: 1 1 auto;
+  max-width: 180px;
+}
 
-  &__footer {
-    margin-top: var(--spacing-size-xl);
-    text-align: center;
-  }
+.onboarding-muscles__footer {
+  margin-top: var(--spacing-size-xl);
+  text-align: center;
 }

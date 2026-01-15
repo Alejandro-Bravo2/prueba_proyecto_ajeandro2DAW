@@ -2,6 +2,7 @@
    05-COMPONENTS: Alerta
    Componentes de alerta y notificacion
    Nomenclatura BEM en espanol
+   SIN SELECTORES ANIDADOS
    ============================================ */
 
 @import '../01-tools/mixins';
@@ -27,11 +28,11 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+}
 
-  svg {
-    width: 1.5rem;
-    height: 1.5rem;
-  }
+.alerta__icono svg {
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
 .alerta__contenido {
@@ -61,15 +62,15 @@
   padding: var(--spacing-size-xss);
   border-radius: var(--radius-xss);
   transition: background-color var(--duration-fast);
+}
 
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.1);
-  }
+.alerta__cerrar:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
 
-  svg {
-    width: 1.25rem;
-    height: 1.25rem;
-  }
+.alerta__cerrar svg {
+  width: 1.25rem;
+  height: 1.25rem;
 }
 
 
@@ -77,45 +78,45 @@
    MODIFICADORES DE TIPO
    -------------------------------------------- */
 
-// Alerta de exito
+/* Alerta de exito */
 .alerta--exito {
   background-color: var(--amarillo-normal);
   color: var(--negro-normal);
-
-  .alerta__cerrar:hover {
-    background-color: var(--amarillo-dark);
-  }
 }
 
-// Alerta de error
+.alerta--exito .alerta__cerrar:hover {
+  background-color: var(--amarillo-dark);
+}
+
+/* Alerta de error */
 .alerta--error {
   background-color: var(--button-red);
   color: var(--text-dark);
-
-  .alerta__cerrar:hover {
-    background-color: var(--button-red-hover);
-  }
 }
 
-// Alerta de advertencia
+.alerta--error .alerta__cerrar:hover {
+  background-color: var(--button-red-hover);
+}
+
+/* Alerta de advertencia */
 .alerta--advertencia {
   background-color: var(--amarillo-dark);
   color: var(--negro-normal);
-
-  .alerta__cerrar:hover {
-    background-color: var(--amarillo-dark-hover);
-  }
 }
 
-// Alerta de informacion
+.alerta--advertencia .alerta__cerrar:hover {
+  background-color: var(--amarillo-dark-hover);
+}
+
+/* Alerta de informacion */
 .alerta--info {
   background-color: var(--gris-dark);
   color: var(--text-dark);
   border: 1px solid var(--gris-normal);
+}
 
-  .alerta__cerrar:hover {
-    background-color: var(--gris-normal);
-  }
+.alerta--info .alerta__cerrar:hover {
+  background-color: var(--gris-normal);
 }
 
 
@@ -137,7 +138,7 @@
   animation: notificacion-entrada var(--duration-base) ease-out;
 }
 
-// Animacion de entrada
+/* Animacion de entrada */
 @keyframes notificacion-entrada {
   from {
     opacity: 0;
@@ -149,7 +150,7 @@
   }
 }
 
-// Animacion de salida
+/* Animacion de salida */
 .notificacion--saliendo {
   animation: notificacion-salida var(--duration-base) ease-in forwards;
 }
@@ -175,11 +176,11 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+}
 
-  svg {
-    width: 1.5rem;
-    height: 1.5rem;
-  }
+.notificacion__icono svg {
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
 .notificacion__contenido {
@@ -209,15 +210,15 @@
   padding: var(--spacing-size-xss);
   border-radius: var(--radius-xss);
   transition: background-color var(--duration-fast);
+}
 
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.1);
-  }
+.notificacion__cerrar:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
 
-  svg {
-    width: 1.25rem;
-    height: 1.25rem;
-  }
+.notificacion__cerrar svg {
+  width: 1.25rem;
+  height: 1.25rem;
 }
 
 
@@ -281,12 +282,12 @@
   gap: var(--spacing-size-s);
   z-index: 10000;
   pointer-events: none;
+}
 
-  // Modificador: posición dinámica (esquina inferior izquierda)
-  &--dynamic {
-    bottom: var(--spacing-size-m);
-    left: var(--spacing-size-m);
-  }
+/* Modificador: posición dinámica (esquina inferior izquierda) */
+.c-toast-container--dynamic {
+  bottom: var(--spacing-size-m);
+  left: var(--spacing-size-m);
 }
 
 /**
@@ -309,107 +310,106 @@
   pointer-events: auto;
   max-width: 400px;
   min-width: 280px;
-
-  // Estado inicial (para animación de entrada)
+  /* Estado inicial (para animación de entrada) */
   opacity: 0;
   transform: translateX(-100%);
   transition:
     opacity var(--duration-base) ease-out,
     transform var(--duration-base) ease-out;
-
-  // Estado visible (aplicado con Renderer2.addClass)
-  &--visible {
-    opacity: 1;
-    transform: translateX(0);
-  }
-
-  // Estado de salida (aplicado antes de removeChild)
-  &--hiding {
-    opacity: 0;
-    transform: translateX(-100%);
-  }
-
-  // Icono del toast
-  &__icon {
-    flex-shrink: 0;
-    font-size: 1.25rem;
-    line-height: 1;
-  }
-
-  // Mensaje del toast
-  &__message {
-    flex: 1;
-    font-size: var(--font-size-md);
-    font-family: var(--font-primary);
-    line-height: var(--line-height-tight);
-  }
-
-  // Botón de cierre (creado con Renderer2.createElement)
-  &__close {
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 24px;
-    height: 24px;
-    padding: 0;
-    background: transparent;
-    border: none;
-    border-radius: var(--radius-circle);
-    color: inherit;
-    font-size: 1.25rem;
-    line-height: 1;
-    cursor: pointer;
-    transition: background-color var(--duration-fast);
-
-    &:hover {
-      background-color: rgba(0, 0, 0, 0.1);
-    }
-
-    &:focus-visible {
-      outline: 2px solid currentColor;
-      outline-offset: 2px;
-    }
-  }
-
-  // ─────────────────────────────────────────
-  // Modificadores de tipo
-  // ─────────────────────────────────────────
-
-  &--success {
-    background-color: var(--amarillo-normal);
-    color: var(--negro-normal);
-    border-left: 4px solid var(--amarillo-dark);
-
-    .c-toast__icon {
-      color: var(--negro-normal);
-    }
-  }
-
-  &--error {
-    background-color: var(--button-red);
-    color: var(--blanco-puro);
-    border-left: 4px solid var(--button-red-hover);
-
-    .c-toast__close:hover {
-      background-color: rgba(255, 255, 255, 0.2);
-    }
-  }
-
-  &--warning {
-    background-color: var(--amarillo-dark);
-    color: var(--negro-normal);
-    border-left: 4px solid var(--amarillo-normal);
-  }
-
-  &--info {
-    background-color: var(--gris-dark);
-    color: var(--text-dark);
-    border-left: 4px solid var(--gris-normal);
-  }
 }
 
-// Responsive: En móviles, toasts ocupan todo el ancho
+/* Estado visible (aplicado con Renderer2.addClass) */
+.c-toast--visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Estado de salida (aplicado antes de removeChild) */
+.c-toast--hiding {
+  opacity: 0;
+  transform: translateX(-100%);
+}
+
+/* Icono del toast */
+.c-toast__icon {
+  flex-shrink: 0;
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+/* Mensaje del toast */
+.c-toast__message {
+  flex: 1;
+  font-size: var(--font-size-md);
+  font-family: var(--font-primary);
+  line-height: var(--line-height-tight);
+}
+
+/* Botón de cierre (creado con Renderer2.createElement) */
+.c-toast__close {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-circle);
+  color: inherit;
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color var(--duration-fast);
+}
+
+.c-toast__close:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.c-toast__close:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+/* ─────────────────────────────────────────
+   Modificadores de tipo
+   ───────────────────────────────────────── */
+
+.c-toast--success {
+  background-color: var(--amarillo-normal);
+  color: var(--negro-normal);
+  border-left: 4px solid var(--amarillo-dark);
+}
+
+.c-toast--success .c-toast__icon {
+  color: var(--negro-normal);
+}
+
+.c-toast--error {
+  background-color: var(--button-red);
+  color: var(--blanco-puro);
+  border-left: 4px solid var(--button-red-hover);
+}
+
+.c-toast--error .c-toast__close:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.c-toast--warning {
+  background-color: var(--amarillo-dark);
+  color: var(--negro-normal);
+  border-left: 4px solid var(--amarillo-normal);
+}
+
+.c-toast--info {
+  background-color: var(--gris-dark);
+  color: var(--text-dark);
+  border-left: 4px solid var(--gris-normal);
+}
+
+/* Responsive: En móviles, toasts ocupan todo el ancho */
 @media (max-width: 480px) {
   .c-toast-container--dynamic {
     left: var(--spacing-size-s);

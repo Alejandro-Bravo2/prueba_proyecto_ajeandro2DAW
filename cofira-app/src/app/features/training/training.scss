@@ -7,58 +7,74 @@
   margin: 0 auto;
   padding-left: var(--spacing-size-m);
   padding-right: var(--spacing-size-m);
+}
 
-  @include responsive('s') {
+@include responsive('s') {
+  .training-page {
     padding-left: var(--spacing-size-l);
     padding-right: var(--spacing-size-l);
   }
+}
 
-  @include responsive('L') {
+@include responsive('L') {
+  .training-page {
     padding-left: var(--spacing-size-xl);
     padding-right: var(--spacing-size-xl);
   }
+}
 
-  &__header {
+.training-page__header {
+  margin-bottom: var(--spacing-size-l);
+  text-align: center;
+}
+
+@include responsive('M') {
+  .training-page__header {
+    margin-bottom: var(--spacing-size-xxl);
+  }
+}
+
+.training-page__header h1 {
+  @include text-display;
+  margin: 0;
+  font-size: var(--font-size-2xl);
+}
+
+@include responsive('s') {
+  .training-page__header h1 {
+    font-size: var(--font-size-3xl);
+  }
+}
+
+@include responsive('M') {
+  .training-page__header h1 {
+    font-size: var(--font-size-4xl);
+  }
+}
+
+@include responsive('L') {
+  .training-page__header h1 {
+    font-size: var(--font-size-5xl);
+  }
+}
+
+.training-page__search {
+  margin-bottom: var(--spacing-size-m);
+}
+
+@include responsive('M') {
+  .training-page__search {
     margin-bottom: var(--spacing-size-l);
-    text-align: center;
-
-    @include responsive('M') {
-      margin-bottom: var(--spacing-size-xxl);
-    }
-
-    h1 {
-      @include text-display;
-      margin: 0;
-      font-size: var(--font-size-2xl);
-
-      @include responsive('s') {
-        font-size: var(--font-size-3xl);
-      }
-
-      @include responsive('M') {
-        font-size: var(--font-size-4xl);
-      }
-
-      @include responsive('L') {
-        font-size: var(--font-size-5xl);
-      }
-    }
   }
+}
 
-  &__search {
-    margin-bottom: var(--spacing-size-m);
+.training-page__content {
+  @include flex-columna(var(--spacing-size-l));
+}
 
-    @include responsive('M') {
-      margin-bottom: var(--spacing-size-l);
-    }
-  }
-
-  &__content {
-    @include flex-columna(var(--spacing-size-l));
-
-    @include responsive('M') {
-      gap: var(--spacing-size-xl);
-    }
+@include responsive('M') {
+  .training-page__content {
+    gap: var(--spacing-size-xl);
   }
 }
 
@@ -69,12 +85,16 @@
   align-items: center;
   width: 100%;
   max-width: 100%;
+}
 
-  @include responsive('s') {
+@include responsive('s') {
+  .search-input-wrapper {
     max-width: 350px;
   }
+}
 
-  @include responsive('M') {
+@include responsive('M') {
+  .search-input-wrapper {
     max-width: 400px;
   }
 }
@@ -86,8 +106,10 @@
   pointer-events: none;
   width: 18px;
   height: 18px;
+}
 
-  @include responsive('M') {
+@include responsive('M') {
+  .search-icon {
     width: 20px;
     height: 20px;
   }
@@ -102,21 +124,23 @@
   color: var(--color-text-primary);
   font-size: var(--font-size-sm);
   transition: border-color 0.2s, box-shadow 0.2s;
+}
 
-  @include responsive('M') {
+@include responsive('M') {
+  .search-input {
     font-size: var(--font-size-body);
     padding: var(--spacing-size-m) var(--spacing-size-m) var(--spacing-size-m) var(--spacing-size-xxl);
   }
+}
 
-  &:focus {
-    outline: none;
-    border-color: var(--color-primary);
-    box-shadow: 0 0 0 3px var(--color-primary-alpha);
-  }
+.search-input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-alpha);
+}
 
-  &::placeholder {
-    color: var(--color-text-secondary);
-  }
+.search-input::placeholder {
+  color: var(--color-text-secondary);
 }
 
 .search-clear {
@@ -132,23 +156,27 @@
   cursor: pointer;
   border-radius: var(--border-radius-s);
   transition: color 0.2s, background-color 0.2s;
+}
 
-  @include responsive('M') {
+@include responsive('M') {
+  .search-clear {
     right: var(--spacing-size-s);
   }
+}
 
-  &:hover {
-    color: var(--color-text-primary);
-    background: var(--color-surface-hover);
-  }
+.search-clear:hover {
+  color: var(--color-text-primary);
+  background: var(--color-surface-hover);
 }
 
 .search-results-count {
   margin-top: var(--spacing-size-xs);
   font-size: var(--font-size-xs);
   color: var(--color-text-secondary);
+}
 
-  @include responsive('M') {
+@include responsive('M') {
+  .search-results-count {
     font-size: var(--font-size-small);
   }
 }
@@ -162,57 +190,63 @@
   gap: var(--spacing-size-s);
   margin-top: var(--spacing-size-m);
   padding: var(--spacing-size-s) 0;
+}
 
-  @include responsive('s') {
+@include responsive('s') {
+  .pagination {
     gap: var(--spacing-size-m);
     margin-top: var(--spacing-size-l);
     padding: var(--spacing-size-m) 0;
   }
+}
 
-  &__btn {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--spacing-size-xs);
-    padding: var(--spacing-size-xs) var(--spacing-size-s);
-    border: 1px solid var(--color-border);
-    border-radius: var(--border-radius-m);
-    background: var(--color-surface);
-    color: var(--color-text-primary);
-    font-size: var(--font-size-sm);
-    cursor: pointer;
-    transition: background-color 0.2s, border-color 0.2s;
+.pagination__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-size-xs);
+  padding: var(--spacing-size-xs) var(--spacing-size-s);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-m);
+  background: var(--color-surface);
+  color: var(--color-text-primary);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s;
+}
 
-    @include responsive('s') {
-      padding: var(--spacing-size-s) var(--spacing-size-m);
-      font-size: var(--font-size-body);
-    }
-
-    &:hover:not(:disabled) {
-      background: var(--color-surface-hover);
-      border-color: var(--color-primary);
-    }
-
-    &:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-
-    // Ocultar texto en móvil, solo icono
-    span:not(.sr-only) {
-      @include responsive-down('xs') {
-        display: none;
-      }
-    }
+@include responsive('s') {
+  .pagination__btn {
+    padding: var(--spacing-size-s) var(--spacing-size-m);
+    font-size: var(--font-size-body);
   }
+}
 
-  &__info {
-    font-size: var(--font-size-sm);
-    color: var(--color-text-secondary);
-    text-align: center;
-    min-width: 100px;
+.pagination__btn:hover:not(:disabled) {
+  background: var(--color-surface-hover);
+  border-color: var(--color-primary);
+}
 
-    @include responsive('s') {
-      font-size: var(--font-size-body);
-    }
+.pagination__btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+// Ocultar texto en movil, solo icono
+@include responsive-down('xs') {
+  .pagination__btn span:not(.sr-only) {
+    display: none;
+  }
+}
+
+.pagination__info {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  text-align: center;
+  min-width: 100px;
+}
+
+@include responsive('s') {
+  .pagination__info {
+    font-size: var(--font-size-body);
   }
 }

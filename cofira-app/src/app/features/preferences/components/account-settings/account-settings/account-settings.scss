@@ -8,32 +8,32 @@
   padding: var(--spacing-size-xxl);
   max-width: 700px;
   margin: var(--spacing-size-xl) auto;
+}
 
-  &__header {
-    text-align: center;
-    margin-bottom: var(--spacing-size-xxl);
+.account-settings__header {
+  text-align: center;
+  margin-bottom: var(--spacing-size-xxl);
+}
 
-    h1 {
-      @include tipografia-titulo;
-      font-size: var(--font-size-3xl);
-      color: var(--text-primary);
-      margin-bottom: var(--spacing-size-s);
-    }
+.account-settings__header h1 {
+  @include tipografia-titulo;
+  font-size: var(--font-size-3xl);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-size-s);
+}
 
-    p {
-      font-size: var(--font-size-md);
-      color: var(--text-secondary);
-    }
-  }
+.account-settings__header p {
+  font-size: var(--font-size-md);
+  color: var(--text-secondary);
+}
 
-  &__form {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-size-m);
-  }
+.account-settings__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-size-m);
+}
 
-  &__footer {
-    margin-top: var(--spacing-size-xl);
-    text-align: center;
-  }
+.account-settings__footer {
+  margin-top: var(--spacing-size-xl);
+  text-align: center;
 }

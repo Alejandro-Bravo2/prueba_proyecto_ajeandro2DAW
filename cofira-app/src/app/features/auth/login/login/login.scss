@@ -23,161 +23,161 @@
   @include responsive('L') {
     padding: var(--spacing-size-xxl) var(--spacing-size-xl);
   }
+}
 
-  .login-card {
-    background-color: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-md);
-    max-width: 100%;
-    width: 100%;
-    padding: var(--spacing-size-m);
-    text-align: center;
-    @include transition-base;
+.login-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  max-width: 100%;
+  width: 100%;
+  padding: var(--spacing-size-m);
+  text-align: center;
+  @include transition-base;
 
-    @include responsive('xs') {
-      max-width: 400px;
-      padding: var(--spacing-size-l);
-      border-radius: var(--radius-lg);
-    }
-
-    @include responsive('s') {
-      max-width: 420px;
-    }
-
-    @include responsive('M') {
-      max-width: 450px;
-      padding: var(--spacing-size-xl);
-    }
-
-    @include responsive('L') {
-      padding: var(--spacing-size-xxl);
-    }
-
-    &:hover {
-      border-color: var(--border-medium);
-    }
-
-    &__header {
-      margin-bottom: var(--spacing-size-l);
-
-      @include responsive('s') {
-        margin-bottom: var(--spacing-size-xl);
-      }
-
-      @include responsive('M') {
-        margin-bottom: var(--spacing-size-xxl);
-      }
-
-      h1 {
-        @include tipografia-titulo;
-        font-size: var(--font-size-2xl);
-        color: var(--text-primary);
-        margin: 0;
-
-        @include responsive('xs') {
-          font-size: var(--font-size-3xl);
-        }
-
-        @include responsive('M') {
-          font-size: var(--font-size-4xl);
-        }
-      }
-    }
-
-    &__form {
-      margin-bottom: var(--spacing-size-m);
-
-      @include responsive('s') {
-        margin-bottom: var(--spacing-size-l);
-      }
-
-      .c-form__group {
-        text-align: left;
-        margin-bottom: var(--spacing-size-m);
-
-        @include responsive('s') {
-          margin-bottom: var(--spacing-size-l);
-        }
-      }
-
-      .c-form__label {
-        font-weight: var(--font-weight-medium);
-        font-size: var(--font-size-sm);
-
-        @include responsive('s') {
-          font-size: var(--font-size-md);
-        }
-      }
-
-      .c-form__input {
-        font-size: var(--font-size-md);
-
-        @include touch-device {
-          font-size: 16px; // Previene zoom en iOS
-        }
-      }
-    }
-
-    &__submit {
-      margin-top: var(--spacing-size-s);
-      width: 100%;
-      min-height: 44px; // Mínimo táctil
-
-      @include responsive('s') {
-        margin-top: var(--spacing-size-m);
-        min-height: 48px;
-      }
-    }
-
-    &__footer {
-      border-top: 1px solid var(--border-light);
-      padding-top: var(--spacing-size-m);
-      margin-top: var(--spacing-size-m);
-
-      @include responsive('s') {
-        padding-top: var(--spacing-size-l);
-        margin-top: var(--spacing-size-l);
-      }
-
-      .login-card__link {
-        display: block;
-        margin-bottom: var(--spacing-size-s);
-        color: var(--text-primary);
-        text-decoration: none;
-        font-weight: var(--font-weight-medium);
-        font-size: var(--font-size-sm);
-        padding: var(--spacing-size-xs) 0;
-        @include transition-base;
-
-        @include responsive('s') {
-          font-size: var(--font-size-md);
-          margin-bottom: var(--spacing-size-m);
-        }
-
-        &:hover {
-          text-decoration: underline;
-        }
-
-        @include touch-device {
-          padding: var(--spacing-size-s) 0;
-        }
-      }
-
-      .login-card__register-text {
-        font-size: var(--font-size-sm);
-        color: var(--text-secondary);
-
-        @include responsive('s') {
-          font-size: var(--font-size-md);
-        }
-
-        .login-card__link {
-          display: inline;
-          margin-bottom: 0;
-          margin-left: var(--spacing-size-xs);
-          padding: 0;
-        }
-      }
-    }
+  @include responsive('xs') {
+    max-width: 400px;
+    padding: var(--spacing-size-l);
+    border-radius: var(--radius-lg);
   }
+
+  @include responsive('s') {
+    max-width: 420px;
+  }
+
+  @include responsive('M') {
+    max-width: 450px;
+    padding: var(--spacing-size-xl);
+  }
+
+  @include responsive('L') {
+    padding: var(--spacing-size-xxl);
+  }
+}
+
+.login-card:hover {
+  border-color: var(--border-medium);
+}
+
+.login-card__header {
+  margin-bottom: var(--spacing-size-l);
+
+  @include responsive('s') {
+    margin-bottom: var(--spacing-size-xl);
+  }
+
+  @include responsive('M') {
+    margin-bottom: var(--spacing-size-xxl);
+  }
+}
+
+.login-card__header h1 {
+  @include tipografia-titulo;
+  font-size: var(--font-size-2xl);
+  color: var(--text-primary);
+  margin: 0;
+
+  @include responsive('xs') {
+    font-size: var(--font-size-3xl);
+  }
+
+  @include responsive('M') {
+    font-size: var(--font-size-4xl);
+  }
+}
+
+.login-card__form {
+  margin-bottom: var(--spacing-size-m);
+
+  @include responsive('s') {
+    margin-bottom: var(--spacing-size-l);
+  }
+}
+
+.login-card__form .c-form__group {
+  text-align: left;
+  margin-bottom: var(--spacing-size-m);
+
+  @include responsive('s') {
+    margin-bottom: var(--spacing-size-l);
+  }
+}
+
+.login-card__form .c-form__label {
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-sm);
+
+  @include responsive('s') {
+    font-size: var(--font-size-md);
+  }
+}
+
+.login-card__form .c-form__input {
+  font-size: var(--font-size-md);
+
+  @include touch-device {
+    font-size: 16px; // Previene zoom en iOS
+  }
+}
+
+.login-card__submit {
+  margin-top: var(--spacing-size-s);
+  width: 100%;
+  min-height: 44px; // Mínimo táctil
+
+  @include responsive('s') {
+    margin-top: var(--spacing-size-m);
+    min-height: 48px;
+  }
+}
+
+.login-card__footer {
+  border-top: 1px solid var(--border-light);
+  padding-top: var(--spacing-size-m);
+  margin-top: var(--spacing-size-m);
+
+  @include responsive('s') {
+    padding-top: var(--spacing-size-l);
+    margin-top: var(--spacing-size-l);
+  }
+}
+
+.login-card__footer .login-card__link {
+  display: block;
+  margin-bottom: var(--spacing-size-s);
+  color: var(--text-primary);
+  text-decoration: none;
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-sm);
+  padding: var(--spacing-size-xs) 0;
+  @include transition-base;
+
+  @include responsive('s') {
+    font-size: var(--font-size-md);
+    margin-bottom: var(--spacing-size-m);
+  }
+
+  @include touch-device {
+    padding: var(--spacing-size-s) 0;
+  }
+}
+
+.login-card__footer .login-card__link:hover {
+  text-decoration: underline;
+}
+
+.login-card__register-text {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+
+  @include responsive('s') {
+    font-size: var(--font-size-md);
+  }
+}
+
+.login-card__register-text .login-card__link {
+  display: inline;
+  margin-bottom: 0;
+  margin-left: var(--spacing-size-xs);
+  padding: 0;
 }

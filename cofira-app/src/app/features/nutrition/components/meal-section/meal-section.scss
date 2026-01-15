@@ -4,56 +4,56 @@
 .meal-section {
   @include tarjeta-base;
   padding: var(--spacing-size-l);
+}
 
-  &__header {
-    @include flex-between;
-    margin-bottom: var(--spacing-size-m);
-  }
+.meal-section__header {
+  @include flex-between;
+  margin-bottom: var(--spacing-size-m);
+}
 
-  &__title {
-    font-family: var(--font-secondary);
-    font-size: var(--font-size-md);
-    font-weight: var(--font-weight-semibold);
-    color: var(--text-primary);
-    margin: 0;
-    text-transform: capitalize;
-  }
+.meal-section__title {
+  font-family: var(--font-secondary);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin: 0;
+  text-transform: capitalize;
+}
 
-  &__action {
-    @include button-reset;
-    @include flex-center;
-    width: 28px;
-    height: 28px;
-    border-radius: var(--radius-circle);
-    color: var(--text-muted);
-    @include transition-base;
+.meal-section__action {
+  @include button-reset;
+  @include flex-center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-circle);
+  color: var(--text-muted);
+  @include transition-base;
+}
 
-    &:hover {
-      background-color: var(--bg-secondary);
-      color: var(--text-primary);
-    }
+.meal-section__action:hover {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+}
 
-    &:focus-visible {
-      outline: 2px solid var(--negro-normal);
-      outline-offset: 2px;
-    }
+.meal-section__action:focus-visible {
+  outline: 2px solid var(--negro-normal);
+  outline-offset: 2px;
+}
 
-    &:active {
-      transform: scale(0.9);
-    }
-  }
+.meal-section__action:active {
+  transform: scale(0.9);
+}
 
-  &__list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    @include flex-columna(var(--spacing-size-xss));
-  }
+.meal-section__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  @include flex-columna(var(--spacing-size-xss));
+}
 
-  &__empty {
-    color: var(--text-muted);
-    font-size: var(--font-size-sm);
-    padding: var(--spacing-size-s) 0;
-    font-style: italic;
-  }
+.meal-section__empty {
+  color: var(--text-muted);
+  font-size: var(--font-size-sm);
+  padding: var(--spacing-size-s) 0;
+  font-style: italic;
 }

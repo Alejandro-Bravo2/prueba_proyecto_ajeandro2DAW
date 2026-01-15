@@ -2,6 +2,7 @@
    05-COMPONENTS: Tarjeta
    Estilo Minimalista Apple/Ferrari
    Nomenclatura BEM en espanol
+   SIN SELECTORES ANIDADOS
    ============================================ */
 
 @import '../01-tools/mixins';
@@ -20,10 +21,10 @@
   border-radius: var(--radius-m);
   padding: var(--spacing-size-xl);
   @include transition-base;
+}
 
-  &:hover {
-    border-color: var(--border-medium);
-  }
+.tarjeta:hover {
+  border-color: var(--border-medium);
 }
 
 
@@ -98,19 +99,19 @@
   padding: var(--spacing-size-xs) 0;
   color: var(--text-primary);
   border-bottom: 1px solid var(--border-color);
+}
 
-  &:last-child {
-    border-bottom: none;
-  }
+.tarjeta__item:last-child {
+  border-bottom: none;
+}
 
-  &::before {
-    content: '';
-    width: 6px;
-    height: 6px;
-    background-color: var(--text-primary);
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
+.tarjeta__item::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background-color: var(--text-primary);
+  border-radius: 50%;
+  flex-shrink: 0;
 }
 
 .tarjeta__acciones {
@@ -129,7 +130,7 @@
   margin-top: var(--spacing-size-m);
 }
 
-// Badge/Etiqueta
+/* Badge/Etiqueta */
 .tarjeta__badge {
   display: inline-block;
   padding: var(--spacing-size-xss) var(--spacing-size-s);
@@ -147,45 +148,45 @@
    MODIFICADORES DE LA TARJETA
    -------------------------------------------- */
 
-// Tarjeta destacada (borde destacado)
+/* Tarjeta destacada (borde destacado) */
 .tarjeta--destacada {
   border: 2px solid var(--text-primary);
   position: relative;
-
-  .tarjeta__badge {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
 }
 
-// Tarjeta con elevación
+.tarjeta--destacada .tarjeta__badge {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Tarjeta con elevación */
 .tarjeta--elevada {
   box-shadow: var(--shadow-md);
   border-color: transparent;
-
-  &:hover {
-    box-shadow: var(--shadow-lg);
-    transform: translateY(-4px);
-  }
 }
 
-// Tarjeta horizontal
+.tarjeta--elevada:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-4px);
+}
+
+/* Tarjeta horizontal */
 .tarjeta--horizontal {
   flex-direction: row;
   align-items: center;
-
-  .tarjeta__imagen {
-    width: 200px;
-    height: 200px;
-    margin-bottom: 0;
-    margin-right: var(--spacing-size-l);
-    flex-shrink: 0;
-  }
 }
 
-// Tamanos de tarjeta
+.tarjeta--horizontal .tarjeta__imagen {
+  width: 200px;
+  height: 200px;
+  margin-bottom: 0;
+  margin-right: var(--spacing-size-l);
+  flex-shrink: 0;
+}
+
+/* Tamanos de tarjeta */
 .tarjeta--pequena {
   padding: var(--spacing-size-m);
 }
@@ -198,56 +199,56 @@
   padding: var(--spacing-size-xxl);
 }
 
-// Tarjeta de precios (pricing card)
+/* Tarjeta de precios (pricing card) */
 .tarjeta--precios {
   text-align: center;
   padding: var(--spacing-size-xxl) var(--spacing-size-xl);
-
-  .tarjeta__titulo {
-    font-size: var(--font-size-2xl);
-    margin-bottom: var(--spacing-size-xss);
-  }
-
-  .tarjeta__subtitulo {
-    margin-bottom: var(--spacing-size-l);
-  }
-
-  .tarjeta__precio {
-    font-size: var(--font-size-5xl);
-    margin: var(--spacing-size-m) 0;
-  }
-
-  .tarjeta__lista {
-    text-align: left;
-    margin: var(--spacing-size-l) 0;
-  }
-
-  .tarjeta__acciones {
-    justify-content: center;
-    padding-top: var(--spacing-size-l);
-  }
 }
 
-// Tarjeta interactiva (clickeable)
+.tarjeta--precios .tarjeta__titulo {
+  font-size: var(--font-size-2xl);
+  margin-bottom: var(--spacing-size-xss);
+}
+
+.tarjeta--precios .tarjeta__subtitulo {
+  margin-bottom: var(--spacing-size-l);
+}
+
+.tarjeta--precios .tarjeta__precio {
+  font-size: var(--font-size-5xl);
+  margin: var(--spacing-size-m) 0;
+}
+
+.tarjeta--precios .tarjeta__lista {
+  text-align: left;
+  margin: var(--spacing-size-l) 0;
+}
+
+.tarjeta--precios .tarjeta__acciones {
+  justify-content: center;
+  padding-top: var(--spacing-size-l);
+}
+
+/* Tarjeta interactiva (clickeable) */
 .tarjeta--interactiva {
   cursor: pointer;
-
-  &:hover {
-    border-color: var(--text-primary);
-  }
-
-  &:active {
-    transform: scale(0.99);
-  }
 }
 
-// Tarjeta transparente (sin fondo)
+.tarjeta--interactiva:hover {
+  border-color: var(--text-primary);
+}
+
+.tarjeta--interactiva:active {
+  transform: scale(0.99);
+}
+
+/* Tarjeta transparente (sin fondo) */
 .tarjeta--transparente {
   background-color: transparent;
   border: none;
   padding: 0;
+}
 
-  &:hover {
-    border-color: transparent;
-  }
+.tarjeta--transparente:hover {
+  border-color: transparent;
 }
