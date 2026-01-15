@@ -1,6 +1,6 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of, delay, map, catchError, tap } from 'rxjs';
+import { Observable, of, delay, catchError, tap } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 
 export interface FoodAnalysis {
@@ -97,7 +97,7 @@ export class NutritionAIService {
   /**
    * Save analyzed meal to database
    */
-  saveMeal(analysis: FoodAnalysis, imageUrl?: string, mealType: string = 'LUNCH'): Observable<{ meal: Meal }> {
+  saveMeal(analysis: FoodAnalysis, imageUrl?: string, mealType = 'LUNCH'): Observable<{ meal: Meal }> {
     return this.http.post<{ meal: Meal }>(`${this.apiUrl}/meals/from-analysis`, {
       analysis,
       imageUrl,

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -16,7 +16,12 @@ import { ToastService } from '../../../../core/services/toast.service';
   styleUrl: './reset-password.scss',
 })
 export class ResetPassword {
-  codeSent: boolean = false;
+  private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
+  private readonly loadingService = inject(LoadingService);
+  private readonly toastService = inject(ToastService);
+
+  codeSent = false;
 
   emailForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -27,13 +32,6 @@ export class ResetPassword {
     newPassword: new FormControl('', [Validators.required, passwordStrengthValidator()]),
     confirmNewPassword: new FormControl('', [Validators.required]),
   }, { validators: passwordMatchValidator('newPassword', 'confirmNewPassword') });
-
-  constructor(
-    private authService: AuthService,
-    private router: Router,
-    private loadingService: LoadingService,
-    private toastService: ToastService
-  ) {}
 
   // Methods to handle form submissions
   requestResetCode(): void {

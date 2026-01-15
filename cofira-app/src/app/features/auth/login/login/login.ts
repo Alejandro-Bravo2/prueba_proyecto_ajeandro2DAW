@@ -23,7 +23,7 @@ export class Login implements OnInit {
   private route = inject(ActivatedRoute);
 
   /** URL de retorno despues del login (desde queryParams) */
-  private returnUrl: string = '/';
+  private returnUrl = '/';
 
   loginForm = new FormGroup({
     username: new FormControl('', [Validators.required]),

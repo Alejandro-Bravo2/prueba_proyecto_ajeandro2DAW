@@ -1,4 +1,4 @@
-import { Component, input, output, computed, signal, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, input, output, computed, ChangeDetectionStrategy } from '@angular/core';
 import { MacroChart, MacroData } from '../macro-chart/macro-chart';
 import { PhotoAnalyzer } from '../photo-analyzer/photo-analyzer';
 import { FoodAnalysis } from '../../services/nutrition-ai.service';

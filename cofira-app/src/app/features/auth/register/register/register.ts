@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -19,23 +19,19 @@ import { CanComponentDeactivate } from '../../../../core/guards/can-deactivate.g
   styleUrl: './register.scss',
 })
 export class Register implements CanComponentDeactivate {
-  registerForm: FormGroup;
+  private readonly asyncValidatorsService = inject(AsyncValidatorsService);
+  private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
+  private readonly loadingService = inject(LoadingService);
+  private readonly toastService = inject(ToastService);
 
-  constructor(
-    private asyncValidatorsService: AsyncValidatorsService,
-    private authService: AuthService,
-    private router: Router,
-    private loadingService: LoadingService,
-    private toastService: ToastService // Placeholder ToastService
-  ) {
-    this.registerForm = new FormGroup({
-      name: new FormControl('', [Validators.required]),
-      username: new FormControl('', [Validators.required, Validators.minLength(3)], [this.asyncValidatorsService.usernameUnique()]),
-      email: new FormControl('', [Validators.required, Validators.email], [this.asyncValidatorsService.emailUnique()]),
-      password: new FormControl('', [Validators.required, passwordStrengthValidator()]),
-      confirmPassword: new FormControl('', [Validators.required]),
-    }, { validators: passwordMatchValidator('password', 'confirmPassword') });
-  }
+  registerForm = new FormGroup({
+    name: new FormControl('', [Validators.required]),
+    username: new FormControl('', [Validators.required, Validators.minLength(3)], [this.asyncValidatorsService.usernameUnique()]),
+    email: new FormControl('', [Validators.required, Validators.email], [this.asyncValidatorsService.emailUnique()]),
+    password: new FormControl('', [Validators.required, passwordStrengthValidator()]),
+    confirmPassword: new FormControl('', [Validators.required]),
+  }, { validators: passwordMatchValidator('password', 'confirmPassword') });
 
   onSubmit(): void {
     if (this.registerForm.valid) {

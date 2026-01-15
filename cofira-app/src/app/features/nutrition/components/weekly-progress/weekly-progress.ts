@@ -1,4 +1,4 @@
-import { Component, input, computed, inject, effect, ChangeDetectionStrategy } from '@angular/core';
+import { Component, input, computed, inject, ChangeDetectionStrategy } from '@angular/core';
 import { BaseChartDirective } from 'ng2-charts';
 import { ChartConfiguration, ChartData } from 'chart.js';
 import { ThemeService } from '../../../../core/services/theme.service';
